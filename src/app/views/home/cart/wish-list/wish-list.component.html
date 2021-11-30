@@ -1,0 +1,114 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-8 col-lg-5">
+      <h6 class="text-muted mb-3">My wish list {{(' | '+productsInteractions?.length) || ''}}</h6>
+
+
+
+      <br>
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center"
+          *ngFor="let product of productsInteractions" (click)="select(product)">
+          <div class="">
+            <p>
+              <b>{{product.Name}}</b>
+              <span class="price">
+                {{product.Price | currency:'R'}}
+              </span>
+
+            </p>
+            <button class="btn btn-primary" (click)="select(product)">View product</button>
+
+          </div>
+          <div class="image-parent">
+            <img [src]="product.ImageUrl" *ngIf="product.ImageUrl" class="img-fluid" alt="quixote">
+            <img *ngIf="!product.ImageUrl" src="assets/images/common/image-holder.svg" class="img-fluid" alt="quixote">
+
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- <div class="main">
+  <div class="product-section col-1-of-1" *ngIf="tab == 1">
+    <div class="mt5" *ngIf="interactions">
+      <div class="shops" *ngFor="let item of productsInteractions">
+        <div class="shop">
+          <div class="icon">
+            <img *ngIf="item.ImageUrl" [src]="item.ImageUrl" alt="">
+            <img *ngIf="!item.ImageUrl" src="assets/images/shop.svg" alt="">
+          </div>
+          <div class="item">
+            <h3>
+              {{item.Name}}
+              <span class="price" *ngIf="item.InteractionBody != 'Follow'">
+                {{item.Price  | currency:'R'}}
+              </span>
+              <span class="cta" *ngIf="item.InteractionBody == 'Follow'" (click)="goto(item.InteractionTargetId)">
+                Go to shop
+              </span>
+              <span class="cta" *ngIf="item.InteractionBody != 'Follow'" (click)="select(item)">
+                View product
+              </span>
+            </h3>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="product-section col-1-of-1" *ngIf="tab == 2">
+    <div class="mt5" *ngIf="interactions">
+      <div class="shops" *ngFor="let item of shopsInteractions">
+        <div class="shop">
+          <div class="icon">
+            <img *ngIf="item.ImageUrl" [src]="item.ImageUrl" alt="">
+            <img *ngIf="!item.ImageUrl" src="assets/images/shop.svg" alt="">
+          </div>
+          <div class="item">
+            <h3>
+              {{item.Name}}
+              <span class="price" *ngIf="item.InteractionBody != 'Follow'">
+                {{item.Price  | currency:'R'}}
+              </span>
+              <span class="cta" *ngIf="item.InteractionBody == 'Follow'" (click)="goto(item.InteractionTargetId)">
+                Go to shop
+              </span>
+              <span class="cta" *ngIf="item.InteractionBody != 'Follow'" (click)="select(item)">
+                View product
+              </span>
+            </h3>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<div class="quick-add" *ngIf="showAdd">
+  <div class="form">
+    <h3>
+      Please login or sign up to view your wishlist.
+    </h3>
+
+    <div class="form-item">
+      <button (click)="goto('sign-in')">Login</button>
+      <div class="or">Or</div>
+      <button (click)="goto('sign-up')">Sign up</button>
+      <div class="link" (click)="back()">Back</div>
+    </div>
+
+  </div>
+</div> -->

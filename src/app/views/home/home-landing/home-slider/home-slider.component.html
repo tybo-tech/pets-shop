@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
+      <div class="carousel-indicators" *ngIf="banner1">
+        <button type="button" *ngIf="banner1" data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+
+
+        <button type="button" *ngIf="banner2" data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="1" aria-label="Slide 2"></button>
+
+
+        <button type="button" *ngIf="banner3" data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="2" aria-label="Slide 3"></button>
+
+        <button type="button" *ngIf="banner4" data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="3" aria-label="Slide 3"></button>
+
+        <button type="button" *ngIf="banner5" data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="4" aria-label="Slide 3"></button>
+
+        <button type="button" *ngIf="banner6" data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="5" aria-label="Slide 3"></button>
+
+        <button type="button" *ngIf="banner7" data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="6" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active" *ngIf="banner1">
+          <img [src]="banner1.ImageUrl" (click)=viewImage(banner1.ImageUrl) class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" *ngIf="banner2">
+          <img [src]="banner2.ImageUrl" (click)=viewImage(banner2.ImageUrl) class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" *ngIf="banner3">
+          <img [src]="banner3.ImageUrl" (click)=viewImage(banner3.ImageUrl) class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" *ngIf="banner4">
+          <img [src]="banner4.ImageUrl" (click)=viewImage(banner4.ImageUrl) class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" *ngIf="banner5">
+          <img [src]="banner5.ImageUrl" (click)=viewImage(banner5.ImageUrl) class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" *ngIf="banner6">
+          <img [src]="banner6.ImageUrl" (click)=viewImage(banner6.ImageUrl) class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" *ngIf="banner7">
+          <img [src]="banner7.ImageUrl" (click)=viewImage(banner7.ImageUrl) class="d-block w-100" alt="...">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" *ngIf="banner1"
+        data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" *ngIf="banner1" type="button"
+        data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</div>

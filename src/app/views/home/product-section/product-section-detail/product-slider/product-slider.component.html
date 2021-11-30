@@ -1,0 +1,39 @@
+<div class="main-products product-slider ">
+  <div class="picked" *ngIf="products && products.length">
+    <h4>
+      {{tittle}}
+    </h4>
+
+    <div class="left-scrolls pc-only">
+
+      <button class="btn btn-info" (click)="scroll(-1)">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <button class="btn btn-info" (click)="scroll(1)">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+    <div class="products-scroller" id="justAdded">
+      <div class="product" *ngFor="let product of products">
+        <img [src]="product.FeaturedImageUrl" alt="" (click)="viewMore(product)">
+        <p>
+          {{product.Name}}
+
+          <span class="price" *ngIf="!product.OnSale">
+            {{product.RegularPrice | currency:'R'}}
+          </span>
+          <span class="price" *ngIf="product.OnSale">
+            <del> {{product.RegularPrice | currency:'R'}}</del> <br>
+            {{product.SalePrice | currency:'R'}}
+          </span>
+
+          <!-- <span class="company-name" *ngIf="product.Company && product.Company.Name" (click)="gotoComapny(product)">
+            By {{product.Company.Name}}
+          </span> -->
+
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,205 @@
+<h3 class="heading">
+  Settings
+</h3>
+
+
+<br><br>
+<div class="row">
+  <div class="col-lg-8">
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+            aria-expanded="true" aria-controls="collapseOne">
+            Website logo
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="card">
+              <div class="card-body">
+                <div class="" *ngIf="!websiteLogo">
+                  <a (click)="add(ITEM_TYPES.LOGO.Name)" class="btn btn-primary">Upload a logo</a>
+                </div>
+
+                <div class="" *ngIf="websiteLogo">
+                  <app-image-widget [image]="websiteLogo.ImageUrl"
+                    (imageChangedEvent)="item = websiteLogo ; onImageChangedEvent($event, ITEM_TYPES.LOGO.Name)">
+                  </app-image-widget>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseNavBatTheme" aria-expanded="false" aria-controls="collapseNavBatTheme">
+            Navbar theme
+          </button>
+        </h2>
+        <div id="collapseNavBatTheme" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+
+            <div class="card" *ngIf="navBarTheme">
+              <div class="card-body">
+                <h6>
+                  Choose theme
+                </h6>
+
+
+                <select name="" id="" [(ngModel)]="navBarTheme.Description" class="form-control">
+                  <option value="dark-nav">Dark Theme</option>
+                  <option value="light-nav">Light Theme</option>
+                </select>
+
+                <br>
+                <button class="btn btn-primary" (click)="item = navBarTheme; save()">Save navbar theme</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Homepage banners
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+
+            <div class="card">
+              <div class="card-body">
+                <h6>
+                  Fist homepage banner
+                </h6>
+                <div class="" *ngIf="!banner1">
+                  <a (click)="add(ITEM_TYPES.BANNER1.Name)" class="btn btn-primary">Upload banner 1</a>
+                </div>
+
+                <div class="" *ngIf="banner1">
+                  <app-image-widget [image]="banner1.ImageUrl"
+                    (imageChangedEvent)="item = banner1 ; onImageChangedEvent($event, ITEM_TYPES.BANNER1.Name)">
+                  </app-image-widget>
+                </div>
+
+                <hr>
+
+                <h6>
+                  2nd homepage banner
+                </h6>
+                <div class="" *ngIf="!banner2">
+                  <a (click)="add(ITEM_TYPES.BANNER2.Name)" class="btn btn-primary">Upload banner 2</a>
+                </div>
+
+                <div class="" *ngIf="banner2">
+                  <app-image-widget [image]="banner2.ImageUrl"
+                    (imageChangedEvent)="item = banner2 ; onImageChangedEvent($event, ITEM_TYPES.BANNER2.Name)">
+                  </app-image-widget>
+                </div>
+
+
+                <hr>
+
+                <h6>
+                  Third homepage banner
+                </h6>
+                <div class="" *ngIf="!banner3">
+                  <a (click)="add(ITEM_TYPES.BANNER3.Name)" class="btn btn-primary">Upload banner 3</a>
+                </div>
+
+                <div class="" *ngIf="banner3">
+                  <app-image-widget [image]="banner3.ImageUrl"
+                    (imageChangedEvent)="item = banner3 ; onImageChangedEvent($event, ITEM_TYPES.BANNER3.Name)">
+                  </app-image-widget>
+                </div>
+
+
+
+                <hr>
+
+                <h6>
+                  Fourth homepage banner
+                </h6>
+                <div class="" *ngIf="!banner4">
+                  <a (click)="add(ITEM_TYPES.BANNER4.Name)" class="btn btn-primary">Upload banner 4</a>
+                </div>
+
+                <div class="" *ngIf="banner4">
+                  <app-image-widget [image]="banner4.ImageUrl"
+                    (imageChangedEvent)="item = banner4 ; onImageChangedEvent($event, ITEM_TYPES.BANNER4.Name)">
+                  </app-image-widget>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            About us page
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body" *ngIf="aboutUs">
+            <p>About us image</p>
+            <div class="" *ngIf="!aboutUsImage">
+              <a (click)="add(ITEM_TYPES.ABOUT_IMAGE.Name)" class="btn btn-primary">Upload About us image</a>
+            </div>
+
+            <div class="" *ngIf="aboutUsImage">
+              <app-image-widget [image]="aboutUsImage.ImageUrl"
+                (imageChangedEvent)="item = aboutUsImage; onImageChangedEvent($event, ITEM_TYPES.ABOUT_IMAGE.Name)">
+              </app-image-widget>
+            </div>
+            <br><br>
+            <p-editor [(ngModel)]="aboutUs.Description" [style]="{'height':'320px'}">
+
+            </p-editor>
+            <br>
+            <button class="btn btn-primary" (click)="item = aboutUs; save()">Save about us</button>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="quick-add" *ngIf="item">
+  <div class="form">
+    <h3>
+      {{heading}}
+    </h3>
+
+    <div class="form-item">
+      <label for=""> Image</label>
+      <app-image-widget [image]="item.ImageUrl" (imageChangedEvent)="onImageChangedEvent($event, selectedItemType)">
+      </app-image-widget>
+    </div>
+
+
+
+
+    <div class="form-item">
+      <button class="btn btn-secondary" (click)="item = null" style="margin-right: 1em;">Cancel</button>
+      <button (click)="save()" class="btn btn-primary" [disabled]="!item.ImageUrl">Save</button>
+    </div>
+  </div>
+</div>

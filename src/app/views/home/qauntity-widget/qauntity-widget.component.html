@@ -1,0 +1,21 @@
+<div class="qty">
+  <div class="col">
+    <button class="btn btn-dark" [disabled] = "qty <= 1" (click)="prev()">
+      <i class="fas fa-minus"></i>
+    </button>
+  </div>
+  <div class="col">
+    <span>
+      {{qty}}
+    </span>
+  </div>
+  <div class="col">
+    <button class="btn btn-dark" (click)="next()">
+      <i class="fas fa-plus"></i>
+    </button>
+
+  </div>
+</div>
+<p *ngIf="showNotice ">
+  There is only {{maxItems}} left!
+</p>

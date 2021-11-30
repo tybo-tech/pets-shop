@@ -1,0 +1,113 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{addHeading}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Category Name</label>
+      <input type="text" class="form-control" [(ngModel)]="addEditCategory.Name" id="exampleInputEmail1"
+        aria-describedby="emailHelp">
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Description</label>
+      <textarea type="text" class="form-control" style="height:12em" [(ngModel)]="addEditCategory.Description"></textarea>
+    </div>
+
+
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Image</label>
+      <app-image-widget [image]="addEditCategory.ImageUrl" (imageChangedEvent)="onImageChangedEvent($event)">
+      </app-image-widget>
+    </div>
+  </div>
+  <div class="modal-body">
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" (click)="save(); modal.close('Save click')">Save Category</button>
+
+  </div>
+</ng-template>
+
+<div class="row">
+  <div class="col-md-6 col-lg-4 col-sm-12">
+    <div class="card">
+      <h5 class="card-header"> {{heading}}</h5>
+
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item d-flex  justify-content-between align-items-center" *ngFor="let item of categories"
+            [ngClass]="item.Class">
+            {{item.Name}}
+            <div class="action-links">
+              <a (click)="delete(item)" class="link-danger"><i class="far fa-trash-alt"></i></a>
+              <a (click)="openCatergoryModal(content,null,item)" class="link-dark"><i class="fas fa-edit"></i></a>
+              <a (click)="view(item)" class="link-info"><i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </li>
+
+        </ul>
+        <a class="link-success" (click)="openCatergoryModal(content)">Add new category</a>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-4 col-sm-12" *ngIf="category">
+    <div class="card">
+      <h5 class="card-header"> {{category.Name}}</h5>
+
+      <div class="card-body">
+        <ul class="list-group" *ngIf="category.Children">
+          <li class="list-group-item d-flex  justify-content-between align-items-center"
+            *ngFor="let item of category.Children" [ngClass]="item.Class">
+            {{item.Name}}
+            <div class="action-links">
+              <a (click)="delete(item)" class="link-danger"><i class="far fa-trash-alt"></i></a>
+              <a (click)="openCatergoryModal(content,null,item)" class="link-dark"><i class="fas fa-edit"></i></a>
+              <a (click)="viewSubCategory(item)" class="link-info"><i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </li>
+
+        </ul>
+        <a class="link-success" (click)="openCatergoryModal(content,category)">Add new sub category</a>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-6 col-lg-4 col-sm-12" *ngIf="subCategory">
+    <div class="card">
+      <h5 class="card-header"> {{subCategory.Name}} products</h5>
+
+      <div class="card-body">
+        <ul class="list-group" *ngIf="subCategory.Products">
+          <li class="list-group-item d-flex  justify-content-between align-items-center"
+            *ngFor="let item of subCategory.Products">
+            {{item.Name}}
+            <div class="action-links">
+              <a (click)="delete(item)" class="link-danger"><i class="far fa-trash-alt"></i></a>
+              <a (click)="openCatergoryModal(content,null,item)" class="link-dark"><i class="fas fa-edit"></i></a>
+              <a (click)="view(item)" class="link-info"><i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </li>
+
+        </ul>
+        <a class="link-success" (click)="openCatergoryModal(content,subCategory)">Add new product</a>
+
+      </div>
+    </div>
+  </div>
+</div>
+<p-toast position="top-right" baseZIndex="9999999999"></p-toast>
+
+<!-- <button class="btn btn-lg btn-outline-primary" (click)="openCatergoryModal(content)">Launch demo modal</button> -->
+
+
+
+<!-- <app-super-add-adit-category *ngIf="category" [category]="category"></app-super-add-adit-category> -->

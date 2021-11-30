@@ -1,0 +1,137 @@
+@import '../../../../../../assets/styles/color';
+.container{
+  padding-top: 5em;
+}
+
+.card {
+  border-radius: .2em;
+  margin-bottom: 1em;
+  position: relative;
+
+  .like-btn {
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    z-index: 100;
+  
+  }
+
+  .card-img-top {
+    border-radius: .2em;
+    cursor: pointer;
+  }
+
+
+
+  .card-footer {
+    background: $black;
+    color: $white;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom-left-radius: .2em;
+    border-bottom-right-radius: .2em;
+    padding: .7em;
+
+
+  }
+}
+
+
+// .top-bar-conatiner {
+//   display: none;
+
+//   @media only screen and (max-width: 600px) {
+//     display: block;
+//   }
+// }
+
+// .main {
+//   padding: 1em;
+//   border-radius: .5em;
+//   margin: .5em;
+//   // padding: 1em 10%;
+//   background: $cloud;
+
+//   // margin-top: 8em;
+
+//   @media only screen and (max-width: 600px) {
+//     padding: 0;
+//     // margin-top: 10em !important;
+//   }
+
+//   h3 {
+//     text-align: center;
+//     padding: .78558em;
+//   }
+
+//   @media only screen and (max-width: 600px) {
+//     margin-top: 0;
+//   }
+
+//   .product-section {
+//     @media only screen and (max-width: 600px) {
+//       // margin-top: 4em;
+//     }
+//   }
+
+// }
+
+
+
+
+// .child {
+//   margin-bottom: 4em;
+//   box-shadow: none;
+// }
+
+// .product-details p {
+//   text-align: left;
+// }
+
+
+
+
+// .products {
+//   // max-width: 70%;
+//   margin: 1em auto;
+//   grid-gap: 1em;
+//   background: $white;
+//   grid-template-columns: repeat(4, 25%);
+
+//   @media only screen and (max-width: 600px) {
+//     grid-template-columns: repeat(2, 50%);
+//     grid-gap: .2em;
+//     max-width: 100%;
+//     width: 100%;
+//   }
+
+//   .product {
+//     box-shadow: none;
+//     border: none;
+//     cursor: pointer;
+
+//     img {
+//       transition: .5s ease-in-out;
+//     }
+
+//     &:hover {
+//       img {
+//         width: 105%;
+//       }
+//     }
+
+//     .image {
+//       border: 2px solid $cloud;
+//       width: 100%;
+//       overflow: hidden;
+
+//     }
+
+//     p {
+//       text-align: center;
+//       font-weight: 700;
+//       padding: 1em;
+//     }
+//   }
+// }

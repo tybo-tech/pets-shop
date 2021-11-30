@@ -1,0 +1,21 @@
+
+<!-- <app-dash-loader  *ngIf="loading"></app-dash-loader> -->
+
+
+<div class="imagew">
+
+  <input type="file" accept="image/png, image/jpeg" #file placeholder="Choose file" 
+  (change)="uploadFile(file.files)" style="display:none;">
+  <div class="col-sm-6" *ngIf="!loading">
+    <div class="card text-center m-1">
+ 
+
+      <div class="card-body">
+        <div class="preview" (click)="file.click()">
+          <img *ngIf="image && image.length" [src]="image" alt="">
+        </div>
+        <a  *ngIf="!image || !image.length" (click)="file.click()" class="card-link">Click to upload.</a>
+      </div>
+    </div>
+  </div>
+</div>

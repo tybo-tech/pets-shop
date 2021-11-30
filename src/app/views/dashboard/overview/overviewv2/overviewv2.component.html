@@ -1,0 +1,58 @@
+<app-dash-nav *ngIf="showMenu"></app-dash-nav>
+<div class="overlay" *ngIf="showMenu" (click)="menu()"></div>
+
+<div class="main" *ngIf="user && user.Company && products">
+
+  <div class="row align-items-md-stretch">
+
+    <div class="col-md-12">
+      <div class="h-100 p-5 bg-light  rounded-3">
+        <img [src]="user.Company.Dp" style="width: 5em;" alt="">
+        <h5> {{user.Company.Name}}</h5>
+        <!-- <div [innerHtml]="user.Company.Description"></div> -->
+        <div class="mb-3">
+          <br>
+          <button class="btn btn-info" type="button" (click)="goto('company-profile')">Edit company</button>
+          <button class="btn btn-link" (click)="gotoShop()" type="button"> Go to my shop</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 
+  <div class="collections">
+    <div class="collection" (click)="goto('home/shop-for/Ladies')">
+      Ladies collection
+    </div>
+    <div class="collection" (click)="goto('home/shop-for/Mens')">
+      Men's collection
+    </div>
+  </div> -->
+
+
+  <!-- <div class="catergories" *ngIf="catergories">
+    <button class="catergory" (click)="all()">
+      All ({{allProducts.length}})
+    </button>
+    <button class="catergory" *ngFor="let catergory of catergories; let i = index"
+      (click)="tapChildCategory(catergory)">
+      {{catergory.Name}}
+    </button>
+
+  </div> -->
+  <!-- <h3 class="heading">
+    Orders overview <span (click)="goto('create-order')">New order</span>
+  </h3> -->
+  <br><br>
+
+  <app-statistics *ngIf="user && user.UserType === ADMIN"></app-statistics>
+
+
+
+  <!-- <app-product-list-cards *ngIf="user && user.UserType === ADMIN"></app-product-list-cards> -->
+
+  <app-super-overview *ngIf="user && user.UserType === SUPER"></app-super-overview>
+
+
+</div>

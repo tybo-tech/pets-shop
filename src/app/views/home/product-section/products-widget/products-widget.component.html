@@ -1,0 +1,124 @@
+<main>
+  <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;"  *ngIf="products && products.length">
+    <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+      <div class="col" *ngFor="let product of products  | searchproductshome:searchString; let i = index">
+        <div class="card h-100 shadow-sm"> <img
+          [src]="product.FeaturedImageUrl" 
+            class="card-img-top" alt="...">
+          <!-- <div class="label-top shadow-sm">DELL</div> -->
+          <div class="card-body">
+            <div class="clearfix mb-3"> <span class="float-start price-hp">{{product.RegularPrice | currency:'R'}}</span> <span class="float-end"><a
+                  class="text-muted small pointer" (click)="viewMore(product)">View details</a></span> </div>
+            <h5 class="card-title">  {{product.Name}}</h5>
+            <div class="text-center"> <a class="btn btn-primary" (click)="addToCart(product)"> Add to cart</a> </div>
+            <!-- <div class="clearfix mb-1"> <span class="float-start"><i class="far fa-question-circle"></i></span> <span
+                class="float-end"><i class="fas fa-plus"></i></span> </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- <h3 class="toptop" [ngClass]="topclass">
+  All products
+</h3>
+
+<div class="main-products phone-only">
+
+
+
+  <div class="picked" *ngIf="products && products.length">
+
+
+    <div class="products">
+      <div class="product" *ngFor="let product of products  | searchproductshome:searchString; let i = index">
+        <div class="image">
+          <img [src]="product.FeaturedImageUrl" alt="Awesome Sunglasses" >
+        </div>
+
+        <div class="product-details">
+          <span class="stock-check" *ngIf="product.TotalStock==0">Sold out</span>
+          <p>
+            {{product.Name}}
+
+            <span class="price" *ngIf="!product.OnSale">
+              {{product.RegularPrice | currency:'R'}}
+            </span>
+            <span class="price" *ngIf="product.OnSale">
+              <del> {{product.RegularPrice | currency:'R'}}</del> <br>
+              {{product.SalePrice | currency:'R'}}
+            </span>
+          </p>
+        </div>
+        <div class="action">
+          <button class="btn btn-light" (click)="viewMore(product)"> More details</button>
+
+        </div>
+
+        <div class="action">
+          <button class="btn btn-primary" (click)="addToCart(product)"><i class="fas fa-cart-plus"></i> Add to cart</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+</div>
+
+
+<div class="main-products pc-only">
+
+  <div class="picked" *ngIf="products && products.length">
+
+
+    <div class="products">
+      <div class="product" *ngFor="let product of products  | searchproductshome:searchString; let i = index">
+        <div class="image">
+          <img [src]="product.FeaturedImageUrl" alt="Awesome Sunglasses" >
+        </div>
+
+        <div class="product-details">
+          <span class="stock-check" *ngIf="product.TotalStock==0">Sold out</span>
+
+          <p>
+            {{product.Name}}
+
+            <span class="price" *ngIf="!product.OnSale">
+              {{product.RegularPrice | currency:'R'}}
+            </span>
+            <span class="price" *ngIf="product.OnSale">
+              <del> {{product.RegularPrice | currency:'R'}}</del> <br>
+              {{product.SalePrice | currency:'R'}}
+            </span>
+          </p>
+
+          <div class="action">
+            <button class="btn btn-light" (click)="viewMore(product)"> More details</button>
+
+          </div>
+
+          <div class="action">
+            <button class="btn btn-primary" (click)="addToCart(product)"><i class="fas fa-cart-plus"></i> Add to cart</button>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+</div> -->

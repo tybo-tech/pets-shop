@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-8 col-lg-5">
+      <h6 class="text-muted mb-3">All products {{(' | '+products?.length) || ''}}</h6>
+      <div class="mb-3">
+        <input type="search" class="form-control" [(ngModel)]="searchString"
+          placeholder="🔎 Filter by product name or description" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+
+      <div class="mb-3">
+        <button type="button" (click)="addProduct()" class="btn btn-primary">Add product</button>
+
+      </div>
+
+      <br>
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center"
+          *ngFor="let product of products  | searchproduct: searchString; let i = index" (click)="view(product)">
+          <p>
+            <b>{{product.Name}}</b>
+            <span>{{product.ParentCategoryName}} | {{product.CategoryName}}</span>
+            <span> {{product.TotalStock}} In stock</span>
+            <span class="price" *ngIf="!product.OnSale">
+              {{product.RegularPrice | currency:'R'}}
+            </span>
+            <span class="price" *ngIf="product.OnSale">
+              <del> {{product.RegularPrice | currency:'R'}}</del> <br>
+              {{product.SalePrice | currency:'R'}}
+            </span>
+          </p>
+          <div class="image-parent">
+            <img [src]="product.FeaturedImageUrl" *ngIf="product.FeaturedImageUrl" class="img-fluid" alt="quixote">
+            <img *ngIf="!product.FeaturedImageUrl" src="assets/images/common/image-holder.svg" class="img-fluid"
+              alt="quixote">
+
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="quick-add" *ngIf="showAdd && newProduct">
+  <div class="form">
+    <h1>
+      Add new product.
+    </h1>
+
+
+    <div class="form-item">
+      <label for="">Product name</label>
+      <input type="text" name="" id="" [(ngModel)]="newProduct.Name" placeholder="Enter product name.">
+    </div>
+
+    <div class="form-item">
+      <label for="">Product Description</label>
+      <textarea type="text" [(ngModel)]="newProduct.Description" placeholder="Enter product description."></textarea>
+    </div>
+    <div class="form-item">
+      <label for="">Product  Price <strong>(ZAR)</strong></label>
+      <input type="tel" name="" id="" [(ngModel)]="newProduct.RegularPrice" placeholder="Enter product price.">
+    </div>
+
+
+    <div class="form-item">
+      <button (click)="saveProduct()" [disabled]="!newProduct.Name">Next</button>
+      <div class="link" (click)="showAdd = false">Cancel</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,117 @@
+
+<div class="container" *ngIf="user">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header bg-dark text-white"><i class="fa fa-user"></i> My profile.
+        </div>
+        <div class="card-body">
+          <div>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" [(ngModel)]="user.Name" class="form-control" id="name" aria-describedby="emailHelp"
+                placeholder="Enter name" required>
+            </div>
+      
+
+
+
+        
+            <div class="form-group">
+              <label for="exampleInputSurname">Delivery address</label>
+              <app-address-widgeth-home  [addressLineHome]="user.AddressLineHome " (adressChangedEvent)="onAdressEvent($event)"></app-address-widgeth-home>
+              <!-- <textarea ngx-google-places-autocomplete [options]='options' [(ngModel)]="user.AddressLineHome"
+                placeholder="Start typing..." class="form-control" #places="ngx-places"
+                (onAddressChange)="handleAddressChange($event)" ></textarea> -->
+            </div>
+      
+         
+              <div class="form-group">
+                <label for="name">My Phone Number</label>
+                <input type="text" class="form-control" [(ngModel)]="user.PhoneNumber" placeholder="e.g. 084 001 0100">
+              </div>
+      
+      
+
+
+
+            <div class="mx-auto">
+              <button type="submit" [disabled]="!user.Name" type="button"
+                (click)="save()" class="btn btn-primary text-right">Save my profile</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+</div>
+
+
+
+
+
+
+<!-- <div class="edit-user-profile" *ngIf="user">
+  <div class="top-bar-home">
+    <div class="menu-back">
+      <span class="material-icons" (click)="back()">
+        keyboard_arrow_left
+      </span>
+    </div>
+
+
+    <div class="name">
+      Edit My profile
+    </div>
+  </div>
+
+
+  <div class="form-section">
+
+    <div class="upload-preview">
+      <div class="upload">
+        <input type="file" accept="image/png, image/jpeg" #file placeholder="Choose file" multiple
+          (change)="uploadFile(file.files)" style="display:none;">
+
+        <img class="profile-user" *ngIf="!user.Dp" (click)="file.click()"
+          src="assets/images/common/profile-user.svg" alt="">
+      </div>
+      <div class="preview" (click)="file.click()">
+        <img *ngIf="user.Dp" [src]="user.Dp" alt="">
+      </div>
+    </div>
+    <div class="">
+      <div class="col">
+     
+
+      
+        
+      <div class="form-group">
+        <label for="exampleInputSurname">Delivery address</label>
+        <input ngx-google-places-autocomplete [options]='options' [(ngModel)]="user.AddressLineHome"
+          placeholder="Start typing..." class="form-control" #places="ngx-places"
+          (onAddressChange)="handleAddressChange($event)" />
+      </div>
+
+   
+        <div class="detail">
+          <label for="name">My Phone Number</label>
+          <input type="text" [(ngModel)]="user.PhoneNumber" placeholder="e.g. 084 001 0100">
+        </div>
+
+
+
+
+        <button mat-button class="more" [disabled]="!user.Name" type="button" (click)="save()">
+          Save my profile
+        </button>
+      </div>
+    </div>
+
+
+
+
+  </div>
+</div>
+<app-customer-feedback *ngIf="modalModel && modalModel.heading" [modalModel]="modalModel"></app-customer-feedback>
+<app-home-loader *ngIf="showLoader"></app-home-loader> -->

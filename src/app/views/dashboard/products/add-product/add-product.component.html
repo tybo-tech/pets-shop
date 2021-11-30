@@ -1,0 +1,216 @@
+<div class="row" *ngIf="product">
+  <div class="col-md-8 col-lg-8 col-sm-12">
+    <div class="card">
+      <h5 class="card-header">Product basic details</h5>
+
+      <div class="card-body">
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label">Catergory</label>
+              <select class="form-select" aria-label="Default select example" [(ngModel)]="product.ParentCategoryGuid"
+                *ngIf="parentCategories && parentCategories.length" (change)="selectCategory($event.target.value)">
+                <option *ngFor="let pc of parentCategories" [ngValue]="pc.CategoryId">{{pc.Name}}</option>
+              </select> </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label">Sub Catergory</label>
+              <select class="form-select" aria-label="Default select example" [(ngModel)]="product.CategoryGuid"
+                *ngIf="chilndrenCategories" (change)="catChanged()">
+                <option *ngFor="let cc of chilndrenCategories" [ngValue]="cc.CategoryId">{{cc.Name}}</option>
+              </select> </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+            
+
+              <label class="form-label"> Price <strong>(ZAR)</strong></label>
+              <input type="number" class="form-control" [(ngModel)]="product.RegularPrice" id="exampleInputPassword1">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label">Total Stock In Hand
+              </label>
+              <input type="tel" class="form-control" [(ngModel)]="product.TotalStock" id="exampleInputPassword1">
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Product name</label>
+          <input type="text" class="form-control" [(ngModel)]="product.Name" id="exampleInputPassword1">
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+          <textarea class="form-control" [(ngModel)]="product.Description"  id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Images</label>
+
+          <app-images *ngIf="product" [images]="product.Images" [user]="user" [product]="product" [optionId]="0"
+            (onUploadFinished)="saveImage($event)" (deleteImageEvent)="deleteImage($event)"
+            (setMianImageEvent)="setMianImage($event)" (showImageEvent)="showImage($event)"></app-images>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-md-4 col-lg-4 col-sm-12">
+    <div class="card">
+      <h5 class="card-header">Actions</h5>
+      <div class="card-body">
+        <a class="btn btn-dark" (click)="back()"> Back</a>
+        <a class="btn btn-primary" (click)="saveProduct()"> Save product</a>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<p-toast position="top-right" baseZIndex="9999999999"></p-toast>
+
+
+
+
+
+
+<!-- <div class="data-view-main" *ngIf="product">
+  <app-dashbread [items]="items"></app-dashbread>
+  <div class="actions-linsk">
+    <span class="material-icons" *ngIf="product.ProductStatus != STATUS_TRASHED_STRING" (click)="delete()">
+      delete
+    </span>
+    <span class="material-icons" *ngIf="product.ProductStatus == STATUS_TRASHED_STRING" (click)="undelete()">
+      recycling
+    </span>
+
+    <span class="material-icons" [cdkCopyToClipboard]="productLink" (click)="copy()">
+      share
+    </span>
+
+
+
+  </div>
+
+
+  <div class="basic">
+    <h3 class="header-label">
+      Product images.
+    </h3>
+
+    <app-images *ngIf="product" [images]="product.Images" [user]="user" [product]="product" [optionId]="0"
+      (onUploadFinished)="saveImage($event)" (deleteImageEvent)="deleteImage($event)"
+      (setMianImageEvent)="setMianImage($event)" (showImageEvent)="showImage($event)"></app-images>
+  </div>
+
+  <div class="basic">
+    <h3 class="header-label">
+      Product info.
+    </h3>
+
+    <div class="no-child">
+      <div class="black-label">
+        Name
+      </div>
+      <div class="link" (click)="name()">
+        <input type="text" [(ngModel)]="product.Name" placeholder="e.g. Floral summer shirts">
+      </div>
+    </div>
+    <div class="no-child">
+      <div class="black-label">
+        Description
+      </div>
+      <div class="link" (click)="name()">
+        <textarea name="" [(ngModel)]="product.Description" placeholder="Enter product description "></textarea>
+      </div>
+    </div>
+
+    <div class="no-child">
+      <div class="black-label">
+        <p>
+          Price <strong>(ZAR)</strong>
+        </p>
+      </div>
+      <div class="link" (click)="name()">
+        <div class="link" (click)="name()">
+          <input type="number" [(ngModel)]="product.RegularPrice" placeholder="Selling price">
+        </div>
+      </div>
+    </div>
+
+    <div class="no-child">
+      <div class="black-label">
+        <p>
+          Category
+        </p>
+      </div>
+      <div class="link">
+        <select [(ngModel)]="product.ParentCategoryGuid" style="width: 100%;">
+          <option [value]="item.Id" *ngFor="let item of SEX">{{item.Name}}</option>
+        </select>
+      </div>
+    </div>
+
+
+    <div class="no-child">
+      <div class="black-label">
+        <p>
+          Category
+        </p>
+      </div>
+      <div class="link">
+        <select [(ngModel)]="product.CategoryGuid" style="width: 100%;">
+          <option [value]="item.Id" *ngFor="let item of CATEGORIES">{{item.Name}}</option>
+        </select>
+      </div>
+    </div>
+
+
+
+    <div class="no-child">
+      <div class="black-label">
+        Total Stock In Hand
+      </div>
+      <div class="link" (click)="name()">
+        <input type="tel" [(ngModel)]="product.TotalStock" placeholder="Items sellable">
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="basic">
+    <div class="ctas">
+
+      <div class="cta">
+        <button class="mat-primary checkout cancel" [disabled]="!product.Name" mat-button color="primary"
+          (click)="back()">
+          Cancel
+        </button>
+      </div>
+
+      <div class="cta">
+        <button class="mat-primary checkout" [disabled]="!product.Name" mat-button color="primary"
+          (click)="saveProduct()">
+          Save product
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div> -->

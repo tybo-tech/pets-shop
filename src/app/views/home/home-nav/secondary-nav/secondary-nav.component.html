@@ -1,0 +1,82 @@
+<div class="items pc-only" *ngIf="categories">
+  <div class="item" (click)="goto('/products')" *ngIf="productsMenu" [ngClass]="productsMenu.Class">
+    {{productsMenu.Name}}
+  </div>
+  <div class="item" *ngFor="let item of categories" [ngClass]="item.Class" (mouseover)="item.IsSelected = true"
+    (mouseleave)="item.IsSelected = false">
+    {{item.Name}} <i class="fas fa-chevron-down"></i>
+    <div class="drop" *ngIf="item.IsSelected && item.Children">
+      <div class="drop-items">
+        <div class="drop-item" *ngFor="let child of item.Children" (click)="view(child)">
+          {{child.Name}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="menu-btn phone-only" *ngIf="categories">
+  <div class="item">
+    <a class="link" *ngIf="!showMenu" (click)="showMenu = true"><i class="fas fa-bars"></i></a>
+    <a class="link" *ngIf="showMenu" (click)="showMenu = false"><i class="fas fa-times"></i></a>
+  </div>
+
+  <div class="item">
+    <a class="link" routerLink="/contact"><i class="fas fa-phone"></i></a>
+  </div>
+
+  <div class="item">
+    <a class="link" routerLink="/home/edit-myprofile"><i class="fas fa-user"></i></a>
+  </div>
+
+  <div class="item">
+    <a class="link" routerLink="/home/wishlist"><i class="fas fa-heart"></i></a>
+  </div>
+
+  <div class="item">
+    <a class="link" routerLink="/shop/cart"><i class="fas fa-shopping-cart"></i>   
+    <span class="badge bg-primary" *ngIf="carttItems">  {{carttItems}}</span>
+  </a>
+  </div>
+
+</div>
+
+<div class="mmmenu" *ngIf="showMenu">
+  <div class="mob-menu">
+    <div class="item" (click)="goto('/products')" *ngIf="productsMenu" [ngClass]="productsMenu.Class">
+      {{productsMenu.Name}}
+    </div>
+    <div class="item" *ngFor="let item of categories" [ngClass]="item.Class" (click)="toggleMenu(item)">
+      {{item.Name}} <i class="fas fa-chevron-down"></i>
+      <div class="drop" *ngIf="item.IsSelected && item.Children">
+        <div class="drop-items">
+          <div class="drop-item" *ngFor="let child of item.Children" (click)="view(child)">
+            {{child.Name}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 
+<div class="items phone-only" *ngIf="categories">
+  <div class="item" (click)="goto('/products')" *ngIf="productsMenu" [ngClass]="productsMenu.Class">
+   {{productsMenu.Name}}
+  </div>
+  <div class="item" *ngFor="let item of categories" [ngClass]="item.Class" (mouseover)="item.IsSelected = true"
+    (mouseleave)="item.IsSelected = false">
+    {{item.Name}} <i class="fas fa-chevron-down"></i>
+    <div class="drop" *ngIf="item.IsSelected && item.Children">
+      <div class="drop-items">
+        <div class="drop-item" *ngFor="let child of item.Children"  (click)="view(child)">
+          {{child.Name}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div> -->

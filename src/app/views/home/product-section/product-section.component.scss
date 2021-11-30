@@ -1,0 +1,38 @@
+@import '../../../../assets/styles/color';
+.container{
+  padding-top: 5em;
+}
+
+.card {
+  border-radius: .2em;
+  margin-bottom: 1em;
+  position: relative;
+
+  .like-btn {
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    z-index: 100;
+  
+  }
+
+  .card-img-top {
+    border-radius: .2em;
+    cursor: pointer;
+  }
+
+
+
+  .card-footer {
+    background: $black;
+    color: $white;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom-left-radius: .2em;
+    border-bottom-right-radius: .2em;
+    padding: .7em;
+
+
+  }
+}

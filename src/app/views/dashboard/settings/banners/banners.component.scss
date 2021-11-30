@@ -1,0 +1,9 @@
+@import '../../../../../assets/styles/color';
+
+.accordion-button {
+  font-size: .6em !important;
+
+  .collapsed {
+    background: $black !important;
+  }
+}

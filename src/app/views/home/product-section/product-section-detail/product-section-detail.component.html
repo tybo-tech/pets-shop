@@ -1,0 +1,181 @@
+<br>
+<br>
+<br>
+
+<div class="container" *ngIf="product && order">
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="row" style="background: #fff">
+        <div class="col-lg-6">
+          <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
+            <div class="carousel-indicators" *ngIf="product.AllImages && product.AllImages.length > 1">
+              <button type="button" *ngIf="product.AllImages[0]" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+
+
+              <button type="button" *ngIf="product.AllImages[1]" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide-to="1" aria-label="Slide 2"></button>
+
+
+              <button type="button" *ngIf="product.AllImages[2]" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide-to="2" aria-label="Slide 3"></button>
+
+              <button type="button" *ngIf="product.AllImages[3]" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide-to="3" aria-label="Slide 3"></button>
+
+              <button type="button" *ngIf="product.AllImages[4]" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide-to="4" aria-label="Slide 3"></button>
+
+              <button type="button" *ngIf="product.AllImages[5]" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide-to="5" aria-label="Slide 3"></button>
+
+              <button type="button" *ngIf="product.AllImages[6]" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide-to="6" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active" *ngIf="product.AllImages[0]">
+                <img [src]="product.AllImages[0].Url" (click)=viewImage(product.AllImages[0]) class="d-block w-100"
+                  alt="...">
+              </div>
+              <div class="carousel-item" *ngIf="product.AllImages[1]">
+                <img [src]="product.AllImages[1].Url" (click)=viewImage(product.AllImages[1]) class="d-block w-100"
+                  alt="...">
+              </div>
+              <div class="carousel-item" *ngIf="product.AllImages[2]">
+                <img [src]="product.AllImages[2].Url" (click)=viewImage(product.AllImages[2]) class="d-block w-100"
+                  alt="...">
+              </div>
+              <div class="carousel-item" *ngIf="product.AllImages[3]">
+                <img [src]="product.AllImages[3].Url" (click)=viewImage(product.AllImages[3]) class="d-block w-100"
+                  alt="...">
+              </div>
+              <div class="carousel-item" *ngIf="product.AllImages[4]">
+                <img [src]="product.AllImages[4].Url" (click)=viewImage(product.AllImages[4]) class="d-block w-100"
+                  alt="...">
+              </div>
+              <div class="carousel-item" *ngIf="product.AllImages[5]">
+                <img [src]="product.AllImages[5].Url" (click)=viewImage(product.AllImages[5]) class="d-block w-100"
+                  alt="...">
+              </div>
+              <div class="carousel-item" *ngIf="product.AllImages[6]">
+                <img [src]="product.AllImages[6].Url" (click)=viewImage(product.AllImages[6]) class="d-block w-100"
+                  alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button"
+              *ngIf="product.AllImages && product.AllImages.length > 1" data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" *ngIf="product.AllImages && product.AllImages.length > 1"
+              type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">
+                {{product.Name}}
+              </h4>
+              <p *ngIf="product.CategoryName">
+                category: <b>{{product.CategoryName}}</b>
+              </p>
+
+              <h4 class="card-title" *ngIf="!product.OnSale">
+                {{product.RegularPrice | currency:'R'}}
+              </h4>
+              <h4 class="card-title" *ngIf="product.OnSale">
+                <del>{{product.RegularPrice | currency:'R'}}</del>
+                {{product.SalePrice | currency:'R'}}
+              </h4>
+
+
+              <p>
+                {{product.Description}}
+              </p>
+              <span class="stock-check" *ngIf="product.TotalStock==0">Sold out</span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="action">
+
+            <app-qauntity-widget [qty]="selectedQuantiy" [maxItems]="product.TotalStock"
+              (qtyChangedEvent)="qtyChanged($event)"></app-qauntity-widget>
+            <br>
+
+            <button class="btn btn-primary" [disabled]="product.TotalStock == 0" (click)="addCart(product)">
+              <i class="fas fa-shopping-cart"></i>
+              Add to cart
+            </button>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<br>
+
+
+
+<div *ngIf="leavingShowWarning" class="leaving-warning">
+  <div class="body">
+    <p>
+      One shop at a time.
+
+      <span>
+        You still have an open cart with <b> {{order.Company?.Name}} </b>, please checkout before you continue
+        shopping
+        from other shops.
+      </span>
+
+      <span>
+        To keep delivery efficient and quicker we stick to one shop per order.
+      </span>
+    </p>
+    <div class="actions">
+
+      <button class="ok" (click)="toggleLeavingShowWarning()">Ok</button>
+      <button (click)="cart()">Go to my cart</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="quick-add" *ngIf="showAdd">
+  <div class="form">
+    <h3>
+      Please login or sign up to like the product.
+    </h3>
+
+    <div class="form-item">
+      <button (click)="goto('sign-in')">Login</button>
+      <div class="or">Or</div>
+      <button (click)="goto('sign-up')">Sign up</button>
+      <div class="link" (click)="showAdd = false">Cancel</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="view-full" *ngIf="imageBiengViewed" (click)="imageBiengViewed = null">
+  <img [src]="imageBiengViewed" alt="">
+</div>
+
+<app-product-slider *ngIf="otherproducts && otherproducts.length" [products]="otherproducts" [tittle]="tittle">
+</app-product-slider>
+
+<!-- <app-shop-by-catergory></app-shop-by-catergory> -->

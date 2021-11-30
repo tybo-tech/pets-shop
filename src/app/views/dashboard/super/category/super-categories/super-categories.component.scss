@@ -1,0 +1,54 @@
+@import '../../../../../../assets/styles/color';
+
+.main {
+  padding: 5em 1em;
+
+  .heading__ {
+    padding: 2em 0;
+  }
+}
+
+.icon {
+  width: 6em;
+}
+
+.badge {
+  cursor: pointer;
+}
+
+.link-success {
+  font-weight: 600;
+  margin: 1em .5em;
+  display: block;
+  cursor: pointer;
+}
+
+ul {
+  li {
+    font-size: .9999em;
+    font-weight: 500;
+  }
+
+  .active {
+    background: rgb(196, 226, 190);
+    color: $black;
+    border-color: $white;
+  }
+}
+
+.card {
+  margin: .5em;
+}
+
+.action-links {
+  a {
+    margin: 0 .44333em;
+  }
+
+  .fa,
+  .fas,
+  .far {
+
+    cursor: pointer !important;
+  }
+}

@@ -1,0 +1,1 @@
+npm i primeng@11.4.2 --save

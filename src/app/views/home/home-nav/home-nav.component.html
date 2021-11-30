@@ -1,0 +1,57 @@
+<div class="father">
+  <div class="account-user" *ngIf="user">
+    <a routerLink="/home/edit-myprofile" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
+      Hello,
+      {{user.Name}}</a>
+
+      <a (click)="logout()" >
+       Logout</a>
+  </div>
+
+  <div class="account-user" *ngIf="!user">
+    Need help? <a href="mailto:info@petstoponessenwood.co.za">info@petstoponessenwood.co.za</a>
+  </div>
+  <div class="navheader" [ngClass]="navClass">
+    <div class="col">
+      <a routerLink="/"> <img *ngIf="websiteLogo" [src]="websiteLogo.ImageUrl" alt="Logo"></a>
+
+    </div>
+    <div class="nav">
+      <ul class="nav_links">
+        <li *ngFor="let item of NAV_HOME">
+          <a [routerLink]="item.Link" [routerLinkActiveOptions]="{exact: true}"
+            routerLinkActive="active">{{item.Name}}</a>
+        </li>
+        <span *ngIf="!user">
+          <li *ngFor="let item of NAV_HOME_NOT_LOGGEN_IN">
+            <a [routerLink]="item.Link" [routerLinkActiveOptions]="{exact: true}"
+              routerLinkActive="active">{{item.Name}}</a>
+          </li>
+        </span>
+        <span *ngIf="user">
+       
+          <li *ngIf="user.UserType == ADMIN">
+            <a routerLink="/admin/dashboard" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
+              Dashboard</a>
+          </li>
+        </span>
+
+      </ul>
+    </div>
+    <div class="icons">
+      <a routerLink="/search"> <i class="fas fa-search for-mob-too"></i></a>
+      <a class="link" routerLink="/home/wishlist"><i class="fas fa-heart  for-pc"></i></a>
+      <a routerLink="/shop/cart"> <i class="fas fa-shopping-cart for-pc"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger for-pc">
+          {{carttItems}}
+        </span>
+      </a>
+    </div>
+  </div>
+
+
+
+  <div class="menubar">
+    <app-secondary-nav [carttItems]="carttItems"></app-secondary-nav>
+  </div>
+</div>

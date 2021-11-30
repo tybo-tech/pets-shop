@@ -1,0 +1,154 @@
+@import '../../../../assets/styles/color';
+
+.navheader {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10%;
+
+
+  @media only screen and (max-width: 600px) {
+    padding: .5em 1em;
+  }
+
+  .nav {
+    @media only screen and (max-width: 600px) {
+      display: none;
+    }
+  }
+
+  a {
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    color: $black;
+
+  }
+
+  .icons {
+    top: -.4em;
+
+    .fas {
+      margin: 0 1em;
+      cursor: pointer;
+      // color: $black;
+
+      @media only screen and (max-width: 600px) {
+        margin: 0 .5em;
+
+      }
+    }
+  }
+
+  .nav_links {
+    list-style: none;
+
+    li {
+      display: inline-block;
+      padding: 0 20px;
+
+      a {
+        transition: all 0.3s ease 0s;
+        text-decoration: none;
+
+        &:hover {
+          color: red;
+        }
+      }
+
+      .active {
+        color: red;
+      }
+    }
+  }
+
+  img {
+    width: auto;
+    height: 6em;
+
+    @media only screen and (max-width: 600px) {
+      height: 3.5em;
+    }
+  }
+}
+
+.start-100 {
+  left: 88% !important;
+}
+
+.father {
+  width: 100%;
+  position: fixed;
+  z-index: 100000;
+  background: $white;
+  top: 0;
+  box-shadow: $box-shadow;
+}
+
+.menubar {
+  padding: 0 12%;
+  background: #34495e;
+  color: $white;
+
+  @media only screen and (max-width: 600px) {
+    padding: 0;
+    background: none;
+
+  }
+}
+
+.account-user {
+  padding: .5em 10%;
+  background: $cloud;
+  color: $black;
+  text-align: right;
+
+  a {
+    color: $black !important;
+    font-weight: 600;
+    margin: .1em .75em;
+    text-decoration: none;
+
+  }
+
+  @media only screen and (max-width: 600px) {
+    padding: .5em 2em;
+  }
+}
+
+.for-pc {
+  @media only screen and (max-width: 600px) {
+    display: none;
+
+  }
+}
+
+.for-mob-too {
+  @media only screen and (max-width: 600px) {
+    top: .75em;
+  }
+
+}
+
+
+.dark-nav {
+  background: $black;
+  a{
+    color: $white !important;
+  }
+  .active{
+    color: #E0B328 !important;
+  }
+}
+
+
+.light-nav {
+  background: $white;
+  a{
+    color: $black !important;
+  }
+  .active{
+    color: #8f6e0a !important;
+  }
+}

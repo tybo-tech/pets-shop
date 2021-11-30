@@ -1,0 +1,55 @@
+<!-- <main>
+  <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;"
+    *ngIf="allProducts && allProducts.length">
+    <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+      <div class="col" *ngFor="let product of allProducts  | searchproductshome:searchString; let i = index">
+        <div class="card h-100 shadow-sm"> <img [src]="product.FeaturedImageUrl" class="card-img-top" alt="...">
+          <div class="card-body">
+            <div class="clearfix mb-3"> <span
+                class="float-start price-hp">{{product.RegularPrice | currency:'R'}}</span> <span class="float-end"><a
+                  class="text-muted small pointer" (click)="viewMore(product)">View details</a></span> </div>
+            <h5 class="card-title"> {{product.Name}}</h5>
+            <div class="text-center"> <a class="btn btn-primary" (click)="addToCart(product)"> Add to cart</a> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main> -->
+
+<div class="container">
+
+  <div class="row" *ngIf="allProducts && allProducts.length">
+    <div class="col-lg-3" *ngFor="let product of allProducts  | searchproductshome:searchString; let i = index">
+      <div class="card">
+        <a class="btn btn-light like-btn" (click)="like()">
+          <i class="fas fa-heart  "></i>
+        </a>
+
+        <img [src]="product.FeaturedImageUrl" class="card-img-top" (click)="viewMore(product)" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{product.RegularPrice | currency:'R'}}</h5>
+          <h6 class="card-title">{{product.Name}}</h6>
+        </div>
+
+        <div class="card-footer primary" (click)="addToCart(product)">
+          Add to cart
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<div class="quick-add" *ngIf="showCart">
+  <div class="form">
+    <app-cart-items *ngIf="order" [order]="order"></app-cart-items>
+
+    <div class="form-item">
+      <button (click)="showCart = false" class="btn btn-secondary" style="margin-right: 2em;">Continue shopping</button>
+      <button (click)="showCart = false" class="btn btn-primary">Checkout</button>
+    </div>
+  </div>
+</div>
