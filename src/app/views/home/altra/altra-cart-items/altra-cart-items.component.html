@@ -1,0 +1,70 @@
+<div class="main">
+    <!-- <h6 class="__header">
+        Shopping Cart ({{order?.Orderproducts?.length || 0}})
+    </h6> -->
+    <div class="" *ngIf="order && order.Orderproducts && order.Orderproducts.length">
+        <div class="items">
+            <div class="item" *ngFor="let item of order.Orderproducts; let i = index">
+                <div class="image" *ngIf="item.FeaturedImageUrl">
+                    <img [src]="item.FeaturedImageUrl" alt="">
+                </div>
+                <div class="name">
+                    <div class="d-flex justify-content-between">
+                        <b>{{item.ProductName}}</b>
+
+                        <div class="">
+                            {{item.UnitPrice | currency:'R'}}
+                        </div>
+                    </div>
+
+
+
+                    <div class="d-flex justify-content-between">
+
+                        <div class="qty__">
+                            <a class="btn btn-light qty-btn" (click)="changeQty(-1,item)">
+                                <i class="fas fa-minus"></i>
+                            </a>
+                            <a class="a_text">{{item.Quantity}}</a>
+                            <a class="btn btn-light qty-btn" (click)="changeQty(1,item)">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        </div>
+
+                        <div class="actions">
+                            <button class="link link-danger"
+                                style="background: none !important; color: rgb(235, 57, 57) !important"
+                                (click)="deleteFromCart(item, i)">
+                                <i class="fas fa-times"></i> Remove
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- <h6 class="__header _total">
+            Items Total : {{order.Total | currency : 'R'}}
+        </h6>
+
+        <div class="__actions d-flex justify-content-end">
+            <button class="btn btn-light">Add more items</button>
+            <button class="btn btn-primary" (click)="checkout()">Proceed to checkout</button>
+        </div> -->
+    </div>
+
+
+    <div class="empty-state" *ngIf="!order || !order.Orderproducts || !order.Orderproducts.length">
+        <h6>
+            Your shopping cart is empty
+
+        </h6>
+        <br>
+        <div class="__actions">
+            <button class="btn btn-primary btn-big" (click)="goshop()">Go shopping</button>
+        </div>
+    </div>
+</div>

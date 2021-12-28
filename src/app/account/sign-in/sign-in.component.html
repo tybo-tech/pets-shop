@@ -24,17 +24,20 @@
           Login to your account.
         </h1> -->
 
-      <div class="logo">
-        <a routerLink="">
-          <img src="assets/images/logo.png" alt="">
+      <!-- <div class="logo">
+        <a routerLink="" >
+          <img *ngIf="websiteLogo" style="width: 12em; border-radius: .5em;" [src]="websiteLogo.ImageUrl" alt="">
         </a>
-      </div>
+      </div> -->
 
       <!-- <div class="social">
         <app-social-login></app-social-login>
         <div class="or">Or</div>
       </div> -->
       <div class="form-group">
+        <br>
+        <br>
+        <br>
         <label for="exampleInputEmail1">Email address</label>
         <input type="email" class="form-control" formControlName="Email" id="exampleInputEmail1"
           placeholder="youremail@mail.com">
@@ -62,15 +65,15 @@
         <a routerLink="/home/forgot-password">Forgot password ?</a>
       </div>
       <div class="action">
-        <button class="more" mat-button color="primary" (click)="Login()" [disabled]="!rForm.valid">
+        <button class="btn btn-primary btn-big" (click)="Login()" [disabled]="!rForm.valid">
           Login
         </button>
         <h5 class="error">{{error}}</h5>
       </div>
 
       <div class="go-login">
-        <a routerLink="/sign-up">
-          Go to sign up</a>
+        DON'T HAVE AN ACCOUNT? <a routerLink="/sign-up">
+          SIGN UP</a>
       </div>
     </div>
 
@@ -80,20 +83,3 @@
 <app-customer-feedback *ngIf="modalModel && modalModel.heading" [modalModel]="modalModel"></app-customer-feedback>
 <app-home-loader *ngIf="showLoader"></app-home-loader>
 
-
-
-<div class="quick-add" *ngIf="showAdd">
-  <div class="form">
-    <h3>
-      Please login or sign up to view your wishlist.
-    </h3>
-
-    <div class="form-item">
-      <button (click)="goto('sign-in')">Login</button>
-      <div class="or">Or</div>
-      <button (click)="goto('sign-up')">Sign up</button>
-      <div class="link" (click)="back()">Back</div>
-    </div>
-
-  </div>
-</div>

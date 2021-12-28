@@ -1,0 +1,49 @@
+// component css goes here
+@import "../../../../../../assets/styles/color";
+
+.__items {
+    position: relative;
+    top: 0.3em;
+    padding: 1em;
+    width: fit-content;
+    display: grid;
+    grid-template-columns: repeat(3, 10em);
+    float: right;
+
+    .__item {
+        a {
+            cursor: pointer;
+        }
+        position: relative;
+        .mod {
+            position: absolute;
+            left: 0;
+            top: 29px;
+            z-index: 1000;
+            border-radius: 0.4em;
+            background: $white;
+            box-shadow: $box-shadow;
+            color: $black;
+            padding: 1em;
+            width: 10em;
+            .btn {
+                font-size: 0.75em;
+                padding: 0.2em !important;
+                color: $black !important;
+            }
+        }
+    }
+    // background: rgb(43, 43, 43) !important;
+
+    .user-name {
+        // padding: 1.75em;
+        color: $white;
+        // font-weight: 700;
+    }
+}
+
+.account-link {
+    padding: 0 0.75em;
+    // font-weight: 700;
+}
+

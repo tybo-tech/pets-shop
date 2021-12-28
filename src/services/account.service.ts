@@ -41,8 +41,7 @@ export class AccountService {
   updateUserState(user: User) {
     this._user.next(user);
     localStorage.setItem('user', JSON.stringify(user));
-    this.authService.signOut();
-
+    // this.authService.signOut();
   }
 
 

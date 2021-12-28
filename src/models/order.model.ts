@@ -1,3 +1,4 @@
+import { User } from '.';
 import { Company } from './company.model';
 import { Customer } from './customer.model';
 import { Orderproduct } from './order.product.model';
@@ -28,9 +29,18 @@ export interface Order {
   Status: string;
   StatusId: number;
   Orderproducts?: Orderproduct[];
-  Customer?: Customer;
+  Customer?: User;
   Company?: Company;
   GoBackToCreateOrder?: boolean;
   Discount?: Promotion;
-
+  DistanceTotal?: number;
+  GrandTotal?: number;
+  DeliveryRate?: string;
+  
+  Latitude?: number;
+  Longitude?: number;
+  AddressLine?: string;
+  LocationName?: string;
+  LocationNumber?: string;
+  
 }

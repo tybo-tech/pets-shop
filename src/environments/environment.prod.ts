@@ -1,11 +1,10 @@
+// export const BASE = 'https://bukhosiblooms.co.za';
+export const BASE = 'https://petstoponessenwood.co.za';
+
 export const environment = {
   production: true,
-  API_URL: 'https://petstoponessenwood.co.za//api/',
-  BASE_URL: 'https://petstoponessenwood.co.za/',
-  // API_URL: 'https://petstoponessenwood.co.za//api',
-  // BASE_URL: 'https://petstoponessenwood.co.za/',
-  // API_URL: 'http://localhost:8200/api-tybo-accounting',
-  // BASE_URL: 'http://localhost:4200',
+  API_URL: `${BASE}/api/`,
+  BASE_URL: `${BASE}/`,
   BASE_URL_ADMIN: 'http://localhost:4200',
   ACCOUNT_TEST_EMAIL: 'info@petstoponessenwood.co.za',
   ACCOUNT_TEST_PASSWORD: 'info@petstoponessenwood.co.za',

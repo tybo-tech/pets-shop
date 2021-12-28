@@ -11,7 +11,7 @@ import { AccountService, CompanyCategoryService, ProductService, UploadService }
 import { ImagesService } from 'src/services/images.service';
 import { ProductVariationService } from 'src/services/product-variation.service';
 import { UxService } from 'src/services/ux.service';
-import { CATEGORIES, COMPANY_TYPE, PRODUCT_ORDER_LIMIT_MAX, PRODUCT_TYPE_STOCK, SEX, STATUS_ACTIIVE_STRING, STATUS_TRASHED_STRING } from 'src/shared/constants';
+import { COMPANY_TYPE, PRODUCT_ORDER_LIMIT_MAX, PRODUCT_TYPE_STOCK, STATUS_ACTIIVE_STRING, STATUS_TRASHED_STRING } from 'src/shared/constants';
 
 @Component({
   selector: 'app-add-product',
@@ -91,7 +91,6 @@ export class AddProductComponent implements OnInit {
   items: BreadModel[];
   STATUS_TRASHED_STRING = STATUS_TRASHED_STRING;
   productLink: any;
-  SEX = SEX;
   productId: any;
   // CATEGORIES = CATEGORIES;
   constructor(

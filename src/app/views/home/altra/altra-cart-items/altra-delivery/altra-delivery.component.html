@@ -1,0 +1,63 @@
+<div class="card" *ngIf="orderCollection">
+    <div class="card-header bg-dark text-white"><i class="fa fa-truck"></i> Choose delivery or branch collection
+
+    </div>
+    <div class="card-body" *ngIf="order">
+
+        <div class="funkyradio">
+            <div class="funkyradio-primary" *ngIf="orderDelivery.ItemCode === ITEM_TYPES.ALLOW_YES.Name">
+                <input type="radio" name="radio" (change)="deliveryMethodChanged()" [(ngModel)]="order.Shipping"
+                    value="Delivery" id="radio1" checked />
+                <label for="radio1"> Delivery</label>
+            </div>
+
+
+            <div class="funkyradio-primary" *ngIf="orderCollection.ItemCode === ITEM_TYPES.ALLOW_YES.Name">
+                <input type="radio" name="radio" [(ngModel)]="order.Shipping" (change)="deliveryMethodChanged()"
+                    value="Collection" id="radio2" />
+                <label for="radio2"> Branch collection</label>
+            </div>
+
+        </div>
+
+        <div *ngIf="orderCollection && order.Shipping == 'Collection'" class="hours">
+            <p>
+                <b> Branch Address: </b><br>
+                <span *ngIf="orderCollection.LocationNumber">
+                    {{ orderCollection.LocationNumber}} <br>
+                </span>
+                <span *ngIf="orderCollection.LocationType">
+                    {{ orderCollection.LocationType}} <br>
+                </span>
+                {{orderCollection.AddressLine}}
+            </p>
+
+            <p>
+                <b> Collection times: </b>
+            </p>
+            <div class="d-flex justify-content-between" *ngFor="let day of orderCollection.DescriptionJson">
+                <div class="item"><small>{{day.Day}}</small></div>
+                <div class="item" *ngIf="day.Open == 'open'"><small>{{day.OpenTime}} - {{day.CloseTime}}</small></div>
+                <div class="item" *ngIf="day.Open == 'closed'"><small>Closed</small></div>
+            </div>
+
+        </div>
+
+        <div *ngIf="orderDelivery && order.Shipping == 'Delivery' && order.ShippingPrice" class="hours">
+            <p>
+                <b> Your order will be delivered at: </b><br>
+                <small *ngIf="order.LocationNumber">{{order.LocationNumber}}</small>
+                <small *ngIf="order.LocationName"> {{order.LocationName}} <br></small>
+                <small *ngIf="order.AddressLine">{{order.AddressLine}} </small>
+            </p>
+        </div>
+        <br>
+        <div class="__actions__ d-flex justify-content-end">
+            <button class="btn btn-light" (click)="gotoInfo()"><i class="fas fa-arrow-left"></i> Back to info</button>
+            <button class="btn btn-primary" (click)="gotoPayments()">Proceed to payments</button>
+        </div>
+        <!-- <app-altra-payments  *ngIf="order && user" [order] ="order" [user]="user"></app-altra-payments> -->
+    </div>
+</div>
+
+<br>

@@ -79,7 +79,6 @@ export class HomeNavComponent implements OnInit {
     this.itemService.ItemListObservable.subscribe(data => {
       if (data && data.length)
         this.websiteLogo = data.find(x => x.ItemType === ITEM_TYPES.LOGO.Name);
-        debugger
       this.navBarTheme = data.find(x => x.ItemType === ITEM_TYPES.NAV_BARTHEME.Name);
       if (this.navBarTheme)
         this.navClass = this.navBarTheme.Description;

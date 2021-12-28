@@ -23,6 +23,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import {ToastModule} from 'primeng/toast';
 
 import {EditorModule} from 'primeng/editor';
+import { AltraOperatingHoursComponent } from './settings/altra-operating-hours/altra-operating-hours.component';
 
 @NgModule({
   imports: [
@@ -53,6 +54,6 @@ import {EditorModule} from 'primeng/editor';
     ToastModule
 
   ],
-  declarations: [...declarations]
+  declarations: [...declarations, AltraOperatingHoursComponent]
 })
 export class DashboardModule { }

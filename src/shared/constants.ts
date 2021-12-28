@@ -3,6 +3,7 @@ export const CUSTOMER = 'Customer';
 export const COMPANY_TYPE = 'Pets';
 export const IMAGE_CROP_SIZE = 1500;
 export const COMPANY = 'petstoponessenwood.co.za';
+export const COMPANY_Name = 'Bukhosi Blooms';
 
 export const ADMIN = 'Admin';
 export const SUPER = 'Super';
@@ -77,49 +78,7 @@ export const DISCOUNT_GROUP = ['Automatically Apply The Discount.', 'Customer Mu
 export const CURRENCY = 'ZAR';
 export const MAX_PAGE_SIZE = 200;
 
-export const SEX: CategoryUIModel[] = [
-    {
-        Id: 'dogs',
-        Name: 'Dogs'
-    },
-    {
-        Id: 'cats',
-        Name: 'Cats'
-    },
-    {
-        Id: 'birds',
-        Name: 'Birds'
-    }
-];
-export const CATEGORIES: CategoryUIModel[] = [
-    {
-        Id: 'dog-food',
-        Name: 'Dog food'
-    },
-    {
-        Id: 'Cat food',
-        Name: 'Cat food'
-    },
-    {
-        Id: `Pet accessories`,
-        Name: `Pet accessories`
-    },
-    {
-        Id: 'Pet grooming',
-        Name: 'Pet grooming'
-    }
-    ,
-    {
-        Id: 'Bird food',
-        Name: 'Bird food'
-    }
-    ,
-    {
-        Id: 'Rabbit food',
-        Name: 'Rabbit food'
-    }
 
-];
 
 export interface CategoryUIModel {
     Id: string,
@@ -222,8 +181,35 @@ export const ITEM_TYPES = {
     NAV_BARTHEME: {
         Name: 'NavbarTheme'
     },
+    TITLE: {
+        Name: 'tITLE'
+    },
+    ORDER_COLLECTIONS: {
+        Name: 'Order_Collections'
+    },
+    ORDER_DELIVERY: {
+        Name: 'Order_Delivery'
+    },
+    ALLOW_YES: {
+        Name: 'Yes Allow'
+    },
+    ALLOW_NO: {
+        Name: 'No, Do not Allow'
+    },
     SETTINGS: {
         Name: 'Settings'
+    },
+
+    CUSTOMER_ADRESS: {
+        Name: 'Customer_Address'
+    },
+
+    PROFILES: {
+        Name: 'Profiles'
+    },
+
+    PAYFAST: {
+        Name: 'Payfast'
     }
 }
 
@@ -233,6 +219,63 @@ export const USER_TYPES = {
     },
     ADMIN: {
         Name: 'Admin'
+    }
+}
+
+
+export const DELIVERY_RATES = {
+    RATE_PER_KM: {
+        Name: 'Rate per km'
+    },
+    FLAT: {
+        Name: 'Flat rate'
+    }
+}
+
+
+export const CHECKOUT_PAGES = {
+    CART: {
+        Name: 'cart'
+    },
+    INFO: {
+        Name: 'information'
+    },
+    SHIPPING: {
+        Name: 'shipping'
+    },
+    PAYMENTS: {
+        Name: 'payments'
+    }
+}
+
+
+export const DELIVERY_TYPES = {
+    COLLECTION: {
+        Name: 'Collection'
+    },
+    DELIVERY: {
+        Name: 'Delivery'
+    }
+}
+
+
+export const LOCATION_TYPES = {
+    COMPLEX_ESTATE: {
+        Name: 'Complex / Estate'
+    },
+    APARTMENT: {
+        Name: 'Apartment'
+    },
+
+    HOUSE: {
+        Name: 'House'
+    },
+    OFFICE: {
+        Name: 'Office'
+    }
+
+    , HOTEL: {
+        Name: 'Hotel / B&B'
     }
 }
 

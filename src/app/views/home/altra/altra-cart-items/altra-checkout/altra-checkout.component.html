@@ -1,0 +1,54 @@
+<div class="container" *ngIf="page && order">
+
+    <div class="_banner d-flex justify-content-between" *ngIf="navClass && websiteLogo" [ngClass]="navClass">
+        <a routerLink="/"> <img *ngIf="websiteLogo" [src]="websiteLogo.ImageUrl" alt="Logo"></a>
+        <h6>
+          secure  Checkout
+        </h6>
+    </div>
+    <!-- <br> -->
+    <app-altra-breadcrumb [order]="order" [page]="page"></app-altra-breadcrumb>
+    <br>
+    <div class="row">
+
+        <div class="col-lg-8">
+
+            <div class="card" *ngIf="page === CHECKOUT_PAGES.CART.Name">
+                <div class="card-header bg-dark text-white"><i class="fa fa-user"></i> Cart
+                </div>
+                <div class="card-body">
+                    <app-altra-cart-items></app-altra-cart-items>
+
+                    <div class="__actions__ d-flex justify-content-end">
+                        <button class="btn btn-light">Add more items</button>
+                        <button class="btn btn-primary" (click)="checkout()">Proceed to checkout</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <app-altra-checkout-customer *ngIf="page === CHECKOUT_PAGES.INFO.Name"></app-altra-checkout-customer>
+            <app-altra-payment-methods *ngIf="page === CHECKOUT_PAGES.PAYMENTS.Name && user && order"  [order] ="order" [user]="user"></app-altra-payment-methods>
+            <app-altra-delivery [user]="user" *ngIf="user && page === CHECKOUT_PAGES.SHIPPING.Name">
+            </app-altra-delivery>
+
+        </div>
+
+  
+        <div class="col-lg-4">
+
+            <div class="card">
+
+                <div class="card-body" *ngIf="order">
+
+                    <div class="card-header bg-light"> Order summary -
+                        {{order?.Orderproducts?.length}} items
+                    </div>
+                    <app-altra-cart-sammary></app-altra-cart-sammary>
+                
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

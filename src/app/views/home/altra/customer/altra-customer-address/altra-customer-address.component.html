@@ -1,0 +1,61 @@
+
+<div class="adresses" *ngIf="items && !editing">
+  <div class="list-group">
+
+    <a class="list-group-item list-group-item-action" *ngFor="let _item of items">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{_item.Name}}</h5>
+        <a class="btn btn-light" (click)="customerAddressItem =  _item; editing = true">More</a>
+      </div>
+      <p class="mb-1">{{_item.AddressLine}}</p>
+    </a>
+  </div>
+  <br>
+
+  <button class="btn btn-primary" (click)="add()">Add new address</button>
+</div>
+
+
+<div class="editing" *ngIf="customerAddressItem && ITEM_TYPES && editing">
+  <label>
+    Location type
+  </label>
+
+
+  <select name="" id="" [(ngModel)]="customerAddressItem.LocationType" class="form-control">
+    <option [value]="LOCATION_TYPES.COMPLEX_ESTATE.Name">{{LOCATION_TYPES.COMPLEX_ESTATE.Name}}</option>
+    <option [value]="LOCATION_TYPES.APARTMENT.Name"> {{LOCATION_TYPES.APARTMENT.Name}}</option>
+    <option [value]="LOCATION_TYPES.HOUSE.Name"> {{LOCATION_TYPES.HOUSE.Name}}</option>
+    <option [value]="LOCATION_TYPES.OFFICE.Name"> {{LOCATION_TYPES.OFFICE.Name}}</option>
+    <option [value]="LOCATION_TYPES.HOTEL.Name"> {{LOCATION_TYPES.HOTEL.Name}}</option>
+  </select>
+  <br>
+
+  <label>
+    Street address
+  </label>
+  <app-address-widgeth-home [addressLineHome]="customerAddressItem.AddressLine "
+    (adressChangedEvent)="onAdressEvent($event)">
+  </app-address-widgeth-home>
+
+
+  <br>
+  <label>
+    {{customerAddressItem.LocationType||'Building'}} Name
+  </label>
+  <input type="text" class="form-control" [(ngModel)]="customerAddressItem.Name">
+
+  <br>
+  <label>
+    Unit Number
+  </label>
+  <input type="text" class="form-control" [(ngModel)]="customerAddressItem.LocationNumber">
+
+  <br>
+  <button class="btn btn-light mr-2" (click)="editing = false">Back to list</button>
+  <button class="btn btn-primary mr-2" (click)="item = customerAddressItem; save()">Save address</button>
+  <button class="btn btn-danger " *ngIf="customerAddressItem.ItemId " (click)="customerAddressItem.StatusId =99; item = customerAddressItem; save(true)"><i class="fas fa-trash"></i></button>
+
+</div>
+
+

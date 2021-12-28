@@ -11,6 +11,7 @@ import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { AddressComponent } from 'ngx-google-places-autocomplete/objects/addressComponent';
 import { UxService } from 'src/services/ux.service';
 import { LocationModel, NavHistoryUX } from 'src/models/UxModel.model';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-edit-my-profile',
@@ -47,6 +48,8 @@ export class EditMyProfileComponent implements OnInit {
     private accountService: AccountService,
     private location: Location,
     private uxService: UxService,
+    private messageService: MessageService,
+
 
 
   ) { }
@@ -111,8 +114,9 @@ export class EditMyProfileComponent implements OnInit {
           // this.modalModel.img = IMAGE_DONE
           // this.modalModel.body.push('Profile updated.');
           this.uxService.updateMessagePopState('Profile updated successfully.');
+          this.showSuccess('Profile updated successfully.');
 
-          this.back();
+          // this.back();
         }
       })
     }
@@ -156,5 +160,8 @@ export class EditMyProfileComponent implements OnInit {
       this.user.Longitude = event.lng;
       this.user.AddressLineHome = event.addressLine;
     }
+  }
+  showSuccess(detail, summary = 'Success', severity = 'success') {
+    this.messageService.add({ severity: severity, summary: summary, detail: detail });
   }
 }

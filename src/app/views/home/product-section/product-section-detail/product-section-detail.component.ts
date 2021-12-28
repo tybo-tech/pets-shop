@@ -195,6 +195,7 @@ export class ProductSectionDetailComponent implements OnInit, OnChanges {
           CustomerId: '',
           AddressId: '',
           Notes: '',
+          Shipping: 'Delivery',
           OrderType: ORDER_TYPE_SALES,
           Total: 0,
           Paid: 0,

@@ -1,0 +1,44 @@
+<div class="__nav-bar d-flex justify-content-between">
+    <div class="col" style="text-align: left;">
+        <button class="btn btn-dark"><i class="fas fa-search"></i></button>
+    </div>
+    <div class="col" style="text-align: center;">
+        <a routerLink="/"> <img *ngIf="websiteLogo" [src]="websiteLogo.ImageUrl" alt="Logo"></a>
+    </div>
+    <div class="col" style="text-align: right;">
+        <button (click)="showCartEvent()" class="btn btn-dark"><i class="fa fa-shopping-cart"></i><span class="badge bg-primary" *ngIf="carttItems">  {{carttItems}}</span></button>
+    </div>
+</div>
+
+
+
+<div class="smart-overlay" *ngIf="showCart" (click)="showCartEvent()">
+
+</div>
+
+<div class="smart-modal" *ngIf="showCart">
+    <div class="smart-close d-flex justify-content-between">
+        <div class="h6" style="color: #000; text-transform: capitalize; padding: .4em;">
+            CART <span class="badge rounded-pill bg-dark"> {{carttItems}}</span>
+
+        </div>
+        <i class="far fa-window-close" (click)="showCartEvent()"></i>
+    </div>
+    <app-altra-cart-items></app-altra-cart-items>
+
+    <div class="_bottom">
+        <div class="d-flex justify-content-between totals">
+            <p>
+                Sub total:
+            </p>
+
+            <p>
+                <b>{{order.Total | currency : 'R'}}</b>
+            </p>
+        </div>
+
+        <div class="__actions d-flex justify-content-end">
+            <button class="btn btn-primary" (click)="checkout()">Proceed to checkout</button>
+        </div>
+    </div>
+</div>

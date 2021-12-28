@@ -1,42 +1,31 @@
-@import '../../../../../../assets/styles/color';
-
-.image{
-  text-align: center;
-  img{
-    width: 9em;
-  }
-}
-
-h3 {
-  padding: 1em;
-  text-align: center;
-}
-
-span {
-  font-size: 15px;
-}
-
-a {
-  text-decoration: none;
-  color: #0062cc;
-  border-bottom: 2px solid #0062cc;
-}
-
 .box {
-  padding: 60px 0px;
-}
+  text-align: center;
+  padding: 1em;
+  margin: 2em auto;
 
-.box-part {
-  background: #FFF;
-  border-radius: 0;
-  padding: 20px 10px;
-  margin: 5px;
-}
+  .headering {
+    padding: 2em 1em;
+    .ref {
+      font-size: 0.8em;
+    }
+  }
 
-.text {
-  margin: 20px 0px;
-}
+  @import "../../../../../../assets/styles/color";
 
-.fa {
-  color: #4183D7;
+  .category {
+    margin: 0.5em;
+    position: relative;
+    img{
+      width: 100%;
+    }
+    button {
+      position: absolute;
+      bottom: 1em;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0.5em 2em;
+      border-radius: 0;
+      font-weight: 600;
+    }
+  }
 }

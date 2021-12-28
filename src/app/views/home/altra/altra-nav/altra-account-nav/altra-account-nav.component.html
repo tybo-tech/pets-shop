@@ -1,0 +1,80 @@
+<div class="__items" [ngClass]="navClass" style="border: none;">
+
+
+    <div class="__item">
+        <p class="user-name">
+            <a routerLink="/contact">
+                <i class="fas fa-phone"></i> Contact us
+            </a>
+        </p>
+    </div>
+
+    <div class="__item" *ngIf="user" (mouseover)="showUserProfileModal = true">
+        <p class="user-name">
+            <a routerLink="/home/edit-myprofile"> <i class="fas fa-user"></i> Hi, {{user.Dp}} </a>
+        </p>
+
+        <div class="mod" *ngIf="showUserProfileModal" (mouseleave)="showUserProfileModal = false">
+            <a routerLink="/home/edit-myprofile" (click)="showUserProfileModal = false" class="btn btn-ligth"><i
+                    class="fas fa-user-alt"></i> Edit my profile</a>
+            <hr>
+            <a class="btn btn-ligth" (click)="logout(); showUserProfileModal = false"><i
+                    class="fas fa-sign-out-alt"></i> Logout</a>
+
+        </div>
+    </div>
+
+    <div class="__item" *ngIf="!user">
+        <a routerLink="/sign-in" class="account-link">Login</a>
+        <a routerLink="/sign-up" class="account-link">Sign up</a>
+    </div>
+
+    <div class="__item">
+        <div class="icons">
+            <a class="link" routerLink="/home/wishlist" style="margin-right: 1.5em;"><i
+                    class="fas fa-heart  for-pc"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger for-pc">
+                    {{likes}}
+                </span>
+            </a>
+            <a (click)="showCartEvent()"> <i class="fas fa-shopping-cart for-pc"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger for-pc">
+                    {{carttItems}}
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="smart-overlay" *ngIf="showCart" (click)="showCartEvent()">
+
+</div>
+
+<div class="smart-modal" *ngIf="showCart">
+    <div class="smart-close d-flex justify-content-between">
+        <div class="h6" style="color: #000; text-transform: capitalize; padding: .4em;">
+            CART <span class="badge rounded-pill bg-dark"> {{carttItems}}</span>
+
+        </div>
+        <i class="far fa-window-close" (click)="showCartEvent()"></i>
+    </div>
+    <app-altra-cart-items></app-altra-cart-items>
+
+    <div class="_bottom">
+        <div class="d-flex justify-content-between totals">
+            <p>
+                Sub total:
+            </p>
+
+            <p>
+                <b>{{order.Total | currency : 'R'}}</b>
+            </p>
+        </div>
+
+        <div class="__actions d-flex justify-content-end">
+            <button class="btn btn-primary" (click)="checkout()">Proceed to checkout</button>
+        </div>
+    </div>
+</div>

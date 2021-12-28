@@ -1,0 +1,27 @@
+<div class="____the-nav">
+    <div class="__nav pc-only" [ngClass]="navClass">
+        <div class="nav-items">
+            <div class="__col _logo">
+                <a routerLink="/"> <img *ngIf="websiteLogo" [src]="websiteLogo.ImageUrl" alt="Logo"></a>
+            </div>
+            <div class="__col __search">
+                <app-altra-search></app-altra-search>
+            </div>
+            <div class="__col account">
+                <app-altra-account-nav [carttItems]="carttItems"></app-altra-account-nav>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="__nav phone-only" [ngClass]="navClass">
+        <app-altra-phone-nav *ngIf="websiteLogo  && navClass" [order]=[order] [navClass]="navClass"
+            [websiteLogo]="websiteLogo" [carttItems]="carttItems"> </app-altra-phone-nav>
+    </div>
+
+    <div [ngClass]="navClass">
+        <app-secondary-nav [carttItems]="carttItems"></app-secondary-nav>
+    </div>
+</div>

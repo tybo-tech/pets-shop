@@ -4,6 +4,9 @@
 
 
 <br><br>
+<h6>
+  Website look & feel settings
+</h6>
 <div class="row">
   <div class="col-lg-8">
     <div class="accordion" id="accordionExample">
@@ -60,6 +63,44 @@
 
                 <br>
                 <button class="btn btn-primary" (click)="item = navBarTheme; save()">Save navbar theme</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#webTitle"
+            aria-expanded="false" aria-controls="webTitle">
+            Website title
+          </button>
+        </h2>
+        <div id="webTitle" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+
+            <div class="card" *ngIf="webTitle">
+              <div class="card-body">
+                <h6>
+                  Title
+                </h6>
+
+
+                <input [(ngModel)]="webTitle.Description" class="form-control" />
+
+                <br>
+                <h6>
+                  Favicon
+                </h6>
+                <app-image-widget [image]="webTitle.ImageUrl"
+                  (imageChangedEvent)="item = webTitle ; onImageChangedEvent($event, ITEM_TYPES.TITLE.Name)">
+                </app-image-widget>
+
+                <br>
+                <button class="btn btn-primary" (click)="item = webTitle; save()">Save title</button>
 
               </div>
             </div>
@@ -180,7 +221,211 @@
 </div>
 
 
+<br><br>
+<h6>
+  Order collection and delivery settings
+</h6>
+<div class="row">
+  <div class="col-lg-8">
+    <div class="accordion" id="accordionOrder">
 
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseCollection" aria-expanded="false" aria-controls="collapseCollection">
+            Collections
+          </button>
+        </h2>
+        <div id="collapseCollection" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionOrder">
+          <div class="accordion-body">
+
+            <div class="card" *ngIf="orderCollection && ITEM_TYPES">
+              <div class="card-body">
+                <label>
+                  Allow collections?
+                </label>
+
+
+                <select name="" id="" [(ngModel)]="orderCollection.ItemCode" class="form-control">
+                  <option [value]="ITEM_TYPES.ALLOW_YES.Name">{{ITEM_TYPES.ALLOW_YES.Name}}</option>
+                  <option [value]="ITEM_TYPES.ALLOW_NO.Name">{{ITEM_TYPES.ALLOW_NO.Name}}</option>
+                </select>
+
+
+
+                <!-- <pre>
+                  {{orderCollection | json}}
+                </pre> -->
+
+                <div *ngIf="orderCollection.ItemCode === ITEM_TYPES.ALLOW_YES.Name">
+                  <br>
+                  <label>
+                    Street address
+                  </label>
+                  <app-address-widget-dashboard [addressLineHome]="orderCollection.AddressLine "
+                    (adressChangedEvent)="onAdressEvent($event)">
+                  </app-address-widget-dashboard>
+
+                  <br>
+                  <label>
+                    Building Name
+                  </label>
+                  <input type="text" class="form-control" [(ngModel)]="orderCollection.LocationType">
+
+                  <br>
+                  <label>
+                    Unit Number
+                  </label>
+                  <input type="text" class="form-control" [(ngModel)]="orderCollection.LocationNumber">
+                  <br>
+                  <label>
+                    Collecting show up times
+                  </label>
+                  <app-altra-operating-hours [hours]="orderCollection.DescriptionJson"></app-altra-operating-hours>
+                </div>
+
+                <br>
+                <button class="btn btn-primary" (click)="item = orderCollection; save()">Save collections</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseDelivery" aria-expanded="false" aria-controls="collapseDelivery">
+            Delivery
+          </button>
+        </h2>
+        <div id="collapseDelivery" class="accordion-collapse collapse" aria-labelledby="headingThree"
+          data-bs-parent="#accordionOrder">
+          <div class="accordion-body">
+            <div class="card" *ngIf="orderDelivery && ITEM_TYPES && DELIVERY_RATES">
+              <div class="card-body">
+                <label>
+                  Allow delivery?
+                </label>
+
+
+                <select name="" id="" [(ngModel)]="orderDelivery.ItemCode" class="form-control">
+                  <option [value]="ITEM_TYPES.ALLOW_YES.Name">{{ITEM_TYPES.ALLOW_YES.Name}}</option>
+                  <option [value]="ITEM_TYPES.ALLOW_NO.Name">{{ITEM_TYPES.ALLOW_NO.Name}}</option>
+                </select>
+
+
+
+                <div *ngIf="orderDelivery.ItemCode === ITEM_TYPES.ALLOW_YES.Name">
+                  <br>
+                  <label>
+                    Shop Street address (Delivery from)
+                  </label>
+                  <app-address-widget-dashboard [addressLineHome]="orderDelivery.AddressLine "
+                    (adressChangedEvent)="onAdressEvent2($event)">
+                  </app-address-widget-dashboard>
+                  <br>
+                  <label>
+                    Delivery rate method?
+                  </label>
+
+
+                  <select name="" id="" [(ngModel)]="orderDelivery.ItemSubCategory" class="form-control">
+                    <option [value]="DELIVERY_RATES.FLAT.Name">{{DELIVERY_RATES.FLAT.Name}}</option>
+                    <option [value]="DELIVERY_RATES.RATE_PER_KM.Name">{{DELIVERY_RATES.RATE_PER_KM.Name}}</option>
+                  </select>
+
+                  <div>
+                    <br>
+                    <label>
+                      Free deliver range (km)
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="orderDelivery.LimitValue">
+                  </div>
+
+                  <div>
+                    <br>
+                    <label *ngIf="orderDelivery.ItemSubCategory ==  DELIVERY_RATES.RATE_PER_KM.Name">
+                      Price per km
+                    </label>
+
+                    <label *ngIf="orderDelivery.ItemSubCategory ==  DELIVERY_RATES.FLAT.Name">
+                      Flat(fixed) delivery price
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="orderDelivery.Price">
+                  </div>
+
+
+                  <br>
+
+                  <br>
+                  <button class="btn btn-primary" (click)="item = orderDelivery; save()">Save delivery</button>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+<br><br>
+<h6>
+ Payments settings
+</h6>
+<div class="row">
+  <div class="col-lg-8">
+    <div class="accordion" id="accordionExample">
+    
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#payFastSection" aria-expanded="false" aria-controls="payFastSection">
+          payfast 
+          </button>
+        </h2>
+        <div id="payFastSection" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+
+            <div class="card" *ngIf="payFast">
+              <div class="card-body">
+                <h6>
+                  MerchantId
+                </h6>
+
+
+                <input [(ngModel)]="payFast.Name" class="form-control"/>
+                 
+                <br>
+                <h6>
+                  Merchant Key
+                 </h6>
+                 <input [(ngModel)]="payFast.Description" class="form-control"/>
+
+              <br>
+                <button class="btn btn-primary" (click)="item = payFast; save()">Save payfast</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <div class="quick-add" *ngIf="item">
   <div class="form">

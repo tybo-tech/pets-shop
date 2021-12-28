@@ -2,7 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Category } from 'src/models';
 import { CompanyCategoryService } from 'src/services';
-import { COMPANY_TYPE } from 'src/shared/constants';
+import { ItemService } from 'src/services/item.service';
+import { COMPANY_TYPE, ITEM_TYPES } from 'src/shared/constants';
 
 @Component({
   selector: 'app-secondary-nav',
@@ -15,14 +16,22 @@ export class SecondaryNavComponent implements OnInit {
   categories: Category[];
   parentCategories: Category[];
   category: Category;
-  showMenu
+  showMenu: boolean;
+  showCart: boolean;
   productsMenu: MenuItemm = {
     Name: 'All products',
     Class: []
   }
+  navBarTheme: import("c:/ndu/apps/pets-shop/src/models/item.model").Item;
+  navClass: string;
 
-  constructor(private categoryService: CompanyCategoryService, private router: Router
-  ) { }
+  constructor(
+    private categoryService: CompanyCategoryService,
+    private itemService: ItemService,
+    private router: Router
+  ) {
+
+  }
 
   ngOnInit() {
     this.categoryService.getSystemCategories('All', COMPANY_TYPE);
@@ -38,6 +47,17 @@ export class SecondaryNavComponent implements OnInit {
         this.parentCategories = this.categories.filter(x => x.CategoryType === 'Parent');
       }
     });
+    this.getSettings();
+  }
+
+  getSettings() {
+    this.itemService.ItemListObservable.subscribe(data => {
+      if (data && data.length)
+        this.navBarTheme = data.find(x => x.ItemType === ITEM_TYPES.NAV_BARTHEME.Name);
+      if (this.navBarTheme)
+        this.navClass = this.navBarTheme.Description;
+
+    })
   }
   view(c: Category) {
     this.router.navigate(['/collections', c.ParentId, c.CategoryId]);

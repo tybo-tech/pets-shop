@@ -1,0 +1,8 @@
+<div class="stepwizard">
+    <div class="stepwizard-row">
+        <div class="stepwizard-step" *ngFor="let item of items" (click)="goto(item)">
+            <button type="button" [ngClass]="item.MainClass"><i [ngClass]="item.Class" ></i></button>
+            <p>{{item.Name}}</p>
+        </div>
+    </div>
+</div>

@@ -1,10 +1,10 @@
-@import '../../../../assets/styles/color';
-.container{
+@import "../../../../assets/styles/color";
+.container {
   padding-top: 5em;
 }
 
 .card {
-  border-radius: .2em;
+  border-radius: 0.2em;
   margin-bottom: 1em;
   position: relative;
 
@@ -13,15 +13,12 @@
     right: 1em;
     top: 1em;
     z-index: 100;
-  
   }
 
   .card-img-top {
-    border-radius: .2em;
+    border-radius: 0.2em;
     cursor: pointer;
   }
-
-
 
   .card-footer {
     background: $black;
@@ -29,10 +26,33 @@
     text-align: center;
     font-weight: 600;
     cursor: pointer;
-    border-bottom-left-radius: .2em;
-    border-bottom-right-radius: .2em;
-    padding: .7em;
+    border-bottom-left-radius: 0.2em;
+    border-bottom-right-radius: 0.2em;
+    padding: 0.7em;
+  }
+}
 
+.row {
+  @media only screen and (max-width: 600px) {
+    display: grid;
+    grid-template-columns: 50% auto;
+  }
+}
+.success {
+  margin: 0 2em;
+}
 
+.image__ {
+  height: 15em;
+  @media only screen and (max-width: 600px) {
+    height: 10em;
+  }
+  img {
+    height: 15em;
+    overflow: hidden;
+
+    @media only screen and (max-width: 600px) {
+      height: 10em;
+    }
   }
 }

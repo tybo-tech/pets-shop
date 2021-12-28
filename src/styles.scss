@@ -1,28 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,531;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,531;1,600;1,700;1,800;1,900&family=Metal+Mania&display=swap');
-@import './assets/styles/color';
-@import './assets/styles/main';
-@import './assets/styles/button';
-@import './assets/styles/form';
-@import './assets/styles/grid';
-@import './assets/styles/keyframes';
-@import './assets/styles/modal';
-@import './assets/styles/account';
-@import './assets/styles/users';
-@import './assets/styles/top-bar';
-@import './assets/styles/profile';
-@import './assets/styles/table';
-@import './assets/styles/super-list';
-@import './assets/styles/list-view';
-@import './assets/styles/order-crete-view';
-@import './assets/styles/data-view-main';
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,531;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,531;1,600;1,700;1,800;1,900&family=Metal+Mania&display=swap");
+@import "./assets/styles/color";
+@import "./assets/styles/main";
+@import "./assets/styles/button";
+@import "./assets/styles/form";
+@import "./assets/styles/grid";
+@import "./assets/styles/keyframes";
+@import "./assets/styles/modal";
+@import "./assets/styles/account";
+@import "./assets/styles/users";
+@import "./assets/styles/top-bar";
+@import "./assets/styles/profile";
+@import "./assets/styles/table";
+@import "./assets/styles/super-list";
+@import "./assets/styles/list-view";
+@import "./assets/styles/order-crete-view";
+@import "./assets/styles/data-view-main";
 // @import './assets/styles/checkboxes';
-@import './assets/styles/add-form';
+@import "./assets/styles/add-form";
 
-@import '~quill/dist/quill.core.css';
+@import "~quill/dist/quill.core.css";
 
-@import '~quill/dist/quill.bubble.css';
+@import "~quill/dist/quill.bubble.css";
 
-@import '~quill/dist/quill.snow.css';
+@import "~quill/dist/quill.snow.css";
 
 * {
   box-sizing: border-box;
@@ -38,9 +38,9 @@ body {
   // background: $white;
   background: $cloud !important;
   margin: 0;
-  font-family: 'Jost' !important;
+  font-family: "Jost" !important;
   font-size: 18px;
-
+  // overflow-x: hidden;
   @media only screen and (max-width: 600px) {
     font-size: 13px;
   }
@@ -62,34 +62,9 @@ button {
   }
 }
 
-::-webkit-scrollbar-track {
-  border-radius: 0;
-  background-color: $cloud;
-}
-
-::-webkit-scrollbar {
-  width: 13px;
-  height: 8px;
-  background-color: transparent;
-
-  @media only screen and (max-width: 600px) {
-    // height: 0;
-    // width: .5px;
-  }
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 0;
-  background-color: $darker-grey;
-  box-shadow: none;
-  cursor: pointer;
-}
-
-
 .pac-container {
   z-index: 10000 !important;
 }
-
 
 .scrolls {
   position: absolute;
@@ -101,20 +76,179 @@ button {
 
   span {
     display: block;
-    padding: .2em;
-    padding-left: .4em;
+    padding: 0.2em;
+    padding-left: 0.4em;
     cursor: pointer;
     border-radius: 1em;
     background: rgba(0, 0, 0, 0.685);
     color: #fff;
     text-align: center !important;
     width: 2em;
-    left: .5em;
+    left: 0.5em;
   }
 }
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
-.pac-container{
- z-index: 8000000000 !important;   
+@import "~bootstrap/scss/bootstrap";
+.pac-container {
+  z-index: 8000000000 !important;
+}
+
+.dark-nav {
+  background: $black !important;
+  a {
+    color: $white !important;
+  }
+  .active {
+    color: #e0b328 !important;
+  }
+  &:last-child {
+    border-top: 1px solid rgb(110, 109, 109);
+  }
+}
+
+.light-nav {
+  background: $white !important;
+  a {
+    color: $black !important;
+  }
+  .active {
+    color: #8f6e0a !important;
+  }
+
+  &:last-child {
+    border-top: 1px solid rgb(49, 49, 49);
+  }
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.smart-overlay {
+  background: rgba(6, 34, 51, 0.589);
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 50000;
+  width: 100%;
+  height: 100%;
+}
+
+.smart-modal {
+  // background: $white;
+  // box-shadow: $box-shadow;
+  // position: fixed;
+  // right: 0;
+  // top: 0;
+  // z-index: 50000;
+  // width: 22em;
+  // height: 100%;
+  // animation: moveInRight 0.5s ease-out 0s;
+  // animation-fill-mode: backwards;
+  // overflow-y: scroll;
+
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  width: 470px;
+  animation: moveInRight 0.5s ease-out 0s;
+  animation-fill-mode: backwards;
+  height: 70%;
+  max-width: 100%;
+  overflow-y: scroll;
+  background: #fff;
+  border-left: 1px solid #dcdcdc;
+  transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1) all;
+  z-index: 50000;
+
+  ._bottom {
+    position: inherit;
+    bottom: 0;
+    width: inherit;
+    background: $cloud;
+    padding: 3em 1em;
+    height: 30%;
+    overflow: hidden;
+    animation: moveInRight 0.5s ease-out 0s;
+    animation-fill-mode: backwards;
+  }
+  .form-item {
+    width: 100% !important;
+  }
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
+
+  .smart-close {
+    padding: 0.5em;
+    text-align: right;
+    font-size: 1.5em;
+    color: red;
+    cursor: pointer;
+    background: $cloud;
+    @media only screen and (max-width: 600px) {
+      padding: 0.4em 2em;
+    }
+  }
+
+  .errors {
+    padding: 0.5em 1em;
+  }
+}
+.__actions {
+  padding: 1em;
+  button {
+    width: 100%;
+  }
+}
+
+.card {
+  box-shadow: $box-shadow;
+  border-radius: 0.2em !important;
+  .card-header {
+    border-radius: 0.2em !important;
+  }
+}
+
+.no-box-shadow {
+  box-shadow: none;
+}
+label {
+  font-size: 0.8em !important;
+}
+
+._total {
+  margin-top: 2em;
+  font-weight: 900;
+}
+
+.form-group {
+  margin-bottom: 1em;
+}
+.mr-2 {
+  margin-right: 2em;
+}
+
+.__actions__ {
+  padding: 0;
+  button {
+    width: fit-content;
+    display: block;
+    margin: 0 1em;
+    border: 1px solid $primary !important;
+    text-transform: uppercase;
+  }
+  .btn-light {
+    border-color: $primary;
+  }
+}
+
+.totals {
+  padding: 0.2em 1.2em;
 }

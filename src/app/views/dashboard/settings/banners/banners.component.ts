@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/models';
-import { Item, ITEM_ABOUT_US, ITEM_NAVBARTHEME } from 'src/models/item.model';
+import { item, Item, ITEM_ABOUT_US, ITEM_COLLECTIONS, ITEM_DELIVERY, ITEM_NAVBARTHEME, ITEM_PAYFAST, ITEM_TITLE, OPARATING_HOURS } from 'src/models/item.model';
+import { LocationModel } from 'src/models/UxModel.model';
 import { AccountService } from 'src/services';
 import { ItemService } from 'src/services/item.service';
-import { ADMIN, CUSTOMER, ITEM_TYPES, COMPANY } from 'src/shared/constants';
+import { ADMIN, CUSTOMER, ITEM_TYPES, COMPANY, DELIVERY_RATES } from 'src/shared/constants';
 
 @Component({
   selector: 'app-banners',
@@ -31,14 +32,20 @@ export class BannersComponent implements OnInit {
 
   aboutUs: Item;
   navBarTheme: Item;
+  webTitle: Item;
+  payFast: Item;
+  orderCollection: Item;
   aboutUsImage: Item;
 
   homepageBanners: Item[] = [];
   message: string;
   heading: string;
   ITEM_TYPES = ITEM_TYPES;
+  DELIVERY_RATES = DELIVERY_RATES;
   selectedItemType: any;
-  constructor(private itemService: ItemService,
+  orderDelivery: Item;
+  constructor(
+    private itemService: ItemService,
     private accountService: AccountService,
     private router: Router,
   ) {
@@ -101,10 +108,23 @@ export class BannersComponent implements OnInit {
       this.aboutUsImage = this.items.find(x => x.ItemType === ITEM_TYPES.ABOUT_IMAGE.Name);
       this.aboutUs = this.items.find(x => x.ItemType === ITEM_TYPES.ABOUT.Name) || ITEM_ABOUT_US;
       this.navBarTheme = this.items.find(x => x.ItemType === ITEM_TYPES.NAV_BARTHEME.Name) || ITEM_NAVBARTHEME;
+      this.webTitle = this.items.find(x => x.ItemType === ITEM_TYPES.TITLE.Name) || ITEM_TITLE;
+      this.payFast = this.items.find(x => x.ItemType === ITEM_TYPES.PAYFAST.Name) || ITEM_PAYFAST;
       this.homepageBanners = this.items.filter(x => x.ItemType === ITEM_TYPES.BANNER1.Name);
+
+      this.orderCollection = this.items.find(x => x.ItemType === ITEM_TYPES.ORDER_COLLECTIONS.Name) || ITEM_COLLECTIONS;
+      this.orderDelivery = this.items.find(x => x.ItemType === ITEM_TYPES.ORDER_DELIVERY.Name) || ITEM_DELIVERY;
+      if (this.orderCollection.Description)
+        this.orderCollection.DescriptionJson = JSON.parse(this.orderCollection.Description);
+      else
+        this.orderCollection.DescriptionJson = OPARATING_HOURS;
+
     });
   }
   save() {
+    if (this.item && this.item.ItemType === ITEM_TYPES.ORDER_COLLECTIONS.Name && this.item.DescriptionJson) {
+      this.item.Description = JSON.stringify(this.item.DescriptionJson);
+    }
     if (this.item.CreateDate) {
       this.itemService.update(this.item).subscribe(data => {
         if (data && data.ItemId) {
@@ -133,5 +153,22 @@ export class BannersComponent implements OnInit {
     this.item.ImageUrl = url;
   }
 
+
+  onAdressEvent(event: LocationModel) {
+    console.log(event);
+    if (event) {
+      this.orderCollection.Latitude = event.lat;
+      this.orderCollection.Longitude = event.lng;
+      this.orderCollection.AddressLine = event.addressLine;
+    }
+  }
+  onAdressEvent2(event: LocationModel) {
+    console.log(event);
+    if (event) {
+      this.orderDelivery.Latitude = event.lat;
+      this.orderDelivery.Longitude = event.lng;
+      this.orderDelivery.AddressLine = event.addressLine;
+    }
+  }
 
 }

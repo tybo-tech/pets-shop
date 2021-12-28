@@ -7,7 +7,7 @@ import { ModalModel } from 'src/models/modal.model';
 import { User, UserModel } from 'src/models/user.model';
 import { AccountService } from 'src/services/account.service';
 import { EmailService } from 'src/services/communication';
-import { ADMIN, COMPANY_DESCRIPTION, CUSTOMER, IMAGE_DONE, SYSTEM } from 'src/shared/constants';
+import { ADMIN, COMPANY_DESCRIPTION, CUSTOMER, IMAGE_DONE, ITEM_TYPES, SYSTEM } from 'src/shared/constants';
 import { IS_DELETED_FALSE, AWAITING_ACTIVATION } from 'src/shared/status.const';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
@@ -17,6 +17,7 @@ import { Order } from 'src/models';
 import { environment } from 'src/environments/environment';
 import { UxService } from 'src/services/ux.service';
 import { NavHistoryUX } from 'src/models/UxModel.model';
+import { ItemService } from 'src/services/item.service';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -50,6 +51,7 @@ export class SignUpComponent implements OnInit {
   model: any;
   user: any;
   navHistory: NavHistoryUX;
+  websiteLogo: any;
 
   constructor(
     private fb: FormBuilder,
@@ -59,6 +61,8 @@ export class SignUpComponent implements OnInit {
     private _location: Location,
     private orderService: OrderService,
     private uxService: UxService,
+    private itemService: ItemService,
+
 
 
   ) { }
@@ -86,8 +90,15 @@ export class SignUpComponent implements OnInit {
     this.uxService.uxNavHistoryObservable.subscribe(data => {
       this.navHistory = data;
     })
+    this.getSettings();
   }
+  getSettings(){
+    this.itemService.ItemListObservable.subscribe(data => {
+      if (data && data.length)
+          this.websiteLogo = data.find(x => x.ItemType === ITEM_TYPES.LOGO.Name);
 
+  })
+  }
   back() {
     if (this.navHistory && this.navHistory.BackToAfterLogin) {
       this.routeTo.navigate([this.navHistory.BackToAfterLogin]);

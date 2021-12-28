@@ -1,8 +1,11 @@
 import { Company } from "./company.model";
+import { Item } from "./item.model";
 
 export interface User {
+  Items?: Item[];
   Longitude?: number;
   Latitude?: number;
+  SaveMyDetails?: boolean;
   UserId?: string;
   Email: string;
   Name: string;

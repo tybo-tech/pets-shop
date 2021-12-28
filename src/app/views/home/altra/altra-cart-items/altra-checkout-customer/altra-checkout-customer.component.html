@@ -1,0 +1,195 @@
+<div class="card">
+    <div class="card-header bg-dark text-white"><i class="fa fa-user"></i> Customer information.
+    </div>
+    <div class="card-body" *ngIf="customer && !viewing">
+        <div>
+            <div class="row">
+                <div *ngIf="!customer.UserId" class="col-lg-12">
+                    <p style="padding: 2em 0; font-weight: 600;">
+                        Already have an account? <a routerLink="/sign-in/shopping_checkout_add_information"> Log in</a>
+                    </p>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" [(ngModel)]="customer.Email" (keyup)="checkEmail()" class="form-control"
+                            id="email" aria-describedby="emailHelp" required>
+                        <small id="emailHelp" class="form-text text-muted">We use your email address to update you about
+                            your
+                            order status.</small>
+
+                        <div class="alert alert-warning" *ngIf="userExist" role="alert">
+                            This email address is already being used,
+                            <a href="/sign-in"><b>continue to login?</b></a>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="name">Phone No</label>
+                        <input type="text" [(ngModel)]="customer.PhoneNumber" class="form-control" id="name"
+                            aria-describedby="emailHelp" navBarTheme required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="name">Full Name & Surname</label>
+                        <input type="text" [(ngModel)]="customer.Name" class="form-control" id="name"
+                            aria-describedby="emailHelp" navBarTheme required>
+                    </div>
+
+
+                    <div class="form-group" *ngIf="!editing">
+                        <div class="form-check">
+                            <input class="form-check-input" [(ngModel)]="customer.SaveMyDetails" type="checkbox"
+                                value="" id="flexCheckChecked" checked>
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Save my details for next time
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" *ngIf="customer.SaveMyDetails
+            && !editing">
+                        <label for="email">Password</label>
+                        <input type="password" [(ngModel)]="customer.Password" class="form-control" id="email"
+                            aria-describedby="emailHelp" required>
+                        <small id="emailHelp" class="form-text text-muted">Create a strong password, next time just
+                            enter your
+                            email address and your password to checkout </small>
+                    </div>
+
+                    <div class="mx-auto">
+                        <button type="submit" [disabled]="!customer.Name || userExist" type="button" (click)="save()"
+                            style="margin-right: 2em;" class="btn btn-primary btn-big">Save
+                            information</button>
+
+                        <button class="btn btn-light" *ngIf="editing" (click)="viewing = true; editing = false">Cancel
+                            editing</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+
+    <div class="card-body" *ngIf="customer && viewing">
+        <h6 class="__headers">
+            Contact details
+        </h6>
+        <label class="table-labels">
+            <span class="text-muted">Full Name: </span> {{customer.Name || '------------'}}
+        </label>
+        <label class="table-labels">
+            <span class="text-muted">Email address: </span> {{customer.Email || '------------'}}
+        </label>
+
+        <label class="table-labels">
+            <span class="text-muted">Phone No: </span> {{customer.PhoneNumber || '------------'}}
+        </label>
+
+        <label class="table-labels">
+            <button class="btn btn-light" (click)="viewing = false; editing = true">Edit contact details</button>
+        </label>
+        <br>
+        <h6 class="__headers">
+            Delivery address
+        </h6>
+        <label class="table-labels" *ngIf="order.LocationName || order.LocationNumber || order.AddressLine">
+            <span *ngIf="order.LocationName"><b>{{order.LocationName}} <br></b></span>
+            <span *ngIf="order.LocationNumber">{{order.LocationNumber}}<br></span>
+            <span *ngIf="order.AddressLine">{{order.AddressLine}} </span>
+            <br>
+            <br>
+            <a (click)="selectingAddress = !selectingAddress" style="cursor: pointer;" class="link-danger">
+                <b> <i class="fas fa-sync-alt"></i> Change</b>
+            </a>
+            <a (click)="editAddress()" style="margin-left: 1em; cursor: pointer;" class="link-success">
+                <b> <i class="fas fa-edit"></i> Edit </b>
+            </a>
+        </label>
+
+
+        <label class="table-labels" *ngIf="!order.LocationName && !order.LocationNumber && !order.AddressLine">
+            <span style="padding: 1em 0; color: rgb(255, 77, 77);"> Please capture your delivery address.</span>
+
+            <app-altra-customer-address></app-altra-customer-address>
+
+        </label>
+
+        <br>
+
+
+        <div *ngIf="customer && customer.Items && selectingAddress">
+            <br>
+            <div class="form-check" *ngFor="let item of customer.Items">
+                <input class="form-check-input" (change)="adressChanged()" [(ngModel)]="order.AddressId"
+                    [value]="item.ItemId" type="radio" name="flexRadioDefault" [id]="item.Id">
+                <label class="form-check-label" [for]="item.Id">
+                    {{item.Name}}
+                </label>
+            </div>
+            <button class="link link-warning" (click)="addNewAddress()">Add new address</button>
+            <br>
+            <br>
+
+        </div>
+
+        <div class="" *ngIf="editingAddress && customerAddressItem">
+            <label>
+                Location type
+            </label>
+
+
+            <select name="" id="" [(ngModel)]="customerAddressItem.LocationType" class="form-control">
+                <option [value]="LOCATION_TYPES.COMPLEX_ESTATE.Name">{{LOCATION_TYPES.COMPLEX_ESTATE.Name}}</option>
+                <option [value]="LOCATION_TYPES.APARTMENT.Name"> {{LOCATION_TYPES.APARTMENT.Name}}</option>
+                <option [value]="LOCATION_TYPES.HOUSE.Name"> {{LOCATION_TYPES.HOUSE.Name}}</option>
+                <option [value]="LOCATION_TYPES.OFFICE.Name"> {{LOCATION_TYPES.OFFICE.Name}}</option>
+                <option [value]="LOCATION_TYPES.HOTEL.Name"> {{LOCATION_TYPES.HOTEL.Name}}</option>
+            </select>
+            <br>
+
+            <label>
+                Street address
+            </label>
+            <app-address-widgeth-home [addressLineHome]="customerAddressItem.AddressLine "
+                (adressChangedEvent)="onAdressEvent($event)">
+            </app-address-widgeth-home>
+
+
+            <br>
+            <label>
+                {{customerAddressItem.LocationType||'Building'}} Name
+            </label>
+            <input type="text" class="form-control" [(ngModel)]="customerAddressItem.Name">
+
+            <br>
+            <label>
+                Unit Number
+            </label>
+            <input type="text" class="form-control" [(ngModel)]="customerAddressItem.LocationNumber">
+
+            <br>
+            <button class="btn btn-light mr-2" (click)="editingAddress = false">Cancel</button>
+            <button class="btn btn-primary" (click)="saveItem()">Save address</button>
+<br>
+<br>
+<hr>
+<br>
+<br>
+        </div>
+
+        <div class="__actions__ d-flex justify-content-end">
+            <button class="btn btn-light" (click)="cart()"><i class="fas fa-arrow-left"></i> Back to cart</button>
+            <button class="btn btn-primary" (click)="checkout()">Proceed to shipping</button>
+        </div>
+
+    </div>
+</div>

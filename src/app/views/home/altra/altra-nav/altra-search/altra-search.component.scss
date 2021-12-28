@@ -1,0 +1,30 @@
+// component css goes here
+@import "../../../../../../assets/styles/color";
+
+._item {
+    display: grid;
+    grid-template-columns: 88% auto;
+    background: none;
+    // width: fit-content;
+    border-radius: 10em;
+    overflow: hidden;
+    border: 2px solid $white;
+
+    .col {
+        input {
+            padding: 0.2em 2em;
+            width: 100%;
+            border: none;
+            background: none;
+            border: none;
+            color: $white;
+        }
+
+        button{
+            width: 100%;
+            padding: .5em;
+            background: none;
+            color: $white;
+        }
+    }
+}

@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="row">
+
+
+        <div class="col-lg-8">
+
+            <div class="card">
+                <div class="card-header bg-dark text-white"><i class="fa fa-shopping-cart"></i> CART <span
+                        class="badge rounded-pill bg-primary"> {{carttItems}}</span>
+                </div>
+                <div class="card-body">
+                    <app-altra-cart-items></app-altra-cart-items>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card">
+
+                <div class="card-body" *ngIf="order">
+
+                    <div class="card-header bg-light"> Order summary -
+                        {{order?.Orderproducts?.length}} items
+                    </div>
+                    <app-altra-cart-sammary></app-altra-cart-sammary>
+                    <button  (click)="show()" class="btn btn-light">Add more items</button>
+                    <br>
+                    <button class="btn btn-primary" (click)="checkout()">Proceed to checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>

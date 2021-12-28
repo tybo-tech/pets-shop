@@ -1,10 +1,10 @@
-<div class="items pc-only" *ngIf="categories">
+<div class="items pc-only" [ngClass]="navClass" *ngIf="categories">
   <div class="item" (click)="goto('/products')" *ngIf="productsMenu" [ngClass]="productsMenu.Class">
-    {{productsMenu.Name}}
+   <a> {{productsMenu.Name}}</a>
   </div>
   <div class="item" *ngFor="let item of categories" [ngClass]="item.Class" (mouseover)="item.IsSelected = true"
     (mouseleave)="item.IsSelected = false">
-    {{item.Name}} <i class="fas fa-chevron-down"></i>
+   <a> {{item.Name}} <i class="fas fa-chevron-down"></i></a>
     <div class="drop" *ngIf="item.IsSelected && item.Children">
       <div class="drop-items">
         <div class="drop-item" *ngFor="let child of item.Children" (click)="view(child)">
@@ -35,11 +35,6 @@
     <a class="link" routerLink="/home/wishlist"><i class="fas fa-heart"></i></a>
   </div>
 
-  <div class="item">
-    <a class="link" routerLink="/shop/cart"><i class="fas fa-shopping-cart"></i>   
-    <span class="badge bg-primary" *ngIf="carttItems">  {{carttItems}}</span>
-  </a>
-  </div>
 
 </div>
 
@@ -60,23 +55,3 @@
     </div>
   </div>
 </div>
-
-
-<!-- 
-<div class="items phone-only" *ngIf="categories">
-  <div class="item" (click)="goto('/products')" *ngIf="productsMenu" [ngClass]="productsMenu.Class">
-   {{productsMenu.Name}}
-  </div>
-  <div class="item" *ngFor="let item of categories" [ngClass]="item.Class" (mouseover)="item.IsSelected = true"
-    (mouseleave)="item.IsSelected = false">
-    {{item.Name}} <i class="fas fa-chevron-down"></i>
-    <div class="drop" *ngIf="item.IsSelected && item.Children">
-      <div class="drop-items">
-        <div class="drop-item" *ngFor="let child of item.Children"  (click)="view(child)">
-          {{child.Name}}
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div> -->

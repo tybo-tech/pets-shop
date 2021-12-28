@@ -1,0 +1,39 @@
+@import "../../../../../../assets/styles/color";
+.items {
+    .item {
+        border-bottom: 1px solid $cloud;
+        padding: 0.5em 0.2em;
+        display: grid;
+        grid-template-columns: 100%;
+        .price {
+            padding-bottom: 0.5em;
+        }
+        .image {
+            img {
+                width: 3em;
+                position: relative;
+                top: 0.6em;
+            }
+        }
+    }
+}
+
+
+.__actions {
+    button {
+        width: 100%;
+        display: block;
+        margin: 1em 0;
+        border: 1px solid $primary !important;
+        text-transform: uppercase;
+    }
+    .btn-light {
+        border-color: $primary;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .card {
+        margin-top: 1em;
+    }
+}

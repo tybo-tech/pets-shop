@@ -20,11 +20,11 @@
 
   <form class="form" [formGroup]="rForm">
     <div class="form-container">
-      <div class="logo">
+      <!-- <div class="logo">
         <a routerLink="">
-          <img src="assets/images/logo.png" alt="">
+          <img *ngIf="websiteLogo" style="width: 12em; border-radius: .5em;" [src]="websiteLogo.ImageUrl" alt="">
         </a>
-      </div>
+      </div> -->
 
       <!-- <div class="social">
         <app-social-login></app-social-login>
@@ -33,6 +33,9 @@
 
 
       <div class="form-group">
+        <br>
+        <br>
+        <br>
         <label for="exampleInputName">Full Name*</label>
         <input type="text" class="form-control" formControlName="Name" id="exampleInputFirstName"
           placeholder="John Doe">
@@ -49,7 +52,7 @@
           PhoneNumber is required
         </div>
       </div>
-<!-- 
+      <!-- 
       <div class="form-group">
         <label for="exampleInputPhoneNumber">Date of birth</label>
         <input type="email" class="form-control" formControlName="PhoneNumber" id="exampleInputPhoneNumber"
@@ -91,12 +94,12 @@
       </div>
 
       <div class="form-group">
-        <button color="primary" class="more" (click)="onSubmit(rForm.value)" [disabled]="!rForm.valid">
-          Sign up for free
+        <button class="btn btn-primary btn-big" (click)="onSubmit(rForm.value)" [disabled]="!rForm.valid">
+          Sign up
         </button>
         <span class="error">{{error}}</span>
         <div class="go-login">
-          <a routerLink="/sign-in"> Go to login</a>
+          ALREADY HAVE AN ACCOUNT? <a routerLink="/sign-in"> LOGIN</a>
         </div>
       </div>
     </div>

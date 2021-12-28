@@ -1,0 +1,34 @@
+// component css goes here
+@import "../../../../../assets/styles/color";
+.____the-nav{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+    box-shadow: $box-shadow;
+}
+.__nav {
+    padding: 0.25em 5em;
+    .__col {
+        // border: 1px solid red;
+    }
+    ._logo {
+        img {
+            width: auto;
+            height: 4em;
+        }
+    }
+
+    .nav-items {
+        display: grid;
+        grid-template-columns: 12em 30% auto;
+        .__search {
+            padding: 1rem;
+        }
+    }
+}
+
+.phone-only {
+    padding: 0.5em;
+}

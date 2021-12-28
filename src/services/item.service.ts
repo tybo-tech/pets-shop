@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Item } from 'src/models/item.model';
+import { ITEM_TYPES } from 'src/shared/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,9 @@ export class ItemService {
 
   public get currentItemValue(): Item {
     return this.ItemBehaviorSubject.value;
+  }
+  public get currentItemListValue(): Item[] {
+    return this.ItemListBehaviorSubject.value;
   }
 
 
@@ -65,5 +69,23 @@ export class ItemService {
         this.ItemListBehaviorSubject.next(data || []);
       })
   }
+  getNavTheme() {
+    const data = this.currentItemListValue;
+    if (data && data.length) {
+      const navBarTheme = data.find(x => x.ItemType === ITEM_TYPES.NAV_BARTHEME.Name);
+      if (navBarTheme)
+        return navBarTheme.Description;
+    }
+    return null;
+  }
 
+  getWebsiteLogo() {
+    const data = this.currentItemListValue;
+    if (data && data.length) {
+      const logoItem = data.find(x => x.ItemType === ITEM_TYPES.LOGO.Name);
+      if (logoItem)
+        return logoItem.ImageUrl;
+    }
+    return null;
+  }
 }

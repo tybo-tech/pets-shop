@@ -63,6 +63,7 @@ import { AddressWidgetDashboardComponent } from 'src/app/shared_components/addre
 import { RatesComponent } from './rates/rates/rates.component';
 import { BannersComponent } from './settings/banners/banners.component';
 import { ImageWidgetComponent } from './image-widget/image-widget.component';
+import { AltraOperatingHoursComponent } from './settings/altra-operating-hours/altra-operating-hours.component';
 
 const routes: Routes = [
   {
@@ -181,6 +182,7 @@ export const declarations: Array<any> = [
   RatesComponent,
   BannersComponent,
   ImageWidgetComponent,
+  AltraOperatingHoursComponent
 
 ];
 @NgModule({

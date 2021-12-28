@@ -19,7 +19,7 @@ export interface NavHistoryUX {
 
 export interface BreadModel {
   Name: string;
-  Link:string
+  Link: string
 }
 
 export interface LocationModel {
@@ -29,3 +29,4 @@ export interface LocationModel {
   formatedAddress?: string
   url: string
 }
+

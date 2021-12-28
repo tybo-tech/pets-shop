@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Category, Order, Orderproduct, Product, User } from 'src/models';
 import { Interaction } from 'src/models/interaction.model';
 import { TyboShopModel } from 'src/models/TyboShop';
@@ -9,7 +10,7 @@ import { CompanyService } from 'src/services/company.service';
 import { HomeShopService } from 'src/services/home-shop.service';
 import { InteractionService } from 'src/services/Interaction.service';
 import { UxService } from 'src/services/ux.service';
-import { CATEGORIES, COMPANY, MAX_PAGE_SIZE, ORDER_TYPE_SALES } from 'src/shared/constants';
+import { COMPANY, MAX_PAGE_SIZE, ORDER_TYPE_SALES } from 'src/shared/constants';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { CATEGORIES, COMPANY, MAX_PAGE_SIZE, ORDER_TYPE_SALES } from 'src/shared
   styleUrls: ['./product-section.component.scss']
 })
 export class ProductSectionComponent implements OnInit {
-@Input() topclass;
+  @Input() topclass;
   selectedCategory: Category;
   searchString: string;
   products: Product[] = [];
@@ -29,7 +30,6 @@ export class ProductSectionComponent implements OnInit {
   parentCategories: Category[] = [];
   catergories: Category[] = [];
   tertiaryCategories: Category[] = [];
-  unisexCategory: Category;
   pickedProducts: Product[];
   newProducts: Product[];
   tyboShopModel: TyboShopModel;
@@ -45,50 +45,48 @@ export class ProductSectionComponent implements OnInit {
   modalHeading: string;
   Total: number;
   showCart: boolean;
+  carttItems: number;
+  productId: any;
+  product: Product;
 
 
   constructor(
-    private homeShopService: HomeShopService,
     private productService: ProductService,
-    private uxService: UxService,
     private router: Router,
     private accountService: AccountService,
     private orderService: OrderService,
-    private companyCategoryService: CompanyCategoryService,
+    private activatedRoute: ActivatedRoute,
+
+    @Inject(DOCUMENT) private _document: HTMLDocument
+
 
   ) {
+    this.activatedRoute.params.subscribe(r => {
+      this.productId = r.id;
+      if (this.productId)
+        this.getProduct();
+      else
+        this.getProducts();
+    });
+  }
+  getProduct() {
+    this.productService.getProductSync(this.productId).subscribe(data => {
+      this.product = data;
+    })
   }
 
   ngOnInit() {
 
     this.user = this.accountService.currentUserValue;
 
-    this.uxService.uxNavHistoryObservable.subscribe(data => {
-      this.navHistory = data;
-    })
-
-    this.getProducts();
-
-
-    this.uxService.pageYPositionObservable.subscribe(data => {
-      this.yPosition = data || 0;
-    });
-
-
-    this.uxService.uxNavHistoryObservable.subscribe(data => {
-      if (data) {
-        this.navHistory = data;
-        window.scrollTo(0, this.navHistory.ScrollToYPositoin || 0);
-      }
-    });
-
-    this.companyCategoryService.systemCategoryListObservable.subscribe(data => {
-      if (data && data.length) {
-        this.unisexCategory = data.find(x => x.Name === "Unisex");
-      }
-    });
-
     this.initOrder();
+
+    this.orderService.OrderObservable.subscribe(data => {
+      this.order = data;
+      this.carttItems = 0;
+      if (this.order && this.order.Orderproducts)
+        this.carttItems = this.order.Orderproducts.length
+    })
   }
 
 
@@ -131,17 +129,7 @@ export class ProductSectionComponent implements OnInit {
   }
 
   viewMore(product: Product) {
-    if (product) {
-      window.scroll(0, 0);
-      this.homeShopService.updateProductState(product);
-      this.uxService.keepNavHistory({
-        BackToAfterLogin: '/',
-        BackTo: '/',
-        ScrollToProduct: null,
-        ScrollToYPositoin: this.yPosition
-      });
-      this.router.navigate(['shop/product', product.ProductSlug])
-    }
+    this.router.navigate(['/products', product.ProductSlug])
   }
   // selectCategory(category: Category) {
   //   if (category && category.IsShop) {
@@ -169,53 +157,7 @@ export class ProductSectionComponent implements OnInit {
     alert(parentId)
   }
 
-  loadCategories() {
-    const catergories = [];
-    this.newProducts = [];
-    this.allOtherProducts = [];
 
-    this.productService.productListObservable.subscribe(products => {
-      if (products && products.length) {
-        this.allProducts = products;
-        this.products = this.allProducts;
-        let i = 0;
-        this.products.forEach(product => {
-          if (!catergories.find(x => x && x.CategoryId === product.CategoryGuid)) {
-            if (product.Category) {
-              catergories.push(product.Category);
-            }
-          }
-          if (!this.parentCategories.find(x => x && x.CategoryId === product.ParentCategoryGuid)) {
-            if (product.ParentCategory) {
-              this.parentCategories.push(product.ParentCategory);
-            }
-          }
-          if (!this.tertiaryCategories.find(x => x && x.CategoryId === product.TertiaryCategoryGuid)) {
-            if (product.TertiaryCategory) {
-              this.tertiaryCategories.push(product.TertiaryCategory);
-            }
-          }
-          if (i < 30 && !product.PickId) {
-            this.newProducts.push(product);
-          }
-          if (i >= 30 && !product.PickId) {
-            this.allOtherProducts.push(product);
-          }
-          i++;
-        });
-
-        if (catergories && catergories.length) {
-          this.catergories = catergories;
-        }
-        this.unisexCategory = this.parentCategories.find(x => x.Name === "Unisex");
-
-        this.pickedProducts = this.allProducts.filter(x => x.PickId);
-      }
-
-    });
-    // console.log(this.parentCategories);
-
-  }
 
   tabParentCategories(category: Category) {
     console.log(category);
@@ -226,17 +168,13 @@ export class ProductSectionComponent implements OnInit {
   }
 
   gotoComapny(product: Product) {
-    window.scroll(0, 0);
     if (product.Company) {
       this.router.navigate([product.Company.Slug || product.CompanyId]);
       return;
     }
     this.router.navigate([product.CompanyId]);
   }
-  scroll(e) {
-    this.newInScrollTo += e * 1000;
-    document.getElementById("justAdded").scroll(this.newInScrollTo, 0)
-  }
+
   veiwAllPicks() {
     this.goto(`home/collections/picks`)
   }
@@ -255,6 +193,7 @@ export class ProductSectionComponent implements OnInit {
         CustomerId: '',
         AddressId: '',
         Notes: '',
+        Shipping: '',
         OrderType: ORDER_TYPE_SALES,
         Total: 0,
         Paid: 0,
@@ -278,7 +217,7 @@ export class ProductSectionComponent implements OnInit {
 
     if (!this.order.Orderproducts)
       this.order.Orderproducts = [];
-      
+
     if (this.order && this.order.Orderproducts.length) {
       if (this.order.CompanyId !== product.CompanyId) {
         return false;
@@ -299,7 +238,7 @@ export class ProductSectionComponent implements OnInit {
       this.orderService.updateOrderState(this.order);
       this.modalHeading = `${product.Name} added to bag successfully`;
       // this.cart();
-      this.showCart = true;
+      this.showCartEvent();
     }
   }
 
@@ -330,7 +269,30 @@ export class ProductSectionComponent implements OnInit {
     });
 
   }
-  like(){
-    
+  like() {
+
+  }
+
+
+  checkout() {
+    this.showCartEvent();
+    this.router.navigate([`shopping/checkout/${this.order.OrdersId || 'add'}/information`])
+  }
+
+
+  showCartEvent() {
+    this.showCart = !this.showCart;
+    if (this.showCart) {
+      var body = this._document.getElementById('_body');
+      if (body)
+        body.style.overflow = 'hidden'
+
+    }
+
+    if (!this.showCart) {
+      var body = this._document.getElementById('_body');
+      if (body)
+        body.style.overflowY = 'scroll'
+    }
   }
 }

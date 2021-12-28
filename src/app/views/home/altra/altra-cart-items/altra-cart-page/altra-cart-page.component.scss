@@ -1,0 +1,16 @@
+.container{
+    padding: 2em;
+    margin-bottom: 6em;
+    margin-top: 3em;
+
+    @media only screen and (max-width: 600px) {
+        padding: 3em 1em;
+    }
+}
+
+.card{
+    button{
+        width: 100%;
+        margin: .5em 0;
+    }
+}

@@ -19,6 +19,21 @@ import { ViewMyOrderComponent } from '../dashboard/orders/view-order/view-my-ord
 import { ViewOrderComponent } from '../dashboard/orders/view-order/view-order.component';
 import { AboutComponent } from './about/about.component';
 import { AllShopsComponent } from './all-shops/all-shops.component';
+import { AltraCartItemsComponent } from './altra/altra-cart-items/altra-cart-items.component';
+import { AltraCartPageComponent } from './altra/altra-cart-items/altra-cart-page/altra-cart-page.component';
+import { AltraCartSammaryComponent } from './altra/altra-cart-items/altra-cart-sammary/altra-cart-sammary.component';
+import { AltraCheckoutCustomerComponent } from './altra/altra-cart-items/altra-checkout-customer/altra-checkout-customer.component';
+import { AltraCheckoutComponent } from './altra/altra-cart-items/altra-checkout/altra-checkout.component';
+import { AltraDeliveryComponent } from './altra/altra-cart-items/altra-delivery/altra-delivery.component';
+import { AltraPaymentsComponent } from './altra/altra-cart-items/altra-payments/altra-payments.component';
+import { AltraAccountNavComponent } from './altra/altra-nav/altra-account-nav/altra-account-nav.component';
+import { AltraNavComponent } from './altra/altra-nav/altra-nav.component';
+import { AltraPhoneNavComponent } from './altra/altra-nav/altra-phone-nav/altra-phone-nav.component';
+import { AltraSearchComponent } from './altra/altra-nav/altra-search/altra-search.component';
+import { AltraPaymentMethodsComponent } from './altra/altra-payment-methods/altra-payment-methods.component';
+import { AltraProductComponent } from './altra/altra-product/altra-product.component';
+import { AltraCustomerAddressComponent } from './altra/customer/altra-customer-address/altra-customer-address.component';
+import { AltraBreadcrumbComponent } from './altra/shared/altra-breadcrumb/altra-breadcrumb.component';
 import { CartComponent, CheckoutComponent } from './cart';
 import { CartItemsComponent } from './cart/cart-items/cart-items.component';
 import { MyCartComponent } from './cart/my-cart/my-cart.component';
@@ -73,7 +88,9 @@ const routes: Routes = [
       // { path: ':id', component: ShopProductsComponent },
       // { path: 'home/shop', component: HomeLandingComponent },
       { path: 'sign-in', component: SignInComponent },
+      { path: 'sign-in/:id', component: SignInComponent },
       { path: 'products', component: ProductSectionComponent },
+      { path: 'products/:id', component: ProductSectionComponent },
       { path: 'home/start-shop', component: SignUpModalComponent },
       { path: 'sign-up', component: SignUpComponent },
       { path: 'home/custom-design', component: CustomerDesignComponent },
@@ -105,10 +122,13 @@ const routes: Routes = [
       { path: 'home/chat/:id/:userId/:userToId', component: ChatComponent },
       { path: 'home/messages/:traceId/:targetId', component: MessagesComponent },
 
-      {path:'contact', component: ContactComponent},
-      {path:'about', component: AboutComponent},
-      {path:'terms', component: TermsComponent},
-      {path:'returns-policy', component: ReturnsPolicyComponent},
+      { path: 'contact', component: ContactComponent },
+      { path: 'about', component: AboutComponent },
+      { path: 'terms', component: TermsComponent },
+      { path: 'view-cart', component: AltraCartPageComponent },
+      { path: 'returns-policy', component: ReturnsPolicyComponent },
+      { path: 'shopping/checkout', component: AltraCheckoutComponent },
+      { path: 'shopping/checkout/:id/:page', component: AltraCheckoutComponent },
 
     ]
 
@@ -181,7 +201,23 @@ export const declarations = [
   QauntityWidgetComponent,
   SecondaryNavComponent,
   ProductsWidgetComponent,
-  AddressWidgethHomeComponent
+  AddressWidgethHomeComponent,
+
+  AltraNavComponent,
+  AltraSearchComponent,
+  AltraAccountNavComponent,
+  AltraCartItemsComponent,
+  AltraCheckoutComponent,
+  AltraCheckoutCustomerComponent,
+  AltraCartSammaryComponent,
+  AltraDeliveryComponent,
+  AltraCustomerAddressComponent,
+  AltraBreadcrumbComponent,
+  AltraPaymentsComponent,
+  AltraCartPageComponent,
+  AltraPhoneNavComponent,
+  AltraPaymentMethodsComponent,
+  AltraProductComponent
 
 ];
 

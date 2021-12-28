@@ -1,0 +1,28 @@
+<div *ngIf="hours">
+    <div class="hour">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Day</th>
+                    <th scope="col">Open</th>
+                    <th scope="col">Open time</th>
+                    <th scope="col">Close Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let day of hours">
+                    <td>{{day.Day}}</td>
+                    <td>
+                        <select name="" id="" [(ngModel)]="day.Open">
+                            <option value="open">Yes</option>
+                            <option value="closed">No</option>
+                        </select>
+                    </td>
+                    <td><input type="time" *ngIf="day.Open == 'open'" [(ngModel)]="day.OpenTime"></td>
+                    <td> <input type="time" *ngIf="day.Open == 'open'" [(ngModel)]="day.CloseTime"></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

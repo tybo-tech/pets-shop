@@ -3,11 +3,11 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LocationStrategy } from '@angular/common';
 import { AccountService } from 'src/services/account.service';
 import { TokenModel } from 'src/models/account.model';
-import { ADMIN, CUSTOMER, IMAGE_DONE, IMAGE_WARN, SUPER } from 'src/shared/constants';
+import { ADMIN, CUSTOMER, IMAGE_DONE, IMAGE_WARN, ITEM_TYPES, SUPER } from 'src/shared/constants';
 import { OrderService } from 'src/services/order.service';
 import { Order } from 'src/models';
 import { ModalModel } from 'src/models/modal.model';
@@ -15,6 +15,8 @@ import { ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { UxService } from 'src/services/ux.service';
 import { NavHistoryUX } from 'src/models/UxModel.model';
+import { ItemService } from 'src/services/item.service';
+import { Item } from 'src/models/item.model';
 
 
 @Component({
@@ -29,8 +31,8 @@ export class SignInComponent implements OnInit {
   rForm: FormGroup;
   error: string;
   loading$: Observable<boolean>;
-  email:string = '';
-  password:string = '';
+  email: string = '';
+  password: string = '';
   hidePassword = true;
   shopSecondaryColor;
   shopPrimaryColor;
@@ -47,6 +49,8 @@ export class SignInComponent implements OnInit {
   };
   navHistory: NavHistoryUX;
   showAdd: boolean;
+  websiteLogo: Item;
+  backTo: string;
 
   constructor(
     private fb: FormBuilder,
@@ -56,25 +60,24 @@ export class SignInComponent implements OnInit {
     private orderService: OrderService,
     private uxService: UxService,
     private _location: Location,
+    private itemService: ItemService,
+    private activatedRoute: ActivatedRoute,
+
 
 
   ) {
+    this.activatedRoute.params.subscribe(r => {
+      this.backTo = r.id;
+    });
   }
 
 
   ngOnInit() {
-    if(!environment.production){
+    if (!environment.production) {
 
     }
+    this.getSettings();
     this.order = this.orderService.currentOrderValue;
-    if (this.order) {
-      if (this.order.CustomerId === 'pending') {
-        this.showAdd = true;
-        this.order.CustomerId = 'checked'
-        this.orderService.updateOrderState(this.order);
-      }
-
-    }
     this.rForm = this.fb.group({
       Email: new FormControl(
         this.email,
@@ -93,7 +96,13 @@ export class SignInComponent implements OnInit {
       this.navHistory = data;
     })
   }
+  getSettings() {
+    this.itemService.ItemListObservable.subscribe(data => {
+      if (data && data.length)
+        this.websiteLogo = data.find(x => x.ItemType === ITEM_TYPES.LOGO.Name);
 
+    })
+  }
   goto(url) {
     this.routeTo.navigate(['sign-in']);
     this.routeTo.navigate([url]);
@@ -132,8 +141,10 @@ export class SignInComponent implements OnInit {
       if (user && user.UserId) {
         this.error = '';
         this.accountService.updateUserState(user);
-        if (user && user.UserType === CUSTOMER && this.navHistory && this.navHistory.BackToAfterLogin) {
-          this.routeTo.navigate([this.navHistory.BackToAfterLogin]);
+        if (this.backTo) {
+          debugger
+          this.backTo = this.backTo.split('_').join('/');
+          this.routeTo.navigate([this.backTo]);
           return;
         }
         if (user.UserType === ADMIN) {

@@ -1,0 +1,13 @@
+@import "../../../../../assets/styles/color";
+.container {
+    padding: 8em 10em;
+    width: 100%;
+    height: 100%;
+    max-width: 100% !important;
+    background: $white;
+    overflow-y: scroll;
+    @media only screen and (max-width: 600px) {
+        padding: 8em 1em;
+    }
+
+}

@@ -276,3 +276,20 @@ button.danger {
   text-align: center;
   font-weight: 700;
 }
+
+
+.qty-btn {
+  padding: 0.4em !important;
+  font-size: 0.65em !important;
+  height: 2em;
+  width: 2em ;
+  border-radius: 2em !important;
+}
+
+.btn-big{
+  padding: 1em 1.5em !important;
+}
+
+.btn-light{
+  border: 1px solid $primary !important;
+}

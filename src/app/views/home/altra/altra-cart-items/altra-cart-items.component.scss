@@ -1,0 +1,78 @@
+@import "../../../../../assets/styles/color";
+.main {
+    padding: 2em;
+    .__header {
+        text-align: left;
+        padding: 0.2em 1em;
+    }
+    .empty-state {
+        padding: 4em;
+        text-align: center;
+
+        button{
+            margin: 0 auto;
+        }
+    }
+}
+
+.a_text {
+    color: $black !important;
+    padding: 0.2em 0.8em;
+    font-weight: 600;
+}
+
+.items {
+    .item {
+        // border-bottom: 2px solid $grey;
+        padding: 1em 0.2em;
+        margin-bottom: 1.5em;
+        display: grid;
+        grid-template-columns: 9em 70% auto;
+        font-size: 0.8em;
+        @media only screen and (max-width: 600px) {
+            grid-template-columns: 9em 60% auto;
+        }
+        .price {
+            padding-bottom: 0.5em;
+        }
+        .image {
+            img {
+                width: 7em;
+                position: relative;
+                top: 0.6em;
+                border-radius: 0.25em;
+            }
+        }
+    }
+}
+
+.__actions {
+    padding: 0;
+    button {
+        width: fit-content;
+        display: block;
+        margin: 0 1em;
+        border: 1px solid $primary !important;
+        text-transform: uppercase;
+    }
+    .btn-light {
+        border-color: $primary;
+    }
+}
+
+.name {
+    position: relative;
+    top: 0.75em;
+}
+
+.qty__ {
+    width: fit-content;
+    padding: 0.4em;
+    border: 1px solid $black;
+    margin-top: 0.4em;
+}
+
+.qty-btn {
+    color: $black !important;
+    border: none !important;
+}
