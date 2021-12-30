@@ -41,7 +41,6 @@ export class ProductSectionComponent implements OnInit {
   topLadiesproducts: Product[];
   topMenproducts: Product[];
   order: Order;
-  selectedQuantiy: number;
   modalHeading: string;
   Total: number;
   showCart: boolean;
@@ -79,8 +78,6 @@ export class ProductSectionComponent implements OnInit {
 
     this.user = this.accountService.currentUserValue;
 
-    this.initOrder();
-
     this.orderService.OrderObservable.subscribe(data => {
       this.order = data;
       this.carttItems = 0;
@@ -115,29 +112,14 @@ export class ProductSectionComponent implements OnInit {
   }
 
   loadMore() {
-    this.productService.getTyboShop(this.pageNumber);
-    // this.productService.getAllActiveByparentCategoryId(this.catergoryId, this.nextPage).subscribe(data => {
-    //   if (data && data.length) {
-    //     this.products.push(...data);
-    //     this.pageNumber = data[data.length - 1]?.Id || 99999999;
-    //     this.showShowMore = data.length >= MAX_PAGE_SIZE;
-    //   } else {
-    //     this.showShowMore = false;
-    //   }
-    // });
+    this.productService.getTyboShop(this.pageNumber)
 
   }
 
   viewMore(product: Product) {
     this.router.navigate(['/products', product.ProductSlug])
   }
-  // selectCategory(category: Category) {
-  //   if (category && category.IsShop) {
-  //     this.homeShopService.updateCategoryState(category);
-  //     this.router.navigate([`shop/collections/${category.Name}`])
-  //   }
 
-  // }
   tapChildCategory(category: Category) {
     if (category) {
       this.products = this.products = this.allProducts.filter(x => x.CategoryGuid === category.CategoryId);
@@ -183,116 +165,7 @@ export class ProductSectionComponent implements OnInit {
     this.router.navigate([`collections/${category}`])
   }
 
-  initOrder() {
-    this.order = this.orderService.currentOrderValue;
-    if (!this.order) {
-      this.order = {
-        OrdersId: '',
-        OrderNo: 'Shop',
-        CompanyId: COMPANY,
-        CustomerId: '',
-        AddressId: '',
-        Notes: '',
-        Shipping: '',
-        OrderType: ORDER_TYPE_SALES,
-        Total: 0,
-        Paid: 0,
-        Due: 0,
-        InvoiceDate: new Date(),
-        DueDate: '',
-        CreateUserId: 'shop',
-        ModifyUserId: 'shop',
-        Status: 'Not paid',
-        StatusId: 1,
-        Orderproducts: []
-      }
-      this.orderService.updateOrderState(this.order);
-    }
-
-  }
-
-  addToCart(product: Product) {
-    if (!this.order)
-      return;
-
-    if (!this.order.Orderproducts)
-      this.order.Orderproducts = [];
-
-    if (this.order && this.order.Orderproducts.length) {
-      if (this.order.CompanyId !== product.CompanyId) {
-        return false;
-      }
-
-    }
-
-    if (product && product.ProductId) {
-      product.SelectedQuantiy = this.selectedQuantiy;
-      const orderproduct = this.mapOrderproduct(product);
-      this.order.Orderproducts.push(orderproduct);
-      if (product.Company) {
-        this.order.Company = product.Company;
-      }
-      this.order.CompanyId = product.CompanyId;
-      this.calculateTotalOverdue();
-      this.order.Total = this.Total;
-      this.orderService.updateOrderState(this.order);
-      this.modalHeading = `${product.Name} added to bag successfully`;
-      // this.cart();
-      this.showCartEvent();
-    }
-  }
-
-  mapOrderproduct(product: Product): Orderproduct {
-    return {
-      Id: '',
-      OrderId: '',
-      ProductId: product.ProductId,
-      CompanyId: product.CompanyId,
-      ProductName: product.Name,
-      ProductType: 'Product',
-      Colour: product.SelectedCoulor || '',
-      Size: product.SelectedSize || '',
-      Quantity: product.SelectedQuantiy || 1,
-      SubTotal: product.SelectedQuantiy * Number(product.RegularPrice),
-      UnitPrice: product.SalePrice || product.RegularPrice,
-      FeaturedImageUrl: product.FeaturedImageUrl,
-      CreateUserId: '',
-      ModifyUserId: '',
-      StatusId: 1
-    };
-  }
-
-  calculateTotalOverdue() {
-    this.Total = 0;
-    this.order.Orderproducts.forEach(line => {
-      this.Total += (Number(line.UnitPrice) * Number(line.Quantity));
-    });
-
-  }
-  like() {
-
-  }
 
 
-  checkout() {
-    this.showCartEvent();
-    this.router.navigate([`shopping/checkout/${this.order.OrdersId || 'add'}/information`])
-  }
 
-
-  showCartEvent() {
-    this.showCart = !this.showCart;
-    if (this.showCart) {
-      var body = this._document.getElementById('_body');
-      if (body)
-        body.style.overflow = 'hidden'
-
-    }
-
-    if (!this.showCart) {
-      var body = this._document.getElementById('_body');
-      if (body)
-        body.style.overflowY = 'scroll'
-    }
-  }
 }

@@ -1,11 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Product, Category, Order, Orderproduct } from 'src/models';
-import { TyboShopModel } from 'src/models/TyboShop';
-import { OrderService, ProductService } from 'src/services';
+import { Product, Category } from 'src/models';
+import { CompanyCategoryService, OrderService, ProductService } from 'src/services';
 import { HomeShopService } from 'src/services/home-shop.service';
 import { UxService } from 'src/services/ux.service';
-import { COMPANY, ORDER_TYPE_SALES } from 'src/shared/constants';
 
 @Component({
   selector: 'app-shop-collection',
@@ -13,79 +11,61 @@ import { COMPANY, ORDER_TYPE_SALES } from 'src/shared/constants';
   styleUrls: ['./shop-collection.component.scss']
 })
 export class ShopCollectionComponent implements OnInit {
-
-  product: Product;
-  productSlug: string;
-  totalPrice = 0;
-  quantity = 0;
+  products: Product[];
   catergoryId: string;
   subCatergoryId: string;
   catergory: Category;
-  @Output() navAction: EventEmitter<boolean> = new EventEmitter<boolean>();
-  tyboShopModel: TyboShopModel;
-  products: Product[];
-  heading: string;
-  subProducts: Product[];
-  tittle: string;
-  order: Order;
-  modalHeading: string;
+  catergories: Category[];
   searchString: string;
-  Total: number;
-  selectedQuantiy: number = 1;
-  showCart: boolean;
+  defImage = `https://via.placeholder.com/150`
+  allProducts: Product[];
   constructor(
     private activatedRoute: ActivatedRoute,
     private homeShopService: HomeShopService,
     private uxService: UxService,
     private productService: ProductService,
     private orderService: OrderService,
+    private companyCategoryService: CompanyCategoryService,
     private router: Router,
   ) {
     this.activatedRoute.params.subscribe(r => {
       this.catergoryId = r.id;
       this.subCatergoryId = r.subId;
+      if (!this.catergoryId)
+        this.getCatergories();
 
-      this.getProducts();
+      if (this.catergoryId) {
+        this.getProducts(this.catergoryId);
+        this.getSelectedCatagory(this.catergoryId);
+      }
     });
   }
 
   ngOnInit() {
-    this.initOrder();
   }
-  initOrder() {
-    this.order = this.orderService.currentOrderValue;
-    if (!this.order) {
-      this.order = {
-        OrdersId: '',
-        OrderNo: 'Shop',
-        CompanyId: COMPANY,
-        CustomerId: '',
-        AddressId: '',
-        Notes: '',
-        OrderType: ORDER_TYPE_SALES,
-        Total: 0,
-        Paid: 0,
-        Due: 0,
-        InvoiceDate: new Date(),
-        DueDate: '',
-        CreateUserId: 'shop',
-        ModifyUserId: 'shop',
-        Status: 'Not paid',
-        StatusId: 1,
-        Orderproducts: []
-      }
-      this.orderService.updateOrderState(this.order);
-    }
 
+  getCatergories() {
+    this.companyCategoryService.systemCategoryListObservable.subscribe(data => {
+      this.catergories = data || [];
+      if (this.catergories.length > 0)
+        this.catergories = this.catergories.filter(x => Number(x.StatusId) === 1);
+    })
   }
-  like() { }
-  updateTotalPrice(quantity) {
-    if (!quantity) {
-      quantity = 1;
-    }
-    this.quantity = quantity;
+
+  getSelectedCatagory(catergoryId: string) {
+    this.companyCategoryService.systemCategoryListObservable.subscribe(data => {
+      // debugger
+      if (data && data.length) {
+        this.catergory = data.find(x => x.CategoryId === catergoryId);
+        if (this.catergory && this.catergory.Children && this.catergory.Children.length) {
+          this.catergory.Children.map(x => x.Class = []);
+          const child = this.catergory.Children.find(x => x.CategoryId === this.subCatergoryId);
+          if (child)
+            child.Class = ['active'];
+        }
+      }
+    })
   }
-  onNavItemClicked(p) { }
   back() {
     if (this.catergory && this.catergory.Products && this.catergory.Products.length) {
       const model = this.catergory.Products[0];
@@ -107,82 +87,25 @@ export class ShopCollectionComponent implements OnInit {
     }
   }
 
-  getProducts() {
-    this.subProducts = [];
-    this.tyboShopModel = this.productService.currentTyboShopValue;
-    this.productService.tyboShopObservable.subscribe(data => {
-      if (data && data) {
-        this.products = data.Products;
-        if (this.subCatergoryId)
-          this.subProducts = this.products.filter(x => x.CategoryGuid === this.subCatergoryId);
-        this.products = this.products.filter(x => x.ParentCategoryGuid === this.catergoryId);
-        if (this.products.length)
-          this.tittle = `More ${this.products[0].ParentCategoryName} products`;
-
+  getProducts(categoryId, maxId = 9999999) {
+    this.productService.getAllActiveByParentCategoryId(categoryId, maxId).subscribe(data => {
+      if (data) {
+        this.products = data;
+        this.allProducts = data;
+        if (this.subCatergoryId) {
+          this.products = this.allProducts.filter(x => x.CategoryGuid === this.subCatergoryId);
+        }
       }
     });
-
-    this.productService.getTyboShop(9999999);
-
   }
-
-
-  addToCart(product: Product) {
-    if (!this.order)
-      return;
-
-    if (!this.order.Orderproducts)
-      this.order.Orderproducts = [];
-
-    if (this.order && this.order.Orderproducts.length) {
-      if (this.order.CompanyId !== product.CompanyId) {
-        return false;
-      }
-
-    }
-
-    if (product && product.ProductId) {
-      product.SelectedQuantiy = this.selectedQuantiy;
-      const orderproduct = this.mapOrderproduct(product);
-      this.order.Orderproducts.push(orderproduct);
-      if (product.Company) {
-        this.order.Company = product.Company;
-      }
-      this.order.CompanyId = product.CompanyId;
-      this.calculateTotalOverdue();
-      this.order.Total = this.Total;
-      this.orderService.updateOrderState(this.order);
-      this.modalHeading = `${product.Name} added to bag successfully`;
-      this.showCart = true;
-      // this.cart();
-    }
+  select(catergory: Category) {
+    this.router.navigate([`/collections/${catergory.CategoryId}`])
   }
-
-  mapOrderproduct(product: Product): Orderproduct {
-    return {
-      Id: '',
-      OrderId: '',
-      ProductId: product.ProductId,
-      CompanyId: product.CompanyId,
-      ProductName: product.Name,
-      ProductType: 'Product',
-      Colour: product.SelectedCoulor || '',
-      Size: product.SelectedSize || '',
-      Quantity: product.SelectedQuantiy || 1,
-      SubTotal: product.SelectedQuantiy * Number(product.RegularPrice),
-      UnitPrice: product.SalePrice || product.RegularPrice,
-      FeaturedImageUrl: product.FeaturedImageUrl,
-      CreateUserId: '',
-      ModifyUserId: '',
-      StatusId: 1
-    };
-  }
-
-  calculateTotalOverdue() {
-    this.Total = 0;
-    this.order.Orderproducts.forEach(line => {
-      this.Total += (Number(line.UnitPrice) * Number(line.Quantity));
-    });
+  selectSub(catergory: Category, isAll: string = '') {
+    if (isAll != 'all')
+      this.router.navigate([`/collections/${this.catergoryId}/${catergory.CategoryId}`]);
+      else
+      this.router.navigate([`/collections/${this.catergoryId}`]);
 
   }
 }

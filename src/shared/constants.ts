@@ -170,6 +170,22 @@ export const ITEM_TYPES = {
     BANNER4: {
         Name: 'Banner4'
     },
+
+    MOBILE_BANNER1: {
+        Name: 'MobileBanner1'
+    },
+
+    MOBILE_BANNER2: {
+        Name: 'MobileBanner2'
+    },
+
+    MOBILE_BANNER3: {
+        Name: 'MobileBanner3'
+    },
+
+    MOBILE_BANNER4: {
+        Name: 'MobileBanner4'
+    },
     ABOUT: {
         Name: 'About'
     },

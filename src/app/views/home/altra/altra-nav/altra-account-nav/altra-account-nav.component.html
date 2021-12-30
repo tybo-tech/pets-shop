@@ -62,8 +62,8 @@
     </div>
     <app-altra-cart-items></app-altra-cart-items>
 
-    <div class="_bottom">
-        <div class="d-flex justify-content-between totals">
+    <div class="_bottom" >
+        <div class="d-flex justify-content-between totals" *ngIf="order">
             <p>
                 Sub total:
             </p>
@@ -73,7 +73,7 @@
             </p>
         </div>
 
-        <div class="__actions d-flex justify-content-end">
+        <div class="__actions d-flex justify-content-end" *ngIf="order">
             <button class="btn btn-primary" (click)="checkout()">Proceed to checkout</button>
         </div>
     </div>

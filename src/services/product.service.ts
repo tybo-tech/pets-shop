@@ -222,4 +222,11 @@ export class ProductService {
       `${this.url}/api/product/get-all-active-products-for-shop-for-company.php?CompanyId=${companyId}&&MaxId=${maxId}`)
   }
 
+  
+  search(searchString: string) {
+    return this.http.get<Product[]>(
+      `${this.url}/api/product/search.php?SearchString=${searchString}`)
+  }
+
+
 }

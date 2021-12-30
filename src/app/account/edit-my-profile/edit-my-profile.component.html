@@ -1,4 +1,16 @@
 <div class="container" *ngIf="user">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">My Profile</li>
+    </ol>
+  </nav>
+
+  <br>
+  <div class="actions__">
+    <button class="btn btn-light" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+  </div>
+
   <div class="row">
     <div class="col-lg-6">
       <div class="card">

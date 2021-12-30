@@ -1,6 +1,51 @@
 <div class="container" *ngIf="product">
-    <pre>
-        {{product | json}}
-    </pre>
-    </div>
 
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+            <li class="breadcrumb-item"><a routerLink="/products">Products</a></li>
+            <li *ngIf="product.ParentCategoryName" class="breadcrumb-item"><a [routerLink]="'/collections/' + product.ParentCategoryGuid" >{{product.ParentCategoryName}}</a></li>
+            <li *ngIf="product.CategoryName" class="breadcrumb-item"><a [routerLink]="'/collections/' +product.ParentCategoryGuid + '/' + product.CategoryGuid" >{{product.CategoryName}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{product.Name}}</li>
+        </ol>
+    </nav>
+    <br>
+    <div class="row">
+        <!-- <pre>
+            {{product | json}}
+        </pre> -->
+        <div class="col-lg-4">
+            <app-altra-image-slider *ngIf="product.Images" [images]="product.Images"></app-altra-image-slider>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="details">
+                <h6 class="fw-900">
+                    {{product.Name}}
+                </h6>
+
+
+                <p *ngIf="product.CategoryName">
+                    Category: <b>{{product.CategoryName}}</b>
+                </p>
+
+                <h6 class="card-title" *ngIf="!product.OnSale">
+                    {{product.RegularPrice | currency:'R'}}
+                </h6>
+                <h6 class="card-title" *ngIf="product.OnSale">
+                    <del>{{product.RegularPrice | currency:'R'}}</del>
+                    {{product.SalePrice | currency:'R'}}
+                </h6>
+
+
+                <p>
+                    {{product.Description}}
+                </p>
+                <span class="stock-check" *ngIf="product.TotalStock==0">Sold out</span>
+
+                <button (click)="addToCart(product)" class="btn btn-primary btn-big">
+                    <i class="fas fa-shopping-cart for-pc"></i> Add to cart</button>
+            </div>
+        </div>
+    </div>
+</div>

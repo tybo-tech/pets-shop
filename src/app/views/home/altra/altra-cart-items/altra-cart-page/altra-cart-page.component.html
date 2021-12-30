@@ -19,12 +19,12 @@
         <div class="col-lg-4">
 
             <div class="card">
-
+                <div class="card-header bg-light"> Order summary -
+                    {{order?.Orderproducts?.length}} items
+                </div>
                 <div class="card-body" *ngIf="order">
 
-                    <div class="card-header bg-light"> Order summary -
-                        {{order?.Orderproducts?.length}} items
-                    </div>
+              
                     <app-altra-cart-sammary></app-altra-cart-sammary>
                     <button  (click)="show()" class="btn btn-light">Add more items</button>
                     <br>

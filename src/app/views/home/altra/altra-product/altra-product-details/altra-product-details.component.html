@@ -1,0 +1,61 @@
+<div class="card" *ngIf="!productId">
+    <a class="btn btn-light like-btn" (click)="like()">
+      <i class="fas fa-heart  "></i>
+    </a>
+    <div class="image__">
+      <img [src]="product.FeaturedImageUrl" class="card-img-top" (click)="viewMore(product)" alt="...">
+    </div>
+    <div class="card-body">
+      <div class="d-flex justify-content-between">
+        <p class="card-title">{{product.Name}}</p>
+        <p class="card-title"><b>{{product.RegularPrice | currency:'R'}}</b></p>
+      </div>
+      <div style="text-align: left; padding: 1em 0;"> <button (click)="addToCart(product)" class="btn btn-primary">
+          <i class="fas fa-shopping-cart for-pc"></i> Add to cart</button>
+      </div>
+
+    </div>
+  </div>
+
+  <app-altra-product *ngIf="productId && product" [product]="product" (addToCartEvent)="addToCart($event)"></app-altra-product>
+
+
+
+
+
+  <div class="smart-overlay" *ngIf="showCart" (click)="showCartEvent()">
+
+</div>
+
+<div class="smart-modal" *ngIf="showCart">
+  <div class="smart-close d-flex justify-content-between">
+    <div class="h6" style="color: #000; text-transform: capitalize; padding: .4em;">
+      CART <span class="badge rounded-pill bg-dark"> {{carttItems}}</span>
+
+    </div>
+    <i class="far fa-window-close" (click)="showCartEvent()"></i>
+  </div>
+  <br><br>
+  <h6 class="success">Added to cart successfully!
+
+  </h6>
+  <app-altra-cart-items></app-altra-cart-items>
+
+  <div class="_bottom">
+    <div class="d-flex justify-content-between totals" *ngIf="order">
+      <p>
+        Sub total:
+      </p>
+
+      <p>
+        <b>{{order.Total | currency : 'R'}}</b>
+      </p>
+    </div>
+
+    <div class="__actions" *ngIf="order">
+      <button class="btn btn-light" (click)="shopMore()">Add more items</button>
+      <button class="btn btn-primary" (click)="checkout()">Proceed to checkout</button>
+    </div>
+    
+  </div>
+</div>

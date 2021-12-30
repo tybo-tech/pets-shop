@@ -107,11 +107,13 @@
           </div>
         </div>
       </div>
+
+
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingTwo">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            Homepage banners
+            Large screen banners
           </button>
         </h2>
         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
@@ -186,6 +188,87 @@
           </div>
         </div>
       </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#mobileBanners" aria-expanded="false" aria-controls="mobileBanners">
+            Mobile screen banners
+          </button>
+        </h2>
+        <div id="mobileBanners" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+
+            <div class="card">
+              <div class="card-body">
+                <h6>
+                  Fist mobile banner
+                </h6>
+                <div class="" *ngIf="!bannerMobile1">
+                  <a (click)="add(ITEM_TYPES.MOBILE_BANNER1.Name)" class="btn btn-primary">Upload banner 1</a>
+                </div>
+
+                <div class="" *ngIf="bannerMobile1">
+                  <app-image-widget [image]="bannerMobile1.ImageUrl"
+                    (imageChangedEvent)="item = bannerMobile1 ; onImageChangedEvent($event, ITEM_TYPES.MOBILE_BANNER1.Name)">
+                  </app-image-widget>
+                </div>
+
+                <hr>
+
+                <h6>
+                  2nd mobile banner
+                </h6>
+                <div class="" *ngIf="!bannerMobile2">
+                  <a (click)="add(ITEM_TYPES.MOBILE_BANNER2.Name)" class="btn btn-primary">Upload banner 2</a>
+                </div>
+
+                <div class="" *ngIf="bannerMobile2">
+                  <app-image-widget [image]="bannerMobile2.ImageUrl"
+                    (imageChangedEvent)="item = bannerMobile2 ; onImageChangedEvent($event, ITEM_TYPES.MOBILE_BANNER2.Name)">
+                  </app-image-widget>
+                </div>
+
+
+                <hr>
+
+                <h6>
+                  Third mobile banner
+                </h6>
+                <div class="" *ngIf="!bannerMobile3">
+                  <a (click)="add(ITEM_TYPES.MOBILE_BANNER3.Name)" class="btn btn-primary">Upload banner 3</a>
+                </div>
+
+                <div class="" *ngIf="bannerMobile3">
+                  <app-image-widget [image]="bannerMobile3.ImageUrl"
+                    (imageChangedEvent)="item = bannerMobile3 ; onImageChangedEvent($event, ITEM_TYPES.MOBILE_BANNER3.Name)">
+                  </app-image-widget>
+                </div>
+
+
+
+                <hr>
+
+                <h6>
+                  Fourth mobile banner
+                </h6>
+                <div class="" *ngIf="!bannerMobile4">
+                  <a (click)="add(ITEM_TYPES.MOBILE_BANNER4.Name)" class="btn btn-primary">Upload banner 4</a>
+                </div>
+
+                <div class="" *ngIf="bannerMobile4">
+                  <app-image-widget [image]="bannerMobile4.ImageUrl"
+                    (imageChangedEvent)="item = bannerMobile4 ; onImageChangedEvent($event, ITEM_TYPES.MOBILE_BANNER4.Name)">
+                  </app-image-widget>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingThree">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -381,18 +464,18 @@
 
 <br><br>
 <h6>
- Payments settings
+  Payments settings
 </h6>
 <div class="row">
   <div class="col-lg-8">
     <div class="accordion" id="accordionExample">
-    
+
 
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingTwo">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#payFastSection" aria-expanded="false" aria-controls="payFastSection">
-          payfast 
+            payfast
           </button>
         </h2>
         <div id="payFastSection" class="accordion-collapse collapse" aria-labelledby="headingTwo"
@@ -406,15 +489,15 @@
                 </h6>
 
 
-                <input [(ngModel)]="payFast.Name" class="form-control"/>
-                 
+                <input [(ngModel)]="payFast.Name" class="form-control" />
+
                 <br>
                 <h6>
                   Merchant Key
-                 </h6>
-                 <input [(ngModel)]="payFast.Description" class="form-control"/>
+                </h6>
+                <input [(ngModel)]="payFast.Description" class="form-control" />
 
-              <br>
+                <br>
                 <button class="btn btn-primary" (click)="item = payFast; save()">Save payfast</button>
 
               </div>

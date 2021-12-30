@@ -25,6 +25,12 @@ export class HomeSliderComponent implements OnInit {
   banner5: Item;
   banner6: Item;
   banner7: Item;
+
+  bannerMobile1: Item;
+  bannerMobile2: Item;
+  bannerMobile3: Item;
+  bannerMobile4: Item;
+
   constructor(
     private router: Router,
     private itemService: ItemService,
@@ -38,6 +44,11 @@ export class HomeSliderComponent implements OnInit {
         this.banner3 = data.find(x => x.ItemType === ITEM_TYPES.BANNER3.Name);
         this.banner4 = data.find(x => x.ItemType === ITEM_TYPES.BANNER4.Name);
         this.banner4 = data.find(x => x.ItemType === ITEM_TYPES.BANNER4.Name);
+
+        this.bannerMobile1 = data.find(x => x.ItemType === ITEM_TYPES.MOBILE_BANNER1.Name);
+        this.bannerMobile2 = data.find(x => x.ItemType === ITEM_TYPES.MOBILE_BANNER2.Name);
+        this.bannerMobile3 = data.find(x => x.ItemType === ITEM_TYPES.MOBILE_BANNER3.Name);
+        this.bannerMobile4 = data.find(x => x.ItemType === ITEM_TYPES.MOBILE_BANNER4.Name);
       }
 
     })

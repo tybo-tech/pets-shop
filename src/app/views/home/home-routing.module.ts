@@ -31,6 +31,8 @@ import { AltraNavComponent } from './altra/altra-nav/altra-nav.component';
 import { AltraPhoneNavComponent } from './altra/altra-nav/altra-phone-nav/altra-phone-nav.component';
 import { AltraSearchComponent } from './altra/altra-nav/altra-search/altra-search.component';
 import { AltraPaymentMethodsComponent } from './altra/altra-payment-methods/altra-payment-methods.component';
+import { AltraImageSliderComponent } from './altra/altra-product/altra-image-slider/altra-image-slider.component';
+import { AltraProductDetailsComponent } from './altra/altra-product/altra-product-details/altra-product-details.component';
 import { AltraProductComponent } from './altra/altra-product/altra-product.component';
 import { AltraCustomerAddressComponent } from './altra/customer/altra-customer-address/altra-customer-address.component';
 import { AltraBreadcrumbComponent } from './altra/shared/altra-breadcrumb/altra-breadcrumb.component';
@@ -101,8 +103,11 @@ const routes: Routes = [
       { path: 'home/reset-password', component: ResetPasswordComponent },
       { path: 'home/fitting-room', component: FiitingRoomComponent },
       { path: 'shop/product/:id', component: ProductSectionDetailComponent },
+
+      { path: 'collections', component: ShopCollectionComponent },
       { path: 'collections/:id', component: ShopCollectionComponent },
       { path: 'collections/:id/:subId', component: ShopCollectionComponent },
+
       { path: 'home/collections/:id', component: CollectionsComponent },
       { path: 'home/all-collections/:id', component: AllCollectionsComponent },
       { path: 'home/hello-fashion-shop', component: SellWithUsComponent },
@@ -217,7 +222,9 @@ export const declarations = [
   AltraCartPageComponent,
   AltraPhoneNavComponent,
   AltraPaymentMethodsComponent,
-  AltraProductComponent
+  AltraProductComponent,
+  AltraImageSliderComponent,
+  AltraProductDetailsComponent
 
 ];
 

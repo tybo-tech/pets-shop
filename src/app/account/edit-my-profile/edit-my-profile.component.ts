@@ -164,4 +164,8 @@ export class EditMyProfileComponent implements OnInit {
   showSuccess(detail, summary = 'Success', severity = 'success') {
     this.messageService.add({ severity: severity, summary: summary, detail: detail });
   }
+  logout() {
+    this.accountService.logout();
+}
+
 }

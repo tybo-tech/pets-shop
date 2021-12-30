@@ -1,6 +1,7 @@
+<app-altra-search *ngIf="showSearch"></app-altra-search>
 <div class="__nav-bar d-flex justify-content-between">
     <div class="col" style="text-align: left;">
-        <button class="btn btn-dark"><i class="fas fa-search"></i></button>
+        <button class="btn btn-dark" (click)="showSearch = !showSearch"><i class="fas fa-search"></i></button>
     </div>
     <div class="col" style="text-align: center;">
         <a routerLink="/"> <img *ngIf="websiteLogo" [src]="websiteLogo.ImageUrl" alt="Logo"></a>
@@ -37,7 +38,8 @@
             </p>
         </div>
 
-        <div class="__actions d-flex justify-content-end">
+        <div class="__actions">
+            <button class="btn btn-light" (click)="shopMore()">Add more items</button>
             <button class="btn btn-primary" (click)="checkout()">Proceed to checkout</button>
         </div>
     </div>

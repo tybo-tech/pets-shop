@@ -1,7 +1,21 @@
 <div class="_item">
-    <div class="col"><input placeholder="Search here" type="search">
+    <div class="col">
+        <input placeholder="Search products..." [(ngModel)]="searchString" (keyup)="search()" (change)="search()"  type="search">
+        <div class="results" *ngIf="products && products.length && showResult">
+            <a class="item" *ngFor="let item of products"  [href]="'/products/' + item.ProductId">
+              <div class="">
+                  <img [src]="item.FeaturedImageUrl" alt="">
+              </div>
+
+              <div class="names">
+                {{item.Name}}
+              </div>
+            </a>
+        </div>
     </div>
     <div class="col">
         <button><i class="fas fa-search"></i></button>
     </div>
+
+
 </div>

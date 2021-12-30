@@ -30,6 +30,12 @@ export class BannersComponent implements OnInit {
   banner3: Item;
   banner4: Item;
 
+
+  bannerMobile1: Item;
+  bannerMobile2: Item;
+  bannerMobile3: Item;
+  bannerMobile4: Item;
+
   aboutUs: Item;
   navBarTheme: Item;
   webTitle: Item;
@@ -100,11 +106,18 @@ export class BannersComponent implements OnInit {
     this.itemService.getItems(COMPANY, ITEM_TYPES.SETTINGS.Name).subscribe(data => {
       this.items = data || [];
       this.websiteLogo = this.items.find(x => x.ItemType === ITEM_TYPES.LOGO.Name);
+
       this.banner1 = this.items.find(x => x.ItemType === ITEM_TYPES.BANNER1.Name);
       this.banner2 = this.items.find(x => x.ItemType === ITEM_TYPES.BANNER2.Name);
       this.banner3 = this.items.find(x => x.ItemType === ITEM_TYPES.BANNER3.Name);
       this.banner4 = this.items.find(x => x.ItemType === ITEM_TYPES.BANNER4.Name);
       this.banner4 = this.items.find(x => x.ItemType === ITEM_TYPES.BANNER4.Name);
+
+      this.bannerMobile1 = this.items.find(x => x.ItemType === ITEM_TYPES.MOBILE_BANNER1.Name);
+      this.bannerMobile2 = this.items.find(x => x.ItemType === ITEM_TYPES.MOBILE_BANNER2.Name);
+      this.bannerMobile3 = this.items.find(x => x.ItemType === ITEM_TYPES.MOBILE_BANNER3.Name);
+      this.bannerMobile4 = this.items.find(x => x.ItemType === ITEM_TYPES.MOBILE_BANNER4.Name);
+
       this.aboutUsImage = this.items.find(x => x.ItemType === ITEM_TYPES.ABOUT_IMAGE.Name);
       this.aboutUs = this.items.find(x => x.ItemType === ITEM_TYPES.ABOUT.Name) || ITEM_ABOUT_US;
       this.navBarTheme = this.items.find(x => x.ItemType === ITEM_TYPES.NAV_BARTHEME.Name) || ITEM_NAVBARTHEME;

@@ -1,0 +1,27 @@
+@import "../../../../../../assets/styles/color";
+.tiles {
+    .tile {
+        padding: 0.5em;
+        border: 1px solid $cloud;
+        margin: 0.5em;
+        img {
+            width: 3em;
+            cursor: pointer;
+        }
+    }
+
+    .active {
+        border-color: $primary;
+    }
+}
+
+.showing {
+    min-height: 30vh;
+    img {
+        width: 100%;
+
+        @media only screen and (max-width: 600px) {
+            width: 100%;
+        }
+    }
+}

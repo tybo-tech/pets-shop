@@ -1,58 +1,52 @@
-<!-- <div *ngIf="products" class="main">
-  <section *ngIf="subProducts && subProducts.length">
-    <h3 class="text-bold">
-      {{subProducts[0].CategoryName}}
-    </h3>
-
-    <app-products-widget *ngIf="products &&  products.length" [products]="products"></app-products-widget>
-
-    <div class="product-section col-1-of-1">
-
-
-    </div>
-  </section>
-  <app-product-slider *ngIf="products && products.length" [products]="products" [tittle]="tittle"></app-product-slider>
-
-</div> -->
-
-
 <div class="container">
+  <div id="list-cats" *ngIf="!catergoryId">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Categories</li>
+      </ol>
+    </nav>
+    <br>
 
-  <h3 class="text-bold">
-    {{subProducts[0].CategoryName}}
-  </h3>
-  <div class="row" *ngIf="products && products.length">
-    <div class="col-lg-3" *ngFor="let product of products  | searchproductshome:searchString; let i = index">
-      <div class="card">
-        <a class="btn btn-light like-btn" (click)="like()">
-          <i class="fas fa-heart  "></i>
-        </a>
-
-        <img [src]="product.FeaturedImageUrl" class="card-img-top" (click)="viewMore(product)" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">{{product.RegularPrice | currency:'R'}}</h5>
-          <h6 class="card-title">{{product.Name}}</h6>
-        </div>
-
-        <div class="card-footer primary" (click)="addToCart(product)">
-          Add to cart
+    <div class="row">
+      <div class="col-lg-2" *ngFor="let cat of catergories">
+        <div class="cat" [ngStyle]="{'background-image': 'url(' + cat.ImageUrl || defImage + ')'}">
+          <button (click)="select(cat)"> {{cat.Name}}</button>
         </div>
       </div>
+
     </div>
   </div>
 
-</div>
 
-
-
-
-<div class="quick-add" *ngIf="showCart">
-  <div class="form">
-    <app-cart-items *ngIf="order" [order]="order"></app-cart-items>
-
-    <div class="form-item">
-      <button (click)="showCart = false" class="btn btn-secondary" style="margin-right: 2em;">Continue shopping</button>
-      <button (click)="showCart = false" class="btn btn-primary">Checkout</button>
+  <div id="list-cats" *ngIf="catergoryId && catergory">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item"><a routerLink="/collections">Categories</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{catergory.Name}}</li>
+      </ol>
+    </nav>
+    <br>
+    <ul class="nav nav-tabs" *ngIf="catergory && catergory.Children">
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page"  (click)="selectSub(null, 'all')" *ngIf="subCatergoryId">All</a>
+        <a class="nav-link active" aria-current="page"  *ngIf="!subCatergoryId">All</a>
+      </li>
+      <li class="nav-item" *ngFor="let item of catergory.Children">
+        <a class="nav-link" [ngClass]="item.Class" (click)="selectSub(item)" >{{item.Name}}</a>
+      </li>
+   
+    </ul>
+    <br>
+    <div class="row" *ngIf="products && products.length">
+      <div class="col-lg-3" *ngFor="let product of products  | searchproductshome:searchString; let i = index">
+        <app-altra-product-details [product]="product"></app-altra-product-details>
+  
+      </div>
     </div>
+
   </div>
+
+
 </div>

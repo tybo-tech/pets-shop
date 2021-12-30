@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-lg-12">
+  <div class="col-lg-12 pc-only">
     <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
       <div class="carousel-indicators" *ngIf="banner1">
         <button type="button" *ngIf="banner1" data-bs-target="#carouselExampleIndicators"
@@ -50,12 +50,62 @@
       </div>
       <button class="carousel-control-prev" type="button" *ngIf="banner1"
         data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <i class="btn-carousel  fas fa-chevron-left"></i>
         <span class="visually-hidden">Previous</span>
       </button>
       <button class="carousel-control-next" *ngIf="banner1" type="button"
         data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <i class="btn-carousel  fas fa-chevron-right"></i>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+
+
+  <div class="col-lg-12 phone-only">
+    <div id="carouselExampleIndicatorsMobile" class="carousel carousel-dark slide" data-bs-ride="carousel">
+      <div class="carousel-indicators" *ngIf="bannerMobile1">
+        <button type="button" *ngIf="bannerMobile1" data-bs-target="#carouselExampleIndicatorsMobile"
+          data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+
+
+        <button type="button" *ngIf="bannerMobile2" data-bs-target="#carouselExampleIndicatorsMobile"
+          data-bs-slide-to="1" aria-label="Slide 2"></button>
+
+
+        <button type="button" *ngIf="bannerMobile3" data-bs-target="#carouselExampleIndicatorsMobile"
+          data-bs-slide-to="2" aria-label="Slide 3"></button>
+
+        <button type="button" *ngIf="bannerMobile4" data-bs-target="#carouselExampleIndicatorsMobile"
+          data-bs-slide-to="3" aria-label="Slide 3"></button>
+
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active" *ngIf="bannerMobile1">
+          <img [src]="bannerMobile1.ImageUrl" (click)=viewImage(bannerMobile1.ImageUrl) class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" *ngIf="bannerMobile2">
+          <img [src]="bannerMobile2.ImageUrl" (click)=viewImage(bannerMobile2.ImageUrl) class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" *ngIf="bannerMobile3">
+          <img [src]="bannerMobile3.ImageUrl" (click)=viewImage(bannerMobile3.ImageUrl) class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" *ngIf="bannerMobile4">
+          <img [src]="bannerMobile4.ImageUrl" (click)=viewImage(bannerMobile4.ImageUrl) class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" *ngIf="banner5">
+          <img [src]="banner5.ImageUrl" (click)=viewImage(banner5.ImageUrl) class="d-block w-100" alt="...">
+        </div>
+       
+      </div>
+      <button class="carousel-control-prev" type="button" *ngIf="bannerMobile1"
+        data-bs-target="#carouselExampleIndicatorsMobile" data-bs-slide="prev">
+        <i class="btn-carousel  fas fa-chevron-left"></i>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" *ngIf="bannerMobile1" type="button"
+        data-bs-target="#carouselExampleIndicatorsMobile" data-bs-slide="next">
+        <i class="btn-carousel  fas fa-chevron-right"></i>
         <span class="visually-hidden">Next</span>
       </button>
     </div>

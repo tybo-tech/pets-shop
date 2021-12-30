@@ -1,0 +1,14 @@
+<div *ngIf="images">
+    <div class="showing">
+        <div class="image" *ngIf="currentImage" [@fliInOut] = "state">
+            <img [src]="currentImage.Url"   (swipeleft)="handleSwipe('left')"
+            (swiperight)="handleSwipe('right')">
+        </div>
+    </div>
+
+    <div class="tiles d-flex justify-content-start">
+        <div class="tile" *ngFor="let image of images" [ngClass]="image.Class">
+            <img [src]="image.Url" (click)="toggle(image)" alt="">
+        </div>
+    </div>
+</div>

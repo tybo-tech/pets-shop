@@ -28,6 +28,7 @@ import { AltraCartPageComponent } from './altra/altra-cart-items/altra-cart-page
 import { AltraPhoneNavComponent } from './altra/altra-nav/altra-phone-nav/altra-phone-nav.component';
 import { AltraPaymentMethodsComponent } from './altra/altra-payment-methods/altra-payment-methods.component';
 import { AltraProductComponent } from './altra/altra-product/altra-product.component';
+import { AltraProductDetailsComponent } from './altra/altra-product/altra-product-details/altra-product-details.component';
 
 @NgModule({
   imports: [
@@ -50,7 +51,7 @@ import { AltraProductComponent } from './altra/altra-product/altra-product.compo
 
   ],
   providers: [MessageService],
-  declarations: [...declarations, AltraCartItemsComponent, AltraCheckoutComponent, AltraCheckoutCustomerComponent, AltraCartSammaryComponent, AltraDeliveryComponent, AltraCustomerAddressComponent, AltraBreadcrumbComponent, AltraPaymentsComponent, AltraCartPageComponent, AltraPhoneNavComponent, AltraPaymentMethodsComponent, AltraProductComponent]
+  declarations: [...declarations, AltraCartItemsComponent, AltraCheckoutComponent, AltraCheckoutCustomerComponent, AltraCartSammaryComponent, AltraDeliveryComponent, AltraCustomerAddressComponent, AltraBreadcrumbComponent, AltraPaymentsComponent, AltraCartPageComponent, AltraPhoneNavComponent, AltraPaymentMethodsComponent, AltraProductComponent, AltraProductDetailsComponent]
 })
 export class HomeModule { }
 

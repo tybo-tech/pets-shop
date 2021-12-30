@@ -13,6 +13,7 @@ export class AltraPhoneNavComponent implements OnInit {
   @Input() websiteLogo;
   @Input() order;
   showCart: boolean;
+  showSearch: boolean;
   constructor(
     @Inject(DOCUMENT) private _document: HTMLDocument,
     private router: Router,
@@ -40,9 +41,15 @@ export class AltraPhoneNavComponent implements OnInit {
     }
   }
 
-  
+
   checkout() {
     this.showCartEvent();
     this.router.navigate([`shopping/checkout/${this.order.OrdersId || 'add'}/information`])
-}
+  }
+
+  shopMore() {
+    this.showCartEvent();
+    this.router.navigate([`products`])
+  }
+
 }
