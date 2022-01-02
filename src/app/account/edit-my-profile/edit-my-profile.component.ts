@@ -56,8 +56,8 @@ export class EditMyProfileComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.accountService.currentUserValue;
-    if(!this.user)
-    this.routeTo.navigate(['sign-in'])
+    if (!this.user)
+      this.routeTo.navigate(['sign-in'])
     if (this.user) {
 
       this.user.AddressLineHome = this.user.AddressLineHome || ''
@@ -70,7 +70,7 @@ export class EditMyProfileComponent implements OnInit {
     })
   }
 
-  
+
   back() {
     if (this.navHistory && this.navHistory.BackToAfterLogin) {
       this.routeTo.navigate([this.navHistory.BackToAfterLogin]);
@@ -166,6 +166,9 @@ export class EditMyProfileComponent implements OnInit {
   }
   logout() {
     this.accountService.logout();
-}
+  }
+  dashboard() {
+    this.routeTo.navigate(['/admin/dashboard'])
 
+  }
 }

@@ -9,6 +9,7 @@
   <br>
   <div class="actions__">
     <button class="btn btn-light" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    <button class="btn btn-light" *ngIf="user.UserType == 'Admin'" (click)="dashboard()"><i class="fas tachometer-alt"></i> Dashboard</button>
   </div>
 
   <div class="row">

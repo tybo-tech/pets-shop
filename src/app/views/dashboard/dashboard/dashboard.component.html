@@ -1,46 +1,19 @@
-<!-- 
-
-
-<div class="dasboard">
-  <router-outlet></router-outlet>
-</div>
-
-
-<div class="pop" *ngIf="message">
-  <p>
-    {{message}}
-  </p>
-  <div class="">
-    <span class="material-icons" (click)="message = ''">
-      close
-    </span>
+<div class="__dashboard">
+  <app-dash-nav></app-dash-nav>
+  <div class="_outlet">
+    <router-outlet></router-outlet>
   </div>
 </div>
+<p-toast position="top-right" baseZIndex="9999999999"></p-toast>
 
 
-
-<div class="overlay" *ngIf="loadingUx && loadingUx.Loading">
-  <div class="loading">
-    <mat-spinner></mat-spinner>
-    <h3 *ngIf="loadingUx.Message">
-      {{loadingUx.Message}}
-    </h3>
-  </div>
-</div>
-<button *ngIf="showScrollUp" class="scroll-top" (click)="totop()">
-  <span class="material-icons">
-    arrow_circle_up
-  </span>
-</button> -->
-
-
-<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" *ngIf="user" routerLink="/admin/dashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Hi, {{user.Name}}</a>
+<!-- <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" *ngIf="user" routerLink="/admin/dashboard"
+    routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Hi, {{user.Name}}</a>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
     data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
       <a class="nav-link px-3 pointer" (click)="logout()">Sign out</a>
@@ -52,71 +25,16 @@
   <div class="row">
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar pc-only">
       <div class="position-sticky pt-3">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" routerLink="/admin/dashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
-              <i class="fas fa-th-large"></i>
-              Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/admin/dashboard/invoices/all" routerLinkActive="active-link" >
-              <i class="fas fa-file"></i>
-              Orders
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/admin/dashboard/categories" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
-              <i class="fas fa-list-ul"></i>
-              Catergories
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/admin/dashboard/products" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
-              <i class="fas fa-shopping-cart"></i>
-              Products
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/admin/dashboard/promotions" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
-              <i class="fas fa-tag"></i>
-              Promotions
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/admin/dashboard/banners" routerLinkActive="active-link"
-              [routerLinkActiveOptions]="{exact: true}">
-              <i class="fas fa-cogs"></i>
-              Settings
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/admin/dashboard/customers" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
-              <i class="fas fa-users"></i>
-              Customers
-            </a>
-          </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" routerLink="/admin/dashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
-              <i class="fas fa-chart-bar"></i>
-              Reports
-            </a>
-          </li> -->
-
-        </ul>
-
+      
       </div>
     </nav>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-      <div
-        class="router-outlet">
+      <div class="router-outlet">
         <router-outlet></router-outlet>
       </div>
 
 
     </main>
   </div>
-</div>
-
+</div> -->

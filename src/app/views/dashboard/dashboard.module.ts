@@ -24,6 +24,7 @@ import {ToastModule} from 'primeng/toast';
 
 import {EditorModule} from 'primeng/editor';
 import { AltraOperatingHoursComponent } from './settings/altra-operating-hours/altra-operating-hours.component';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   imports: [
@@ -54,6 +55,8 @@ import { AltraOperatingHoursComponent } from './settings/altra-operating-hours/a
     ToastModule
 
   ],
-  declarations: [...declarations, AltraOperatingHoursComponent]
+  declarations: [...declarations, AltraOperatingHoursComponent],
+  providers: [MessageService],
+
 })
 export class DashboardModule { }

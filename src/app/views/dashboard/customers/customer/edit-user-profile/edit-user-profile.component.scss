@@ -1,4 +1,21 @@
-.top-bar {
-    grid-template-columns: 10% auto;
+.container {
+  .card {
+    @media only screen and (max-width: 600px) {
+      margin: 1em auto;
+    }
   }
-  
+}
+
+.actions__ {
+  padding: 1em 0;
+  display: grid;
+  grid-template-columns: repeat(2, 8.5em);
+  grid-gap: .5em;
+  button {
+    display: block;
+    width: fit-content;
+    @media only screen and (max-width: 600px) {
+      width: 100%;
+    }
+  }
+}

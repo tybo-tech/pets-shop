@@ -1,168 +1,145 @@
-  <div class="nav" *ngIf="isAdmin">
-    <ul (click)="toggleNav()">
+<div class="phone-menu-bar phone-only">
+  <div class="d-flex justify-content-between">
+    <div class="text-muted" style="font-size: 1.5em;">
+      <i class="fas fa-bars" (click)="showNav = !showNav"></i>
+    </div>
+
+    <div class="_logo">
+      <img *ngIf="websiteLogo" [src]="websiteLogo.ImageUrl" alt="">
+    </div>
+  </div>
+</div>
+
+<div class="__main phone-only" *ngIf="showNav">
+
+  <div class="d-flex justify-content-between">
+    <div class="text-muted" style="font-size: 1.5em;">
+      <i class="fas fa-times" (click)="showNav = !showNav"></i>
+    </div>
+
+
+    <div class="_logo">
+      <img *ngIf="websiteLogo" [src]="websiteLogo.ImageUrl" alt="">
+    </div>
+  </div>
+  <div class="nav_bar">
+    <br>
+    <hr>
+    <br>
+    <div *ngIf="item; else navItems"></div>
+  </div>
+
+</div>
+
+
+<div class="pc_nav pc-only">
+
+  <div class="d-flex justify-content-center">
+
+
+    <div class="_logo">
+      <br>
+      <img *ngIf="websiteLogo" [src]="websiteLogo.ImageUrl" alt="">
+    </div>
+  </div>
+  <div class="nav_bar">
+    <hr>
+    <br>
+    <div *ngIf="item; else navItems"></div>
+  </div>
+
+</div>
+
+<ng-template #navItems>
+
+  <div class="__nav">
+    <ul>
       <li>
-        <a routerLink="/admin/dashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
-          <span class="material-icons">
-            dashboard
-          </span>
+        <a aria-current="page" routerLink="/admin/dashboard" routerLinkActive="active-link" (click)="showNav = !showNav"
+          [routerLinkActiveOptions]="{exact: true}">
+          <i class="fas fa-th-large"></i>
           Dashboard
         </a>
       </li>
       <li>
-        <a routerLink="/admin/dashboard/products" routerLinkActive="active-link"
-          [routerLinkActiveOptions]="{exact: true}">
-          <span class="material-icons">
-            list
-          </span>
-          Products
-        </a>
-      </li>
-      <li>
-        <a routerLink="/admin/dashboard/categories" routerLinkActive="active-link"
-          [routerLinkActiveOptions]="{exact: true}">
-          <span class="material-icons">
-            list
-          </span>
-          Categories
-        </a>
-      </li>
-
-      <li>
-        <a routerLink="/admin/dashboard/customers" routerLinkActive="active-link"
-          [routerLinkActiveOptions]="{exact: true}">
-          <span class="material-icons">
-            supervisor_account
-          </span>
-          Customers
-        </a>
-      </li>
-
-      <li>
-        <a routerLink="/admin/dashboard/invoices/all" routerLinkActive="active-link"
-          [routerLinkActiveOptions]="{exact: true}">
-          <span class="material-icons">
-            library_books
-          </span>
+        <a routerLink="/admin/dashboard/invoices/all" routerLinkActive="active-link" (click)="showNav = !showNav">
+          <i class="fas fa-file"></i>
           Orders
         </a>
       </li>
       <li>
-        <a routerLink="/admin/dashboard/promotions" routerLinkActive="active-link"
+        <a routerLink="/admin/dashboard/categories" routerLinkActive="active-link" (click)="showNav = !showNav"
           [routerLinkActiveOptions]="{exact: true}">
-          <span class="material-icons">
-            local_offer
-          </span>
+          <i class="fas fa-list-ul"></i>
+          Catergories
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/dashboard/products" routerLinkActive="active-link" (click)="showNav = !showNav"
+          [routerLinkActiveOptions]="{exact: true}">
+          <i class="fas fa-shopping-cart"></i>
+          Products
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/dashboard/promotions" routerLinkActive="active-link" (click)="showNav = !showNav"
+          [routerLinkActiveOptions]="{exact: true}">
+          <i class="fas fa-tag"></i>
           Promotions
         </a>
       </li>
+
       <li>
-        <a routerLink="/admin/dashboard/banners" routerLinkActive="active-link"
+        <a routerLink="/admin/dashboard/banners" routerLinkActive="active-link" (click)="showNav = !showNav"
           [routerLinkActiveOptions]="{exact: true}">
-          <span class="material-icons">
-            local_offer
-          </span>
-          Banners
+          <i class="fas fa-cogs"></i>
+          Settings
         </a>
       </li>
-
+      <li>
+        <a routerLink="/admin/dashboard/customers" routerLinkActive="active-link" (click)="showNav = !showNav"
+          [routerLinkActiveOptions]="{exact: true}">
+          <i class="fas fa-users"></i>
+          Customers
+        </a>
+      </li>
+      <li>
+        <a routerLink="/" routerLinkActive="active-link" (click)="showNav = !showNav"
+          [routerLinkActiveOptions]="{exact: true}">
+          <i class="fas fa-store"></i>
+          Shop
+        </a>
+      </li>
       <!-- <li>
-        <a routerLink="/admin/dashboard/shipping" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
-          <span class="material-icons">
-            local_shipping
-          </span>
-          Shipping methods
+        <a  routerLink="/admin/dashboard" routerLinkActive="active-link" (click)="showNav = !showNav"
+          [routerLinkActiveOptions]="{exact: true}">
+          <i class="fas fa-chart-bar"></i>
+          Reports
         </a>
       </li> -->
 
-      <li>
-        <a (click)="logout()" style="display: block;top: 2em; color: rgb(97, 0, 0);cursor: pointer;">
-          <span class="material-icons">
-            logout
-          </span>
-          Logout
-        </a>
-      </li>
-
-
     </ul>
+
+    <br>
+    <br>
+    <hr>
+    <br><br>
+    <div class="__nav" *ngIf="user">
+      <ul>
+        <li>
+          <a aria-current="page" routerLink="/admin/dashboard/edit-user-profile" routerLinkActive="active-link"
+            (click)="showNav = !showNav" [routerLinkActiveOptions]="{exact: true}">
+            <i class="far fa-user-circle"></i>
+            {{user.Name}}
+            <br>
+            <small
+              style="font-weight: 300; position: relative;left: 1em; text-transform: lowercase; border-bottom: 1px solid rgb(221, 221, 221);">{{user.Email}}</small>
+            <br>
+            <small
+              style="font-weight: 300; position: relative;left: 1em; text-transform: lowercase;">{{user.UserType}}</small>
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
-
-  <div class="nav" *ngIf="isSuper">
-
-    <ul (click)="toggleNav()">
-      <li>
-        <a routerLink="/admin/dashboard/super-categories" routerLinkActive="active-link"
-          [routerLinkActiveOptions]="{exact: true}">
-          <span class="material-icons">
-            list
-          </span>
-          Categories
-        </a>
-      </li>
-      <li>
-        <a routerLink="/admin/dashboard/super-variations" routerLinkActive="active-link"
-          [routerLinkActiveOptions]="{exact: true}">
-          <span class="material-icons">
-            list
-          </span>
-          Variations
-        </a>
-      </li>
-
-      <li>
-        <a routerLink="/admin/dashboard/invoices/all" routerLinkActive="active-link"
-          [routerLinkActiveOptions]="{exact: true}">
-          <span class="material-icons">
-            supervisor_account
-          </span>
-          All orders
-        </a>
-      </li>
-
-      <li>
-        <a routerLink="/admin/dashboard/super-companies" routerLinkActive="active-link"
-          [routerLinkActiveOptions]="{exact: true}">
-          <span class="material-icons">
-            supervisor_account
-          </span>
-          Companies
-        </a>
-      </li>
-
-      <li>
-        <a routerLink="/admin/dashboard/invoices/all" routerLinkActive="active-link"
-          [routerLinkActiveOptions]="{exact: true}">
-          <span class="material-icons">
-            library_books
-          </span>
-          Invoices
-        </a>
-      </li>
-      <li>
-        <a routerLink="/admin/dashboard/all-users" routerLinkActive="active-link"
-          [routerLinkActiveOptions]="{exact: true}">
-          <span class="material-icons">
-            people_outline
-          </span>
-          Users
-        </a>
-      </li>
-      <li>
-        <a routerLink="/admin/dashboard/jobs" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
-          <span class="material-icons">
-            playlist_add_check
-          </span>
-          Job cards
-        </a>
-      </li>
-      <li>
-        <a (click)="logout()" style="display: block;top: 2em; color: rgb(97, 0, 0);cursor: pointer;">
-          <span class="material-icons">
-            logout
-          </span>
-          Logout
-        </a>
-      </li>
-
-    </ul>
-  </div>
+</ng-template>

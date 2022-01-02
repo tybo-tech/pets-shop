@@ -6,6 +6,7 @@ import { User } from 'src/models';
 import { ModalModel } from 'src/models/modal.model';
 import { UploadService, UserService, AccountService } from 'src/services';
 import { IMAGE_DONE } from 'src/shared/constants';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-edit-user-profile',
@@ -16,19 +17,14 @@ export class EditUserProfileComponent implements OnInit {
 
   user: User;
   showLoader;
-  modalModel: ModalModel = {
-    heading: undefined,
-    body: [],
-    ctaLabel: 'Done',
-    routeTo: 'admin/dashboard/user-profile',
-    img: undefined
-  };
+
   constructor(
     private uploadService: UploadService,
     private userService: UserService,
     private routeTo: Router,
     private accountService: AccountService,
     private location: Location,
+    private messageService: MessageService,
 
 
   ) { }
@@ -70,15 +66,17 @@ export class EditUserProfileComponent implements OnInit {
           data.Company = this.user.Company;
           this.accountService.updateUserState(data);
           this.showLoader = false;
-          this.modalModel.heading = `Success!`
-          this.modalModel.img = IMAGE_DONE
-          this.modalModel.body.push('Profile updated.')
+       
+          this.messageService.add({ severity: 'success', summary: 'Profile updated.' ,detail: '' });
+
         }
       })
     }
 
   }
-
+  logout() {
+    this.accountService.logout();
+  }
   back() {
 
     this.location.back();
