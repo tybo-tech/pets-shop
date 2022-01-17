@@ -6,7 +6,7 @@
 
             <div class="card">
                 <div class="card-header bg-dark text-white"><i class="fa fa-shopping-cart"></i> CART <span
-                        class="badge rounded-pill bg-primary"> {{carttItems}}</span>
+                        class="badge rounded-pill bg-primary"> {{order?.CartItems || 0}}</span>
                 </div>
                 <div class="card-body">
                     <app-altra-cart-items></app-altra-cart-items>
@@ -20,15 +20,16 @@
 
             <div class="card">
                 <div class="card-header bg-light"> Order summary -
-                    {{order?.Orderproducts?.length}} items
+                    {{order?.CartItems || 0}} items
                 </div>
                 <div class="card-body" *ngIf="order">
 
-              
-                    <app-altra-cart-sammary></app-altra-cart-sammary>
-                    <button  (click)="show()" class="btn btn-light">Add more items</button>
+                    <app-button [btnClass]="'btn-big'" [type]="'secondary'" style="width: 100%;" (primaryButtonEvent)="show()"
+                        [label]="'Add more items'"></app-button>
                     <br>
-                    <button class="btn btn-primary" (click)="checkout()">Proceed to checkout</button>
+                    <app-button [btnClass]="'btn-big'" style="width: 100%;" (primaryButtonEvent)="checkout()"
+                        [label]="'Proceed to checkout'">
+                    </app-button>
                 </div>
             </div>
         </div>

@@ -1,0 +1,34 @@
+<div class="card moveInLeft" *ngIf="category">
+  <div class="card-header bg-dark text-white">Sub Categories {{(' | '+categories?.length) || ''}}
+  </div>
+  <div class="card-body">
+    <div class="mb-3">
+      <input type="search" class="form-control" [(ngModel)]="searchString" placeholder="🔎 Filter by name"
+        id="exampleInputEmail1" aria-describedby="emailHelp">
+    </div>
+
+    <div class="mb-3">
+      <button type="button" (click)="add()" class="btn btn-primary">Add sub category</button>
+    </div>
+    <ul class="list-group" *ngIf="categories && categories.length">
+      <li class="list-group-item d-flex justify-content-start align-items-center"
+        *ngFor="let item of categories  | searchitem: searchString; let i = index">
+
+        <div class="image-parent" (click)="view(item)">
+          <div>
+            <img [src]="item.ImageUrl" *ngIf="item.ImageUrl" class="img-fluid" alt="quixote">
+            <img *ngIf="!item.ImageUrl" src="assets/images/image-holder.svg" class="img-fluid" alt="quixote">
+          </div>
+
+        </div>
+        <p style="cursor: pointer;">
+          <b (click)="view(item)">{{item.Name}}</b>
+          <small class="text-muted"><a (click)="confirm($event, item)" class="link-danger">Delete</a></small>
+        </p>
+
+      </li>
+
+    </ul>
+
+  </div>
+</div>

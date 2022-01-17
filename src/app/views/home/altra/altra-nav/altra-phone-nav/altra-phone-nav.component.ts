@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { OrderService } from 'src/services';
 
 @Component({
   selector: 'app-altra-phone-nav',
@@ -9,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AltraPhoneNavComponent implements OnInit {
   @Input() navClass;
+  @Input() styles;
   @Input() carttItems;
   @Input() websiteLogo;
   @Input() order;
@@ -17,11 +19,16 @@ export class AltraPhoneNavComponent implements OnInit {
   constructor(
     @Inject(DOCUMENT) private _document: HTMLDocument,
     private router: Router,
+    private orderService: OrderService,
 
 
   ) { }
 
   ngOnInit(): void {
+    this.orderService.OrderObservable.subscribe(data => {
+      this.order = data;
+  })
+
   }
   showCartEvent() {
     this.showCart = !this.showCart;

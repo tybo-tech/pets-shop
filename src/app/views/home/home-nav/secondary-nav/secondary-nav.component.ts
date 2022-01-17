@@ -13,6 +13,7 @@ import { COMPANY_TYPE, ITEM_TYPES } from 'src/shared/constants';
 export class SecondaryNavComponent implements OnInit {
   allCategories: Category[];
   @Input() carttItems;
+  @Input() style;
   categories: Category[];
   parentCategories: Category[];
   category: Category;
@@ -20,6 +21,10 @@ export class SecondaryNavComponent implements OnInit {
   showCart: boolean;
   productsMenu: MenuItemm = {
     Name: 'All products',
+    Class: []
+  }
+  aboutMenu: MenuItemm = {
+    Name: 'About Us',
     Class: []
   }
   navBarTheme: import("c:/ndu/apps/pets-shop/src/models/item.model").Item;
@@ -73,6 +78,15 @@ export class SecondaryNavComponent implements OnInit {
   }
   goto(url: string) {
     this.router.navigate([url])
+  }
+
+  openParent(item: Category) {
+    if (item.Children && item.Children.length)
+      return;
+
+    this.showMenu = false;
+    this.router.navigate(['/collections', item.CategoryId]);
+
   }
 
 }

@@ -36,8 +36,12 @@
 
 
       <div class="__actions__ d-flex justify-content-end">
-        <button  type="button" (click)="backtoInfo()" class="btn btn-light">back to Shipping</button>
-        <button type="submit" class="btn btn-primary" [disabled]="!merchantKey || !merchantId" >Pay now</button>
+  
+        
+        <app-button [btnClass]="'btn-big'" [type]="'secondary'" (primaryButtonEvent)="backtoInfo()" [label]="backLabel">
+        </app-button>
+        <app-button [btnClass]="'btn-big'" [label]="'Pay now'">
+        </app-button>
     </div>
     </form>
   </div>

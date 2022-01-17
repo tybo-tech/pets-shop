@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="344" height="344" viewBox="0 0 344 344">
+  <g id="image-holder" transform="translate(-2791 -143)">
+    <g id="user-placeholder" transform="translate(640)">
+      <rect id="Rectangle_2" data-name="Rectangle 2" width="344" height="344" rx="6" transform="translate(2151 143)" fill="#eaeaea"/>
+      <g id="perm_identity_black_24dp" transform="translate(2189 181)">
+        <path id="Path_7" data-name="Path 7" d="M0,0H268V268H0Z" fill="none"/>
+      </g>
+    </g>
+    <g id="insert_photo_black_24dp" transform="translate(2842 239)">
+      <path id="Path_9" data-name="Path 9" d="M0,0H242.206V152.312H0Z" fill="none"/>
+      <path id="Path_10" data-name="Path 10" d="M214.313,19.426V134.407H29.414V19.426h184.9m0-16.426H29.414C14.886,3,3,10.392,3,19.426V134.407c0,9.034,11.886,16.426,26.414,16.426h184.9c14.528,0,26.414-7.392,26.414-16.426V19.426C240.727,10.392,228.841,3,214.313,3ZM150.127,75.766,110.505,107.55,82.242,86.279l-39.621,31.7H201.106L150.127,75.766Z" transform="translate(-0.76 -0.76)"/>
+    </g>
+  </g>
+</svg>

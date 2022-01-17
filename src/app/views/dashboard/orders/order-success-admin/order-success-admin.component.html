@@ -1,0 +1,27 @@
+<div class="smart-overlay">
+
+</div>
+
+<div class="smart-modal">
+    <div class="smart-close d-flex justify-content-between">
+        <i class="far fa-window-close" (click)="close()"></i>
+    </div>
+
+    <div class="_body">
+        <br><br>
+        <h6 class="success alert alert-success">Order placed successfully!</h6>
+        <br>
+
+        
+        <div class="card">
+            <div class="card-header bg-dark text-white">Sammary
+            </div>
+            <div class="card-body">
+                <app-altra-cart-sammary></app-altra-cart-sammary>
+                <br>
+                <button class="btn btn-light btn-big" (click)="back()" style="margin-right: 1em;"> Orders details</button>
+                <button class="btn btn-primary btn-big" (click)="newOrder()">Add new order</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule, declarations } from './dashboard-routing.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -23,16 +21,18 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import {ToastModule} from 'primeng/toast';
 
 import {EditorModule} from 'primeng/editor';
-import { AltraOperatingHoursComponent } from './settings/altra-operating-hours/altra-operating-hours.component';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import {ConfirmPopupModule} from 'primeng/confirmpopup';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { AltraLayoutComponent } from './settings/banners/altra-layout/altra-layout.component';
+import { PromotionProductsComponent } from './promotion/add-promotion/promotion-products/promotion-products.component';
+import { AltraNgStyleComponent } from './settings/banners/altra-ng-style/altra-ng-style.component';
 
 @NgModule({
   imports: [
-    CommonModule,
+    SharedModule,
     MatNativeDateModule,
     DashboardRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
     MatTabsModule,
     MatFormFieldModule,
     MatSelectModule,
@@ -52,11 +52,12 @@ import { MessageService } from 'primeng/api';
     ImageCropperModule,
     EditorModule,
     QuillModule.forRoot(),
-    ToastModule
+    ToastModule,
+    ConfirmPopupModule
 
   ],
-  declarations: [...declarations, AltraOperatingHoursComponent],
-  providers: [MessageService],
+  declarations: [...declarations, AltraLayoutComponent, PromotionProductsComponent, AltraNgStyleComponent],
+  providers: [MessageService, ConfirmationService],
 
 })
 export class DashboardModule { }

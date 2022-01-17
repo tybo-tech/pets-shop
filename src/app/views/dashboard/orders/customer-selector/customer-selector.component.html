@@ -1,62 +1,130 @@
-<div class="quick-add">
-  <div class="form">
-    <h3>
-      Select Customer
-    </h3>
+<div class="row">
+  <div class="col-lg-6">
 
-    <div class="form-item">
-      <button class="primary" *ngIf="items && items.length" (click)="add()">
-        add new customer
-      </button>
-      <div class="items" *ngIf="items && items.length">
-
-        <div class="">
-
-          <div *ngFor="let item of items; let i = index" class="item" (click)="selectItem(item)">
-            <div class="image">
-              <img *ngIf="item.Dp" [src]="item.Dp" alt="">
-              <img *ngIf="!item.Dp" src="assets/images/common/profile-user.svg" alt="">
-            </div>
-
-            <div class="name">
-              <p>
-                {{item.Name}}
-                <!-- <span>
-                  {{item.PhoneNumber}}
-                </span> -->
-
-                <span>
-                  {{item.Email}}
-                </span>
-
-                <!-- <span>
-                  {{item.AddressLineHome}}
-                </span> -->
-              </p>
-            </div>
-
-          </div>
-
-
+    <div class="card" *ngIf="selecting">
+      <div class="card-header bg-dark text-white"><i class="fas fa-user-circle"></i> Select/Create customer
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <input type="search" class="form-control" [(ngModel)]="searchString"
+            placeholder="🔎 Filter by name, surname, email or phone" id="exampleInputEmail1"
+            aria-describedby="emailHelp">
         </div>
 
+        <div class="mb-3">
+          <button type="button" (click)="add()" class="btn btn-primary">Add customer</button>
 
+        </div>
+        <ul class="list-group" *ngIf="users && users.length">
+          <li class="list-group-item d-flex justify-content-start align-items-center"
+            *ngFor="let item of users  | searchuser: searchString; let i = index">
 
+            <div class="image-parent" (click)="selectItem(item)">
+              <img [src]="item.Dp" *ngIf="item.Dp" class="img-fluid" alt="quixote">
+              <img *ngIf="!item.Dp" src="assets/images/user-placeholder.svg" class="img-fluid" alt="quixote">
+
+            </div>
+            <p>
+              <b (click)="selectItem(item)">{{item.Name}}</b>
+              <small (click)="selectItem(item)" class="text-muted">{{item.Email}}</small>
+              <small class="text-muted" (click)="selectItem(item)">{{item.PhoneNumber}}</small>
+            </p>
+
+          </li>
+
+        </ul>
       </div>
+    </div>
 
-      <div class="" *ngIf="items && !items.length">
-        <div class="no-data">
-          <h1>
-            You don't have customers yet.
-          </h1>
-          <img src="assets/images/common/customer.svg" alt="">
+
+    <div class="card" *ngIf="!selecting && order && order.Customer">
+      <div class="card-header bg-dark text-white"><i class="fas fa-user-circle"></i> Selected customer
+      </div>
+      <div class="card-body">
+        <div class="d-flex justify-content-start _dp">
+          <img [src]="order.Customer.Dp" *ngIf="order.Customer.Dp" class="img-fluid" alt="quixote">
+          <img *ngIf="!order.Customer.Dp" src="assets/images/user-placeholder.svg" class="img-fluid" alt="quixote">
           <p>
-            To create an order you need to have customers in the system. Click the button below to create a new customer
+            Name: <b>{{order.Customer.Name}}</b> <br>
+            Email: <b>{{order.Customer.Email}}</b> <br>
+            Phone: <b>{{order.Customer.PhoneNumber}}</b> <br>
+            <br>
+            <a (click)="selecting = true" class="link-primary" style="margin-right: 1.5em;">Change</a>
+            <a (click)="edit(order.Customer)" class="link-info">Edit</a>
           </p>
-
-          <button class="more" (click)="add()">Add customer</button>
         </div>
       </div>
     </div>
+
   </div>
+
+  <div class="col-lg-4">
+
+    <div class="card">
+      <div class="card-header bg-dark text-white">Actions
+      </div>
+      <div class="card-body">
+        <button class="btn btn-light btn-big"  (click)="cancel()" style="margin-right: 1em;"><i class="fas fa-arrow-left"></i> Cancel</button>
+        <button class="btn btn-primary btn-big" (click)="gotoProducts()">Proceed to products</button>
+      </div>
+    </div>
+  </div>
+
 </div>
+
+<!-- <div class="form">
+  <h3>
+    selectItem Customer
+  </h3>
+
+  <div class="form-item">
+    <button class="primary" *ngIf="items && items.length" (click)="add()">
+      add new customer
+    </button>
+    <div class="items" *ngIf="items && items.length">
+
+      <div class="">
+
+        <div *ngFor="let item of items; let i = index" class="item" (click)="selectItemItem(item)">
+          <div class="image">
+            <img *ngIf="item.Dp" [src]="item.Dp" alt="">
+            <img *ngIf="!item.Dp" src="assets/images/common/profile-user.svg" alt="">
+          </div>
+
+          <div class="name">
+            <p>
+              {{item.Name}}
+    
+
+              <span>
+                {{item.Email}}
+              </span>
+
+          
+            </p>
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+
+    </div>
+
+    <div class="" *ngIf="items && !items.length">
+      <div class="no-data">
+        <h1>
+          You don't have customers yet.
+        </h1>
+        <img src="assets/images/common/customer.svg" alt="">
+        <p>
+          To create an order you need to have customers in the system. Click the button below to create a new customer
+        </p>
+
+        <button class="more" (click)="add()">Add customer</button>
+      </div>
+    </div>
+  </div>
+</div> -->

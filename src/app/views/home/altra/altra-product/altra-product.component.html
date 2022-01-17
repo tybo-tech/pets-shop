@@ -14,7 +14,7 @@
         <!-- <pre>
             {{product | json}}
         </pre> -->
-        <div class="col-lg-4">
+        <div class="col-lg-6">
             <app-altra-image-slider *ngIf="product.Images" [images]="product.Images"></app-altra-image-slider>
         </div>
 
@@ -43,8 +43,11 @@
                 </p>
                 <span class="stock-check" *ngIf="product.TotalStock==0">Sold out</span>
 
-                <button (click)="addToCart(product)" class="btn btn-primary btn-big">
-                    <i class="fas fa-shopping-cart for-pc"></i> Add to cart</button>
+                <!-- <button (click)="addToCart(product)" class="btn btn-primary btn-big">
+                    <i class="fas fa-shopping-cart for-pc"></i> Add to cart</button> -->
+
+                    <app-button *ngIf = "addToCartLabel" (primaryButtonEvent)="addToCart($event)" [input]="product" [label] = "addToCartLabel"></app-button>
+
             </div>
         </div>
     </div>

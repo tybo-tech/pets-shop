@@ -50,7 +50,7 @@ export class SignInComponent implements OnInit {
   navHistory: NavHistoryUX;
   showAdd: boolean;
   websiteLogo: Item;
-  backTo: string;
+  backTo: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -142,7 +142,6 @@ export class SignInComponent implements OnInit {
         this.error = '';
         this.accountService.updateUserState(user);
         if (this.backTo) {
-          debugger
           this.backTo = this.backTo.split('_').join('/');
           this.routeTo.navigate([this.backTo]);
           return;

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Modal } from 'bootstrap';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Category, User } from 'src/models';
 import { AccountService, CompanyCategoryService } from 'src/services';
 import { COMPANY_TYPE } from 'src/shared/constants';
@@ -33,12 +33,15 @@ export class SuperCategoriesComponent implements OnInit {
   addHeading = 'Add category';
   categoryTertiaryList: Category[] = [];
   closeResult: string = '';
+  defImage: string = '';
+  searchString: string;
   constructor(
     private accountService: AccountService,
     private categoryService: CompanyCategoryService,
     private router: Router,
     private modalService: NgbModal,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
   ) { }
 
   ngOnInit() {
@@ -47,21 +50,11 @@ export class SuperCategoriesComponent implements OnInit {
     this.categoryService.systemCategoryListObservable.subscribe(data => {
       if (data && data.length) {
         this.allCategories = data;
-        this.categories = this.allCategories.filter(x => Number(x.StatusId) === 1);
+        this.categories = data;
         this.categories.map(x => x.IsSelected = false);
-        this.categories.forEach(item => {
-          if (item.Children)
-            item.Children = item.Children.filter(x => Number(x.StatusId) === 1);
-        })
-        this.parentCategories = this.categories.filter(x => x.CategoryType === 'Parent');
-        if (this.category && this.categories) {
-          const c = this.categories.find(x => x.CategoryId === this.category.CategoryId);
-          if (c)
-            this.view(c);
 
-        }
-        else
-          this.view(this.categories[0]);
+        this.parentCategories = this.categories.filter(x => x.CategoryType === 'Parent');
+      
       }
     });
   }
@@ -145,11 +138,9 @@ export class SuperCategoriesComponent implements OnInit {
     this.categories = this.allCategories;
   }
 
-  view(item: Category) {
-    this.categories.map(x => x.Class = []);
-    this.category = item;
-    this.category.Class = ['active'];
-    this.subCategory = null;
+  view(cat: Category) {
+    this.router.navigate(['admin/dashboard/category', cat.CategoryId]);
+    return;
   }
 
   viewSubCategory(subCategory: Category) {
@@ -159,14 +150,14 @@ export class SuperCategoriesComponent implements OnInit {
       this.subCategory.Class = ['active'];
     }
   }
-  delete(item: Category) {
-    item.StatusId = 2;
-    this.categoryService.update(item).subscribe(data => {
-      if (data && data.CategoryId) {
-        this.ngOnInit();
-      }
-    });
-  }
+  // delete(item: Category) {
+  //   item.StatusId = 2;
+  //   this.categoryService.update(item).subscribe(data => {
+  //     if (data && data.CategoryId) {
+  //       this.ngOnInit();
+  //     }
+  //   });
+  // }
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -199,11 +190,37 @@ export class SuperCategoriesComponent implements OnInit {
     }
   }
 
-  
+
   onImageChangedEvent(url) {
     if (!this.addEditCategory)
       return;
 
     this.addEditCategory.ImageUrl = url;
+  }
+
+  confirm(event: Event, category) {
+    this.confirmationService.confirm({
+      target: event.target,
+      message: 'Are you sure that you want to proceed?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        //confirm action
+        this.delete(category);
+      },
+      reject: () => {
+        //reject action
+      }
+    });
+  }
+
+  delete(category: Category) {
+    if (!category)
+      return;
+
+    category.StatusId = 99;
+    this.categoryService.update(category).subscribe(data => {
+      this.categoryService.getSystemCategories('All', COMPANY_TYPE);
+      this.messageService.add({ severity: 'error', summary: 'Category deleted.', detail: '' });
+    })
   }
 }

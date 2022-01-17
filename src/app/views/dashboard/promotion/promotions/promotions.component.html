@@ -1,87 +1,63 @@
-<div class="data-view-main" *ngIf="promotions">
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Discounts</li>
+    </ol>
+  </nav>
 
-  <div class="top-bar-conatiner">
+  <br>
+  <div class="row">
+    <div class="col-12 col-sm-8 col-lg-5">
+      <h6 class="text-muted mb-3">Discounts {{(' | '+promotions?.length) || ''}}</h6>
 
-    <div class="top-bar">
-      <div class="menu-back">
-        <span class="material-icons" (click)="back()">
-          chevron_left
-        </span>
+      <div class="mb-3">
+        <button type="button" (click)="add()" class="btn btn-primary">Create Discount</button>
+
       </div>
 
-
-      <div class="name">
-        Promotions
-      </div>
-    </div>
-  </div>
-
-  <app-dashbread [items]="items"></app-dashbread>
-
-
-  <div class="basic">
-    <h3 class="heading" *ngIf="promotions">
-      <span class="head"> My promotions</span> <span (click)="add()">Create promotion</span>
-    </h3>
-    <div class="list">
-
-      <div class="list-item" *ngFor="let item of promotions" (click)="view(item)">
-        <div class="col">
-          <p>
-            <b>  {{item.PromoType}}</b>
-            <span class="sub">
-              {{item.PromoCode || item.Name}}
-              <span class="material-icons">
-                fiber_manual_record
-              </span>
-             
-              {{item.PromoGroup}}
-              <span class="material-icons">
-                fiber_manual_record
-              </span>
-           
-              {{item.DiscountValue}} {{item.DiscountUnits}}
+      <br>
+      <ul class="list-group" *ngIf="promotions && promotions.length">
+        <li class="list-group-item d-flex justify-content-start align-items-center pointer"
+          *ngFor="let item of promotions;let i = index">
+       <div>
+        <p (click)="view(item)" >
+          <b>  {{item.PromoType}}</b>
+          <span class="sub">
+            {{item.PromoCode || item.Name}}
+         
+            {{item.PromoGroup}}
+         
+         
+            {{item.DiscountValue}} {{item.DiscountUnits}}
 
 
-            </span>
+          </span>
 
-            <span class="sub">
-              {{item.AppliesTo}}
-              <span class="material-icons">
-                fiber_manual_record
-              </span>
-              {{item.MinimumRequirementValue}}   {{item.MinimumRequirements}}
-            </span>
-            <span class="sub">
-              {{item.StartDate  | date: 'mediumDate'}} <b>{{item.StartTime}}</b>
-              <span class="material-icons">
-                trending_flat
-              </span>
-              {{item.FinishDate  | date: 'mediumDate'}} <b>{{item.FinishTime}}</b>
-            </span>
-          </p>
-        </div>
-      </div>
-
-      <div class="empty" *ngIf="!promotions || !promotions.length">
-        <p>
-          <span class="material-icons">
-            info
-            </span>
-          Your promotions will show here.
+          <span class="sub">
+            {{item.AppliesTo}}
+            {{item.MinimumRequirementValue}}   {{item.MinimumRequirements}}
+          </span>
+          <span class="sub">
+            {{item.StartDate  | date: 'mediumDate'}} <b>{{item.StartTime}}</b>
+        
+            {{item.FinishDate  | date: 'mediumDate'}} <b>{{item.FinishTime}}</b>
+          </span>
         </p>
-      </div>
-    </div>
-  </div>
 
-  <div class="basic">
-    <div class="ctas">
+        <p>
+          <small class="text-muted"><a (click)="confirm($event, item)" class="link-danger">Delete</a></small>
 
-      <div class="cta">
-        <button class="secondary" mat-button color="primary" (click)="back()">
-          Back
-        </button>
-      </div>
+        </p>
+       </div>
+
+        </li>
+
+      </ul>
+
+      <app-empty-state *ngIf="!promotions || !promotions.length"
+        [message]="'No promotions found yet, promotion list will show here.'"></app-empty-state>
     </div>
   </div>
 </div>
+

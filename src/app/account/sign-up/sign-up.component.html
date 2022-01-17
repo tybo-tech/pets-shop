@@ -94,12 +94,15 @@
       </div>
 
       <div class="form-group">
-        <button class="btn btn-primary btn-big" (click)="onSubmit(rForm.value)" [disabled]="!rForm.valid">
+        <!-- <button class="btn btn-primary btn-big" (click)="onSubmit(rForm.value)" [disabled]="!rForm.valid">
           Sign up
-        </button>
+        </button> -->
+
+        <app-button  [isDisabled]="!rForm.valid" [btnClass]="'btn-big'" (primaryButtonEvent)="onSubmit(rForm.value)" [label] = "'Sign up'"></app-button>
+
         <span class="error">{{error}}</span>
         <div class="go-login">
-          ALREADY HAVE AN ACCOUNT? <a routerLink="/sign-in"> LOGIN</a>
+          ALREADY HAVE AN ACCOUNT? <a [routerLink]="'/sign-in/'+backTo"> LOGIN</a>
         </div>
       </div>
     </div>

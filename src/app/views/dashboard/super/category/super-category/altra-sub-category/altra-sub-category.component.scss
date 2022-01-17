@@ -1,0 +1,22 @@
+.image-parent {
+    max-width: 5em;
+    img{
+      border-radius: .5em;
+      width: 4em;
+    }
+  }
+  
+  .selections{
+    padding: .5em;
+  }
+  
+  p {
+    padding: .2em 1em;
+    span, small {
+      display: block;
+    }
+  }
+  
+  .link-danger{
+    cursor: pointer;
+  }

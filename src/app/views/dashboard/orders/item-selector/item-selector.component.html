@@ -1,97 +1,106 @@
-<div class="list-selector">
-  <div class="items" *ngIf="items && items.length">
-    <div class="steps">
-      <div class="step active">
-        Select product for the order.
+<div class="row">
+  <div class="col-lg-6">
+
+    <div class="card" *ngIf="selecting">
+      <div class="card-header bg-dark text-white"><i class="fas fa-shopping-cart"></i> Select products
       </div>
-    </div>
-    <div *ngFor="let item of items; let i = index" class="item" (click)="selectItem(item)">
-      <div class="image">
-        <img [src]="item.FeaturedImageUrl" alt="">
-      </div>
-
-      <div class="name">
-        <p>
-          {{item.Name}}
-          <span>
-            {{item.RegularPrice   | currency:'R'}}
-          </span>
-          <!-- <span>
-            In Stock: {{item.Quantity}}
-          </span> -->
-        </p>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="" *ngIf="items && !items.length">
-    <div class="no-data">
-      <h1>
-        You don't have products yet.
-      </h1>
-      <img src="assets/images/common/customer.svg" alt="">
-      <p>
-        To create an order you need to have products in the system. Click the button below to create a new product
-      </p>
-
-      <button class="more" (click)="add()">Add product</button>
-    </div>
-  </div>
-  <button class="more" *ngIf="items && items.length" (click)="add()">
-    quick add product
-  </button>
-
-
-  <div class="overlay" *ngIf="product" (click)="product = null"></div>
-
-  <div class="item-options" *ngIf="product">
-    <div class="close">
-      <span class="material-icons" (click)="product = null">
-        close
-      </span>
-    </div>
-    <div class="images">
-      <div class="image">
-        <img id="i" [src]="product.FeaturedImageUrl" alt="">
-      </div>
-    </div>
-
-    <div class="details">
-      <p>
-        {{product.Name}}
-        <span>
-          {{product.RegularPrice | currency:'R'}}
-        </span>
-      </p>
-
-      <div class="product-options " *ngIf="sizes">
-        <div *ngFor="let option of sizes.ProductVariationOptions" class="option size-btn"
-          (click)="selectColor(option, 'Size')">
-          {{option.OptionName}}
-          <span class="material-icons" *ngIf="option.IsSelected">
-            check_circle
-          </span>
+      <div class="card-body">
+        <div class="mb-3">
+          <input type="search" class="form-control" [(ngModel)]="searchString"
+            placeholder="🔎 Filter by name, surname, email or phone" id="exampleInputEmail1"
+            aria-describedby="emailHelp">
         </div>
-      </div>
 
-      <div class="product-options " *ngIf="colors">
-
-        <div *ngFor="let option of colors.ProductVariationOptions" class="option color-btn"
-          [ngStyle]="{background: option.Description}" (click)="selectColor(option, 'Coulor')">
-          <span class="material-icons" *ngIf="option.IsSelected">
-            check_circle
-          </span>
+        <div class="mb-3">
+          <button type="button" (click)="addProduct()" class="btn btn-primary">Add customer</button>
 
         </div>
-      </div>
+        <ul class="list-group" *ngIf="products && products.length">
+          <li class="list-group-item d-flex justify-content-between pointer"
+            *ngFor="let product of products  | searchproduct: searchString; let i = index">
+            <div class="d-flex justify-content-start">
+              <div class="image-parent" (click)="selectItem(product)">
+                <img [src]="product.FeaturedImageUrl" *ngIf="product.FeaturedImageUrl" class="img-fluid" alt="quixote">
+                <img *ngIf="!product.FeaturedImageUrl" src="assets/images/image-holder.svg" class="img-fluid"
+                  alt="quixote">
 
-      <div class="qyt">
-        <label for="">Quantity</label>
-        <input type="number" [(ngModel)]="product.SelectedQuantiy" class="qty" name="" id="">
-      </div>
+              </div>
+              <p (click)="selectItem(product)">
+                <b>{{product.Name}}</b>
+                <span class="badge rounded-pill bg-info text-dark">Stock: {{product.TotalStock}} </span>
 
-      <button (click)="addToCart()">Add to bag</button>
+                <span class="price" *ngIf="!product.OnSale">
+                  {{product.RegularPrice | currency:'R'}}
+                </span>
+                <span class="price" *ngIf="product.OnSale">
+                  <del> {{product.RegularPrice | currency:'R'}}</del> <br>
+                  {{product.SalePrice | currency:'R'}}
+                </span>
+
+              </p>
+            </div>
+
+
+            <div>
+              <input type="number" [(ngModel)]="product.SelectedQuantiy" class="qty form-control">
+              <button (click)="addToCart(product)"
+                [disabled]="product.SelectedQuantiy <= 0 || product.SelectedQuantiy > product.TotalStock"
+                class="btn btn-dark" style="margin-top: .4em;"> <i class="fa fa-cart-plus"></i> Add</button>
+            </div>
+
+
+
+          </li>
+
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="card" *ngIf="!selecting && order && order.Orderproducts && order.Orderproducts.length">
+      <div class="card-header bg-dark text-white"><i class="fas fa-shopping-cart"></i> Customer cart
+      </div>
+      <div class="card-body">
+        <div class="list-item d-flex justify-content-start _dp" *ngFor="let item of order.Orderproducts; let i = index">
+          <div class="images">
+            <img [src]="item.FeaturedImageUrl" *ngIf="item.FeaturedImageUrl" alt="quixote">
+            <img *ngIf="!item.FeaturedImageUrl" src="assets/images/user-placeholder.svg" alt="quixote">
+          </div>
+          <p>
+            Name: <b>{{item.ProductName}}</b> <br>
+            Price: <b>{{item.UnitPrice | currency:'R'}}</b> <br>
+            Sub Total: <b>{{item.SubTotal | currency:'R'}}</b> <br> <br>
+            <app-qty-btn [val]="item.Quantity" [max]="item.TotalStock" (qtyEvent)="qtyEvent($event, item)">
+            </app-qty-btn>
+            <br>
+            <a (click)="deleteFromCart(item, i)" class="link-danger" style="margin-right: 1.5em;">Remove</a>
+            <!-- <a href="" class="link-info">Edit</a> -->
+          </p>
+        </div>
+        <br>
+        <div class="actions">
+          <h6 class="d-flex justify-content-between">
+            <span>Items Total</span>
+            <span>{{order.Total | currency : 'R'}}</span>
+          </h6>
+          <br>
+          <button class="btn btn-dark" (click)="selecting = true">Add more items</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-lg-4">
+
+    <div class="card">
+      <div class="card-header bg-dark text-white">Actions
+      </div>
+      <div class="card-body">
+        <button class="btn btn-light btn-big"  (click)="gotoInfo()" style="margin-right: 1em;"><i class="fas fa-arrow-left"></i> Customer</button>
+        <button class="btn btn-primary btn-big" (click)="gotoShipping()">Proceed to checkout</button>
+      </div>
     </div>
   </div>
+
 </div>

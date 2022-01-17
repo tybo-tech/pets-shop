@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/models';
 import { ProductService } from 'src/services';
@@ -12,6 +12,7 @@ export class AltraSearchComponent {
     searchString: string;
     products: Product[];
     showResult: boolean;
+    @Input() styles;
     constructor(private productService: ProductService, private router: Router) { }
     search() {
         if (!this.searchString || !this.searchString.length) {

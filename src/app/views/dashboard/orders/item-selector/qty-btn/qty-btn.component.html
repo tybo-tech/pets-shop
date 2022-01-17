@@ -1,0 +1,13 @@
+<div class="input-group">
+    <span class="input-group-btn">
+        <button type="button"  (click)="qtyChanged(-1)" class="btn btn-danger btn-number" data-type="minus" data-field="quant[2]">
+            <li class="fa fa-minus"></li>
+        </button>
+    </span>
+    <input type="number" disabled [(ngModel)]="val" class="form-control input-number"  >
+    <span class="input-group-btn">
+        <button (click)="qtyChanged(1)" type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
+            <li class="fa fa-plus"></li>
+        </button>
+    </span>
+</div>

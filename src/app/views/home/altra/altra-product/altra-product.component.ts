@@ -24,10 +24,13 @@ import { Product } from 'src/models';
 export class AltraProductComponent implements OnInit {
   @Input() product: Product;
   @Output() addToCartEvent: EventEmitter<Product> = new EventEmitter();
+  addToCartLabel: string;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.addToCartLabel = '<i class="fas fa-shopping-cart for-pc"></i> Add to cart'
+
   }
   addToCart(product: Product) {
     this.addToCartEvent.emit(product);

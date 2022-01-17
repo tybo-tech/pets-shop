@@ -1,0 +1,26 @@
+<app-loader *ngIf="showLoader"></app-loader>
+<div *ngIf="products && appliesValue">
+    <div class="mb-3">
+        <input type="search" class="form-control" [(ngModel)]="searchString"
+          placeholder="🔎 Filter by product name or description" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <br>
+      </div>
+    
+    <table class="table" *ngIf="products">
+    
+    
+        <tbody>
+          <tr *ngFor="let product  of products   | searchproduct: searchString; let i = index">
+            <td>
+                <img [src]="product.FeaturedImageUrl" *ngIf="product.FeaturedImageUrl" class="img-fluid" alt="quixote">
+                <img *ngIf="!product.FeaturedImageUrl" src="assets/images/image-holder.svg" class="img-fluid" alt="quixote">
+            </td>
+            <td>{{product.Name}}</td>
+            <td>
+                <button class="btn btn-dark" *ngIf="product.PromotionLinkId !== appliesValue"  (click)="select(product, appliesValue)">Select</button>
+                <button class="btn btn-light" *ngIf="product.PromotionLinkId === appliesValue" (click)="select(product, '', 'Product removed from discount')">Selected</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</div>

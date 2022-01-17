@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { User } from 'src/models';
 import { Promotion } from 'src/models/promotion.model';
 import { AccountService } from 'src/services';
@@ -33,12 +34,17 @@ export class PromotionsComponent implements OnInit {
   constructor(
     private promotionService: PromotionService,
     private accountService: AccountService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
     private router: Router,
 
   ) { }
 
   ngOnInit() {
     this.user = this.accountService.currentUserValue;
+    this.getPromotions();
+  }
+  getPromotions() {
     if (this.user && this.user.CompanyId) {
       this.promotionService.getByCompanyId(this.user.CompanyId, 1).subscribe(data => {
         this.promotions = data || [];
@@ -53,11 +59,11 @@ export class PromotionsComponent implements OnInit {
     }
   }
   view(promotion: Promotion) {
-    this.router.navigate(['admin/dashboard/promotion', promotion.PromotionId]);
+    this.router.navigate(['admin/dashboard/discount', promotion.PromotionId]);
   }
   add() {
     // this.showAdd = true
-    this.router.navigate(['admin/dashboard/promotion/add']);
+    this.router.navigate(['admin/dashboard/discount/add']);
   }
   back() {
     this.router.navigate(['admin/dashboard']);
@@ -70,5 +76,31 @@ export class PromotionsComponent implements OnInit {
 
   filterWith(e) {
     this.promotions = this.inactivePromotions;
+  }
+
+  delete(promotion: Promotion) {
+    if (!promotion)
+      return;
+
+    promotion.StatusId = 99;
+    this.promotionService.update(promotion).subscribe(data => {
+      this.getPromotions();
+      this.messageService.add({ severity: 'error', summary: 'Promotion deleted.', detail: '' });
+    })
+  }
+
+  confirm(event: Event, user) {
+    this.confirmationService.confirm({
+      target: event.target,
+      message: 'Are you sure that you want to proceed?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        //confirm action
+        this.delete(user);
+      },
+      reject: () => {
+        //reject action
+      }
+    });
   }
 }

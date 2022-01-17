@@ -20,6 +20,7 @@ export class AltraDeliveryComponent implements OnInit {
   order: Order;
   orderCollection: Item;
   orderDelivery: Item;
+  backLabel: string;
   constructor(
     private orderService: OrderService,
     private itemService: ItemService,
@@ -29,6 +30,7 @@ export class AltraDeliveryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.backLabel = `<i class="fas fa-arrow-left"></i> Back to info`;
     this.orderService.OrderObservable.subscribe(data => {
       this.order = data;
     });
@@ -52,7 +54,7 @@ export class AltraDeliveryComponent implements OnInit {
   }
 
   deliveryMethodChanged() {
-    this.orderService.deliveryMethodChanged(this.order, this.orderDelivery);
+   this.order = this.orderService.deliveryMethodChanged(this.order, this.orderDelivery);
     return;
   }
 

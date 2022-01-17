@@ -19,6 +19,7 @@ export class AltraAccountNavComponent implements OnInit {
     order: Order;
     showCart: boolean;
     @Input() carttItems;
+    @Input() style;
     showUserProfileModal: boolean;
     constructor(
         private accountService: AccountService,
@@ -83,6 +84,12 @@ export class AltraAccountNavComponent implements OnInit {
     checkout() {
         this.showCartEvent();
         this.router.navigate([`shopping/checkout/${this.order.OrdersId || 'add'}/information`])
+    }
+
+    shopMore(){
+        this.showCartEvent();
+        this.router.navigate([`/products`])
+
     }
 }
 

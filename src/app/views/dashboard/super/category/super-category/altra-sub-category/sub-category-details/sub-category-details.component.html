@@ -1,0 +1,92 @@
+<div class="container" *ngIf="category">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item"><a routerLink="/admin/dashboard/categories">Categories</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="'/admin/dashboard/category/'+category.ParentId">{{category.ParentName}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{category.Name}}</li>
+      </ol>
+    </nav>
+  
+    <br>
+  
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-header bg-dark text-white">Sub Category
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" [(ngModel)]="category.Name" class="form-control" id="name" aria-describedby="emailHelp"
+                  placeholder="Enter name" required>
+              </div>
+  
+              <div class="form-group">
+                <label for="name">Description </label>
+                <textarea type="text" [(ngModel)]="category.Description" class="form-control"></textarea>
+              </div>
+  
+              <div class="form-group">
+                <label for="name">Image </label>
+                <app-image-widget [image]="category.ImageUrl" (imageChangedEvent)="onImageChangedEvent($event)">
+                </app-image-widget>
+              </div>
+  
+  
+            </div>
+          </div>
+        </div>
+        <br>
+  
+        <br>
+        <div class="card moveInLeft" *ngIf="categoryId != 'add'" style="display: none;">
+          <div class="card-header bg-dark text-white">Products
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" [(ngModel)]="category.Name" class="form-control" id="name" aria-describedby="emailHelp"
+                  placeholder="Enter name" required>
+              </div>
+  
+              <div class="form-group">
+                <label for="name">Description </label>
+                <textarea type="text" [(ngModel)]="category.Description" class="form-control"></textarea>
+              </div>
+  
+              <div class="form-group">
+                <label for="name">Image </label>
+                <app-image-widget [image]="category.ImageUrl" (imageChangedEvent)="onImageChangedEvent($event)">
+                </app-image-widget>
+              </div>
+  
+  
+            </div>
+          </div>
+        </div>
+      </div>
+  
+  
+      <div class="col-lg-3">
+        <div class="card">
+          <div class="card-header bg-dark text-white">Actions
+          </div>
+          <div class="card-body">
+  
+            <div class="mx-auto">
+  
+              <button type="submit" type="button" (click)="back()" class="btn btn-light"
+                style="margin-right: 1em;">Back</button>
+              <button type="submit"  [disabled]="!category.Name" type="button" (click)="save()" class="btn btn-primary">Save Category</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+  
+    </div>
+  </div>
+  

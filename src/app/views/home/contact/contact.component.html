@@ -32,9 +32,14 @@
               <label for="message">Message</label>
               <textarea class="form-control" [(ngModel)]="massage" id="message" rows="6" required></textarea>
             </div>
-            <div class="mx-auto">
-              <button type="submit" [disabled]="!name || !email || !phone || !massage" type="button"
-                (click)="sendEmail()" class="btn btn-primary text-right">Submit</button></div>
+            <div class="mx-auto" *ngIf="!loading">
+              
+
+                <app-button *ngIf = "sendLabel" [isDisabled]="!name || !email || !phone || !massage" (primaryButtonEvent)="sendEmail()" [label] = "sendLabel"></app-button>
+
+              </div>
+
+              <app-loader  *ngIf="loading"></app-loader>
           </div>
         </div>
       </div>

@@ -40,7 +40,7 @@ export class AltraBreadcrumbComponent implements OnInit {
   }
   selectItem(item: AltraBread) {
     this.items.map(x => x.MainClass = 'btn btn-light btn-circle');
-    item.MainClass = 'btn btn-primary btn-circle';
+    item.MainClass = 'btn btn-black btn-circle';
   }
 
   goto(item: AltraBread) {

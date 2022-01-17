@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoaderComponent } from 'src/app/shared_components/loader/loader.component';
 import { ImagesComponent } from 'src/shared/components/images/images.component';
 import { SetUpCompanyCategoriesComponent } from './categories/set-up-company-categories/set-up-company-categories.component';
 import { SetUpCompanySubCategoriesComponent } from './categories/set-up-company-categories/set-up-company-sub-categories/set-up-company-sub-categories.component';
@@ -64,6 +63,15 @@ import { RatesComponent } from './rates/rates/rates.component';
 import { BannersComponent } from './settings/banners/banners.component';
 import { ImageWidgetComponent } from './image-widget/image-widget.component';
 import { AltraOperatingHoursComponent } from './settings/altra-operating-hours/altra-operating-hours.component';
+import { SearchUserPipe } from 'src/app/_pipes/search-user.pipe';
+import { EmptyStateComponent } from './settings/empty-state/empty-state.component';
+import { AltraOrderStepsComponent } from '../home/altra/shared/altra-order-steps/altra-order-steps.component';
+import { QtyBtnComponent } from './orders/item-selector/qty-btn/qty-btn.component';
+import { SearchItemPipe } from 'src/app/_pipes/search-item.pipe';
+import { SubCategoryDetailsComponent } from './super/category/super-category/altra-sub-category/sub-category-details/sub-category-details.component';
+import { OrderSuccessAdminComponent } from './orders/order-success-admin/order-success-admin.component';
+import { VatComponent } from './settings/banners/vat/vat.component';
+import { AltraSubCategoryComponent } from './super/category/super-category/altra-sub-category/altra-sub-category.component';
 
 const routes: Routes = [
   {
@@ -72,10 +80,13 @@ const routes: Routes = [
       // { path: '', component: OverviewComponent },
       { path: '', component: Overviewv2Component },
       // { path: '', component: ListProductsComponent },
-      { path: 'customer/:id', component: CustomerComponent },
+      { path: 'customer/:id', component: AddCustomerComponent },
+      { path: 'customer/:id/:backTo', component: AddCustomerComponent },
       { path: 'product/:id', component: AddProductComponent },
       { path: 'order/:id', component: OrderComponent },
       { path: 'create-order', component: CreateOrderComponent },
+      { path: 'create-order/:step', component: CreateOrderComponent },
+      { path: 'create-order/:step/:id', component: CreateOrderComponent },
       { path: 'products', component: ListProductsComponent },
       { path: 'customers', component: CustomersComponent },
       { path: 'invoices/:status', component: ListOrdersComponent },
@@ -90,7 +101,8 @@ const routes: Routes = [
       { path: 'jobs', component: JobCardsComponent },
       { path: 'job-card/:id', component: VeiwJobCardComponent },
       { path: 'categories', component: SuperCategoriesComponent },
-      { path: 'category/:id', component: SuperCategoryComponent },
+      { path: 'category/:id', component: SuperAddAditCategoryComponent },
+      { path: 'sub-category/:id/:parent', component: SubCategoryDetailsComponent },
       { path: 'super-companies', component: SuperCompaniesComponent },
       { path: 'super-company-page/:id', component: SuperCompanyPageComponent },
       { path: 'super-variations', component: SuperVariationsComponent },
@@ -105,19 +117,18 @@ const routes: Routes = [
       { path: 'super-products/:id', component: SuperListProductComponent },
       { path: 'job-estimate/:id', component: JobEstimateComponent },
       { path: 'view-invoice/:id/:type', component: ViewInvoiceComponent },
-      { path: 'promotion/:id', component: AddPromotionComponent },
-      { path: 'promotions', component: PromotionsComponent },
+      { path: 'discount/:id', component: AddPromotionComponent },
+      { path: 'discounts', component: PromotionsComponent },
       { path: 'all-users', component: AllUsersComponent },
       { path: 'super-products-picks', component: SuperProductsPicksComponent },
       { path: 'super-pick/:id', component: SuperPickDetailsComponent },
-      {path:'banners', component: BannersComponent},
+      { path: 'banners', component: BannersComponent },
 
     ]
   }
 ];
 export const declarations: Array<any> = [
   DashboardComponent,
-  LoaderComponent,
   CustomerComponent,
   CustomersComponent,
   ListProductsComponent,
@@ -173,16 +184,25 @@ export const declarations: Array<any> = [
   AllUsersComponent,
   SuperProductsPicksComponent,
   SuperPickDetailsComponent,
+  EmptyStateComponent,
+  AltraOrderStepsComponent,
   // pipes
   SearchProductPipe,
   Overviewv2Component,
   StatisticsComponent,
   ProductListCardsComponent,
-  DashbreadComponent,AddressWidgetDashboardComponent,
+  DashbreadComponent, AddressWidgetDashboardComponent,
   RatesComponent,
   BannersComponent,
   ImageWidgetComponent,
-  AltraOperatingHoursComponent
+  AltraOperatingHoursComponent,
+  SearchUserPipe,
+  QtyBtnComponent,
+  SearchItemPipe,
+  OrderSuccessAdminComponent, 
+  VatComponent,
+   AltraSubCategoryComponent, 
+  SubCategoryDetailsComponent
 
 ];
 @NgModule({

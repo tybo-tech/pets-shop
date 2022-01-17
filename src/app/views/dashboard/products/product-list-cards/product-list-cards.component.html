@@ -11,7 +11,6 @@
     <p>
       <span  (click)="all()">Active ({{activeProducts?.length}})</span>
       <span  (click)="filterWith(STATUS_TRASHED_STRING)">Trash ({{trasheddProducts?.length}})</span>
-      <!-- <span  (click)="filterWith('all')">Active ({{products.length}})</span> -->
     </p>
   </div>
 </div>
@@ -31,9 +30,7 @@
         <span>{{product.ParentCategoryName}} | {{product.CategoryName}}</span>
         <span *ngIf="product.IsJustInTime != 'Just in time'"> {{product.TotalStock}} In stock</span>
         <span *ngIf="product.IsJustInTime == 'Just in time'"> {{product.OrderLimit}} Max. orders</span>
-        <!-- <span class="cat">
-          {{product.IsJustInTime}}
-        </span> -->
+   
         <span class="price" *ngIf="!product.OnSale">
           {{product.RegularPrice | currency:'R'}}
         </span>

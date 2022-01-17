@@ -5,6 +5,8 @@
   margin-bottom: 1em;
   position: relative;
   margin: 1em 0.75em;
+  min-height: 24em;
+
 
   .like-btn {
     position: absolute;
@@ -36,4 +38,8 @@
     width: 100%;
     margin: 0.5em auto;
   }
+}
+
+.alert{
+  margin: .5em 2em;
 }

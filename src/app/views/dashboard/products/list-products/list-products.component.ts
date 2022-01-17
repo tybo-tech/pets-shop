@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { Category } from 'src/models/category.model';
+import { Company } from 'src/models/company.model';
 import { Product } from 'src/models/product.model';
 import { User } from 'src/models/user.model';
 import { BreadModel } from 'src/models/UxModel.model';
 import { CompanyCategoryService } from 'src/services';
 import { AccountService } from 'src/services/account.service';
+import { CompanyService } from 'src/services/company.service';
 import { ProductService } from 'src/services/product.service';
 import { UserService } from 'src/services/user.service';
 import { UxService } from 'src/services/ux.service';
-import { PRODUCT_ORDER_LIMIT_MAX, PRODUCT_TYPE_JIT, PRODUCT_TYPE_STOCK, STATUS_ACTIIVE_STRING } from 'src/shared/constants';
+import { PRODUCT_ORDER_LIMIT_MAX, PRODUCT_TYPE_JIT, PRODUCT_TYPE_STOCK, STATUS_ACTIIVE_STRING, VAT_RATES } from 'src/shared/constants';
 
 @Component({
   selector: 'app-list-products',
@@ -27,25 +30,35 @@ export class ListProductsComponent implements OnInit {
   categories: Category[];
   parentCategoryGuid = '';
   categoryGuid = '';
+  productVAT = '';
   search;
   searchString;
   products: Product[];
+  selectedProducts: Product[] = [];
   newProduct: Product;
   allProducts: Product[];
   showLoader;
   showAdd: boolean;
+  showSelectedOption: boolean;
   items: BreadModel[];
+  company: Company;
   PRODUCT_ORDER_LIMIT_MAX = PRODUCT_ORDER_LIMIT_MAX;
+  VAT_RATES = VAT_RATES;
+  allSelected: boolean;
   constructor(
     private productService: ProductService,
     private accountService: AccountService,
     private companyCategoryService: CompanyCategoryService,
     private router: Router,
     private uxService: UxService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private companyService: CompanyService,
 
   ) { }
 
   ngOnInit() {
+    this.company = this.companyService.companyValue;
     this.items = [
       {
         Name: 'Dashboard',
@@ -58,6 +71,11 @@ export class ListProductsComponent implements OnInit {
 
     ];
     this.user = this.accountService.currentUserValue;
+    this.getProducts();
+    this.loadCategories();
+  }
+  getProducts() {
+    this.showLoader = true;
     this.uxService.updateLoadingState({ Loading: true, Message: 'Loading products, please wait.' })
     this.productService.getProductsSync(this.user.CompanyId).subscribe(data => {
       this.products = data;
@@ -69,9 +87,15 @@ export class ListProductsComponent implements OnInit {
 
       this.uxService.updateLoadingState({ Loading: false, Message: undefined });
     })
-    this.loadCategories();
   }
-
+  selectedChanged() {
+    this.selectedProducts = this.products.filter(x => x.IsSelected);
+  }
+  selectAll() {
+    this.allSelected = !this.allSelected;
+    this.products.map(x => x.IsSelected = this.allSelected);
+    this.selectedChanged();
+  }
   loadCategories() {
     this.companyCategoryService.getSystemCategories(this.user.CompanyId, 'All');
     this.companyCategoryService.systemCategoryListObservable.subscribe(data => {
@@ -87,16 +111,25 @@ export class ListProductsComponent implements OnInit {
   }
 
   selectCategory(categoryId: string) {
-    if (categoryId === '') {
-      this.products = this.allProducts;
-      return true;
+    // if (categoryId === '') {
+    //   this.products = this.allProducts;
+    //   return true;
+    // }
+    // if (categoryId && categoryId.length) {
+    //   if (categoryId.split(':').length === 2) {
+    //     categoryId = categoryId.split(':')[1].trim();
+    //   }
+    //   this.products = this.allProducts.filter(x => x.ParentCategoryGuid === categoryId);
+    // }
+    this.chilndrenCategories = [];
+    if (categoryId.split(':').length === 2) {
+      categoryId = categoryId.split(':')[1].trim();
     }
-    if (categoryId && categoryId.length) {
-      if (categoryId.split(':').length === 2) {
-        categoryId = categoryId.split(':')[1].trim();
-      }
-      this.products = this.allProducts.filter(x => x.ParentCategoryGuid === categoryId);
-      this.chilndrenCategories = this.categories.filter(x => x.ParentId === categoryId && Number(x.StatusId) === 1);
+    this.parentCategoryGuid = categoryId
+    const parent = this.categories.find(x => x.CategoryId === categoryId);
+    if (parent && parent.Children && parent.Children.length) {
+      this.chilndrenCategories = parent.Children;
+      this.categoryGuid = this.chilndrenCategories[0].CategoryId;
     }
   }
 
@@ -188,4 +221,85 @@ export class ListProductsComponent implements OnInit {
 
   }
 
+
+  saveProductsRAnge(deleteSelcted = false) {
+    if (!this.selectedProducts || !this.selectedProducts.length)
+      return;
+
+    if (deleteSelcted) {
+      this.selectedProducts.map(x => x.StatusId = 99);
+      this.productService.updateRange(this.selectedProducts).subscribe(data => {
+        this.getProducts();
+        this.messageService.add({ severity: 'error', summary: 'Selected Products deleted.', detail: '' });
+        this.selectedProducts = [];
+        this.showSelectedOption = false;
+      })
+      return;
+    }
+    if (this.productVAT && this.productVAT.length)
+      this.selectedProducts.map(x => x.ProductVAT = this.productVAT);
+
+    const parent = this.categories.find(x => x.CategoryId === this.parentCategoryGuid);
+    let child: Category;
+    if (parent)
+      child = parent.Children.find(x => x.CategoryId === this.categoryGuid);
+
+    this.selectedProducts.forEach(item => {
+      if (parent) {
+        item.ParentCategoryName = parent.Name;
+        item.ParentCategoryGuid = parent.CategoryId;
+      }
+
+      if (child) {
+        item.CategoryName = child.Name;
+        item.CategoryGuid = child.CategoryId;
+      }
+    })
+    this.productService.updateRange(this.selectedProducts).subscribe(data => {
+      this.getProducts();
+      this.messageService.add({ severity: 'success', summary: 'Selected Products Updated.', detail: '' });
+      this.selectedProducts = [];
+      this.showSelectedOption = false;
+    })
+  }
+
+  delete(product: Product) {
+    if (!product)
+      return;
+
+    product.StatusId = 99;
+    this.productService.update(product).subscribe(data => {
+      this.getProducts();
+      this.messageService.add({ severity: 'error', summary: 'Product deleted.', detail: '' });
+    })
+  }
+  confirm(event: Event, product) {
+    this.confirmationService.confirm({
+      target: event.target,
+      message: 'Are you sure that you want to proceed?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        //confirm action
+        this.delete(product);
+      },
+      reject: () => {
+        //reject action
+      }
+    });
+  }
+
+  confirmDeleteSelected(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target,
+      message: 'All selected products will be deleted, Are you sure that you want to proceed?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        //confirm action
+        this.saveProductsRAnge(true);
+      },
+      reject: () => {
+        //reject action
+      }
+    });
+  }
 }

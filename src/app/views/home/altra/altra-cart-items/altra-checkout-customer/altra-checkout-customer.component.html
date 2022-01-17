@@ -61,9 +61,11 @@
                     </div>
 
                     <div class="mx-auto">
-                        <button type="submit" [disabled]="!customer.Name || userExist" type="button" (click)="save()"
-                            style="margin-right: 2em;" class="btn btn-primary btn-big">Save
-                            information</button>
+
+
+                        <app-button [isDisabled]="!customer.Name || userExist" (primaryButtonEvent)="save()"
+                            [label]="'Save information'"></app-button>
+
 
                         <button class="btn btn-light" *ngIf="editing" (click)="viewing = true; editing = false">Cancel
                             editing</button>
@@ -178,17 +180,20 @@
 
             <br>
             <button class="btn btn-light mr-2" (click)="editingAddress = false">Cancel</button>
-            <button class="btn btn-primary" (click)="saveItem()">Save address</button>
-<br>
-<br>
-<hr>
-<br>
-<br>
+            <app-button (primaryButtonEvent)="saveItem()" [label]="'Save address'"></app-button>
+
+            <br>
+            <br>
+            <hr>
+            <br>
+            <br>
         </div>
 
         <div class="__actions__ d-flex justify-content-end">
-            <button class="btn btn-light" (click)="cart()"><i class="fas fa-arrow-left"></i> Back to cart</button>
-            <button class="btn btn-primary" (click)="checkout()">Proceed to shipping</button>
+            <app-button [btnClass]="'btn-big'" [type]="'secondary'" (primaryButtonEvent)="cart()" [label]="backLabel">
+            </app-button>
+            <app-button [btnClass]="'btn-big'" (primaryButtonEvent)="checkout()" [label]="'Proceed to shipping'">
+            </app-button>
         </div>
 
     </div>

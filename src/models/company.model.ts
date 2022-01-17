@@ -33,4 +33,11 @@ export interface Company {
   BankBranch: string;
   ProductsCount?: any
 
+  IsVATCharged?: string;
+  VATNo?: string;
+  VATPercentage?: number;
+  PriceIncludeVAT?: string;
+  DefaultProductVAT?: string;
+  DeliveryVat?: string;
+
 }

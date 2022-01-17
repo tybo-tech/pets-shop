@@ -1,9 +1,8 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Order, Orderproduct, Product } from 'src/models';
+import { Router } from '@angular/router';
+import { Order, Product } from 'src/models';
 import { OrderService } from 'src/services';
-import { COMPANY, ORDER_TYPE_SALES } from 'src/shared/constants';
 
 @Component({
   selector: 'app-altra-product-details',
@@ -18,6 +17,7 @@ export class AltraProductDetailsComponent implements OnInit {
   selectedQuantiy: number;
   Total: number;
   modalHeading: string;
+  addToCartLabel: `<i class="fas fa-shopping-cart for-pc"></i> Add to cart`;
   showCart: any;
 
   constructor(
@@ -32,6 +32,7 @@ export class AltraProductDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.addToCartLabel = '<i class="fas fa-shopping-cart for-pc"></i> Add to cart'
     this.orderService.OrderObservable.subscribe(data => {
       this.order = data;
       this.carttItems = 0;
@@ -40,29 +41,9 @@ export class AltraProductDetailsComponent implements OnInit {
     })
   }
   addToCart(product: Product) {
-    if (!this.order)
-      this.initOrder();
-
-    if (!this.order.Orderproducts)
-      this.order.Orderproducts = [];
-
-    if (this.order && this.order.Orderproducts.length) {
-      if (this.order.CompanyId !== product.CompanyId) {
-        return false;
-      }
-
-    }
 
     if (product && product.ProductId) {
-      product.SelectedQuantiy = this.selectedQuantiy;
-      const orderproduct = this.mapOrderproduct(product);
-      this.order.Orderproducts.push(orderproduct);
-      if (product.Company) {
-        this.order.Company = product.Company;
-      }
-      this.order.CompanyId = product.CompanyId;
-      this.calculateTotalOverdue();
-      this.order.Total = this.Total;
+      this.order = this.orderService.addToCart(product, this.order);
       this.orderService.updateOrderState(this.order);
       this.modalHeading = `${product.Name} added to bag successfully`;
       // this.cart();
@@ -70,33 +51,6 @@ export class AltraProductDetailsComponent implements OnInit {
     }
   }
 
-  mapOrderproduct(product: Product): Orderproduct {
-    return {
-      Id: '',
-      OrderId: '',
-      ProductId: product.ProductId,
-      CompanyId: product.CompanyId,
-      ProductName: product.Name,
-      ProductType: 'Product',
-      Colour: product.SelectedCoulor || '',
-      Size: product.SelectedSize || '',
-      Quantity: product.SelectedQuantiy || 1,
-      SubTotal: product.SelectedQuantiy * Number(product.RegularPrice),
-      UnitPrice: product.SalePrice || product.RegularPrice,
-      FeaturedImageUrl: product.FeaturedImageUrl,
-      CreateUserId: '',
-      ModifyUserId: '',
-      StatusId: 1
-    };
-  }
-
-  calculateTotalOverdue() {
-    this.Total = 0;
-    this.order.Orderproducts.forEach(line => {
-      this.Total += (Number(line.UnitPrice) * Number(line.Quantity));
-    });
-
-  }
   like() {
 
   }
@@ -127,34 +81,6 @@ export class AltraProductDetailsComponent implements OnInit {
   }
   viewMore(product: Product) {
     this.router.navigate(['/products', product.ProductSlug])
-  }
-
-  initOrder() {
-    this.order = this.orderService.currentOrderValue;
-    if (!this.order) {
-      this.order = {
-        OrdersId: '',
-        OrderNo: 'Shop',
-        CompanyId: COMPANY,
-        CustomerId: '',
-        AddressId: '',
-        Notes: '',
-        Shipping: '',
-        OrderType: ORDER_TYPE_SALES,
-        Total: 0,
-        Paid: 0,
-        Due: 0,
-        InvoiceDate: new Date(),
-        DueDate: '',
-        CreateUserId: 'shop',
-        ModifyUserId: 'shop',
-        Status: 'Not paid',
-        StatusId: 1,
-        Orderproducts: []
-      }
-      this.orderService.updateOrderState(this.order);
-    }
-
   }
 
 }

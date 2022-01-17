@@ -975,19 +975,6 @@ span.date {
     .form-item {
       width: 90%;
     }
-
-    button {
-      background: $pop;
-      margin: 1.5em 0;
-      color: $white;
-      padding: 1em;
-      border-radius: .4em;
-
-      &:disabled {
-        background: $darker-grey;
-        cursor: no-drop;
-      }
-    }
   }
 
   .items {
@@ -1352,5 +1339,5 @@ del {
   font-size: .85em;
   text-align: center;
   font-weight: 600;
-  margin: .4em auto;
+  margin: .4em 0;
 }

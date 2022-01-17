@@ -5,7 +5,7 @@
     </div>
 
     <div class="_logo">
-      <img *ngIf="websiteLogo" [src]="websiteLogo.ImageUrl" alt="">
+      <img *ngIf="websiteLogo" (click)="goto('')" [src]="websiteLogo.ImageUrl" alt="">
     </div>
   </div>
 </div>
@@ -39,7 +39,7 @@
 
     <div class="_logo">
       <br>
-      <img *ngIf="websiteLogo" [src]="websiteLogo.ImageUrl" alt="">
+      <img *ngIf="websiteLogo" [src]="websiteLogo.ImageUrl" (click)="goto('')" alt="">
     </div>
   </div>
   <div class="nav_bar">
@@ -63,7 +63,7 @@
       </li>
       <li>
         <a routerLink="/admin/dashboard/invoices/all" routerLinkActive="active-link" (click)="showNav = !showNav">
-          <i class="fas fa-file"></i>
+          <i class="fas fa-box"></i>
           Orders
         </a>
       </li>
@@ -82,10 +82,10 @@
         </a>
       </li>
       <li>
-        <a routerLink="/admin/dashboard/promotions" routerLinkActive="active-link" (click)="showNav = !showNav"
+        <a routerLink="/admin/dashboard/discounts" routerLinkActive="active-link" (click)="showNav = !showNav"
           [routerLinkActiveOptions]="{exact: true}">
           <i class="fas fa-tag"></i>
-          Promotions
+          Discounts
         </a>
       </li>
 
@@ -121,8 +121,7 @@
     </ul>
 
     <br>
-    <br>
-    <hr>
+ 
     <br><br>
     <div class="__nav" *ngIf="user">
       <ul>
@@ -143,3 +142,12 @@
     </div>
   </div>
 </ng-template>
+
+<div class="__cart" *ngIf="order && order.CartItems && !order.OrdersId">
+  <button type="button" class="btn btn-dark position-relative"  (click)="cart()">
+    <i class="fas fa-shopping-cart"></i>
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+      {{order.CartItems}}
+    </span>
+  </button>
+</div>

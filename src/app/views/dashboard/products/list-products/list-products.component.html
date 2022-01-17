@@ -1,5 +1,14 @@
 <div class="container">
-  <div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Products</li>
+    </ol>
+  </nav>
+
+  <br>
+  <app-loader *ngIf="showLoader"></app-loader>
+  <div class="row" *ngIf="products">
     <div class="col-12 col-sm-8 col-lg-5">
       <h6 class="text-muted mb-3">All products {{(' | '+products?.length) || ''}}</h6>
       <div class="mb-3">
@@ -8,30 +17,52 @@
       </div>
 
       <div class="mb-3">
-        <button type="button" (click)="addProduct()" class="btn btn-primary">Add product</button>
+        <button type="button" (click)="addProduct()" style="margin-right: 1em;" class="btn btn-primary">Add
+          product</button>
+        <button type="button" (click)="showSelectedOption = !showSelectedOption" class="btn btn-light"
+          [disabled]="!selectedProducts || !selectedProducts.length">With Selected <span
+            class="badge rounded-pill bg-dark">{{selectedProducts.length}}</span>
+          ...</button>
 
       </div>
 
       <br>
       <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div class="checkbox_">
+            <input type="checkbox" (change)="selectAll()" [(ngModel)]="allSelected"> <span (click)="selectAll()" class="pointer"> Select
+              All</span>
+          </div>
+        </li>
         <li class="list-group-item d-flex justify-content-between align-items-center"
-          *ngFor="let product of products  | searchproduct: searchString; let i = index" (click)="view(product)">
-          <p>
-            <b>{{product.Name}}</b>
-            <span>{{product.ParentCategoryName}} | {{product.CategoryName}}</span>
-            <span> {{product.TotalStock}} In stock</span>
-            <span class="price" *ngIf="!product.OnSale">
-              {{product.RegularPrice | currency:'R'}}
-            </span>
-            <span class="price" *ngIf="product.OnSale">
-              <del> {{product.RegularPrice | currency:'R'}}</del> <br>
-              {{product.SalePrice | currency:'R'}}
-            </span>
-          </p>
-          <div class="image-parent">
+          *ngFor="let product of products  | searchproduct: searchString; let i = index">
+          <div>
+            <div class="checkbox_">
+              <input type="checkbox" [(ngModel)]="product.IsSelected" (change)="selectedChanged()">
+            </div>
+            <p (click)="view(product)">
+              <b>{{product.Name}}</b>
+              <span> <a  *ngIf="product.ParentCategoryName" class="p-a badge bg-dark">{{product.ParentCategoryName}}</a> <a class="p-a badge bg-dark" *ngIf="product.CategoryName">{{product.CategoryName}}</a></span>
+              <span> {{product.TotalStock}} In stock</span>
+              <span class="price" *ngIf="!product.OnSale">
+                {{product.RegularPrice | currency:'R'}}
+              </span>
+              <span class="price" *ngIf="product.OnSale">
+                <del> {{product.RegularPrice | currency:'R'}}</del> <br>
+                {{product.SalePrice | currency:'R'}}
+              </span>
+
+            </p>
+
+            <p>
+              <small class="text-muted pointer"><a (click)="confirm($event, product)"
+                  class="link-danger">Delete</a></small>
+
+            </p>
+          </div>
+          <div class="image-parent" (click)="view(product)">
             <img [src]="product.FeaturedImageUrl" *ngIf="product.FeaturedImageUrl" class="img-fluid" alt="quixote">
-            <img *ngIf="!product.FeaturedImageUrl" src="assets/images/common/image-holder.svg" class="img-fluid"
-              alt="quixote">
+            <img *ngIf="!product.FeaturedImageUrl" src="assets/images/image-holder.svg" class="img-fluid" alt="quixote">
 
           </div>
         </li>
@@ -60,7 +91,7 @@
       <textarea type="text" [(ngModel)]="newProduct.Description" placeholder="Enter product description."></textarea>
     </div>
     <div class="form-item">
-      <label for="">Product  Price <strong>(ZAR)</strong></label>
+      <label for="">Product Price <strong>(ZAR)</strong></label>
       <input type="tel" name="" id="" [(ngModel)]="newProduct.RegularPrice" placeholder="Enter product price.">
     </div>
 
@@ -68,6 +99,79 @@
     <div class="form-item">
       <button (click)="saveProduct()" [disabled]="!newProduct.Name">Next</button>
       <div class="link" (click)="showAdd = false">Cancel</div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="smart-overlay" *ngIf="showSelectedOption" (click)="showSelectedOption = !showSelectedOption">
+
+</div>
+
+<div class="smart-modal" *ngIf="showSelectedOption">
+
+  <div class="smart-close d-flex justify-content-between">
+    <div class="h6" style="color: #000; text-transform: capitalize; padding: .4em;">
+      Selected products <span class="badge rounded-pill bg-dark"> {{selectedProducts.length}}</span>
+
+    </div>
+    <i class="far fa-window-close" (click)="showSelectedOption = !showSelectedOption"></i>
+  </div>
+
+  <div class="_body">
+    <br>
+
+    <button class="btn btn-danger"  (click)="confirmDeleteSelected($event)">Delete selected</button>
+    <br>
+    <hr>
+    <div class="card">
+      <div class="card-body">
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="mb-3">
+              <label class="form-label">Catergory</label>
+              <select class="form-select" aria-label="Default select example" [(ngModel)]="parentCategoryGuid"
+                *ngIf="parentCategories && parentCategories.length" (change)="selectCategory($event.target.value)">
+                <option *ngFor="let pc of parentCategories" [ngValue]="pc.CategoryId">{{pc.Name}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="mb-3">
+              <label class="form-label">Sub Catergory</label>
+              <select class="form-select" aria-label="Default select example" [(ngModel)]="categoryGuid"
+                *ngIf="chilndrenCategories" >
+                <option *ngFor="let cc of chilndrenCategories" [ngValue]="cc.CategoryId">{{cc.Name}}</option>
+              </select>
+            </div>
+
+
+            <div class="mb-3" *ngIf="company && company.IsVATCharged == 'Yes'">
+              <label>
+                Product VAT
+              </label>
+              <select name="" id="" [(ngModel)]="productVAT" class="form-control">
+                <option [value]="VAT_RATES.STANDARD.Name">{{VAT_RATES.STANDARD.Name}}</option>
+                <option [value]="VAT_RATES.ZERO.Name">{{VAT_RATES.ZERO.Name}}</option>
+                <option [value]="VAT_RATES.EXEMPT.Name">{{VAT_RATES.EXEMPT.Name}}</option>
+              </select>
+            </div>
+          </div>
+
+
+          <div class="col-md-12">
+            <div class="mb-3">
+              <button class="btn btn-primary btn-big" (click)="saveProductsRAnge()">Save chages</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

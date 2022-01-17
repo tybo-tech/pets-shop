@@ -53,10 +53,13 @@
         </div>
         <br>
         <div class="__actions__ d-flex justify-content-end">
-            <button class="btn btn-light" (click)="gotoInfo()"><i class="fas fa-arrow-left"></i> Back to info</button>
-            <button class="btn btn-primary" (click)="gotoPayments()">Proceed to payments</button>
+          
+
+            <app-button [btnClass]="'btn-big'" [type]="'secondary'" (primaryButtonEvent)="gotoInfo()" [label]="backLabel">
+            </app-button>
+            <app-button [btnClass]="'btn-big'" (primaryButtonEvent)="gotoPayments()" [label]="'Proceed to payments'">
+            </app-button>
         </div>
-        <!-- <app-altra-payments  *ngIf="order && user" [order] ="order" [user]="user"></app-altra-payments> -->
     </div>
 </div>
 

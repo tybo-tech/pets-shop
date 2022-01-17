@@ -12,7 +12,8 @@
   </div>
   <br>
 
-  <button class="btn btn-primary" (click)="add()">Add new address</button>
+  <app-button  (primaryButtonEvent)="add()" [label] = "'Add new address'"></app-button>
+
 </div>
 
 
@@ -53,7 +54,8 @@
 
   <br>
   <button class="btn btn-light mr-2" (click)="editing = false">Back to list</button>
-  <button class="btn btn-primary mr-2" (click)="item = customerAddressItem; save()">Save address</button>
+  <app-button  (primaryButtonEvent)="save()" [label] = "'Save address'"></app-button>
+
   <button class="btn btn-danger " *ngIf="customerAddressItem.ItemId " (click)="customerAddressItem.StatusId =99; item = customerAddressItem; save(true)"><i class="fas fa-trash"></i></button>
 
 </div>

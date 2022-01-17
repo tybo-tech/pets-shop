@@ -158,6 +158,14 @@ export class CompanyCategoryService {
     });
   }
 
+
+  getByParent(parentId: string) {
+    const params = `ParentId=${parentId}`;
+    return this.http.get<Category[]>(
+      `${this.url}/api/companycategories/list-system-chilndren-categories.php?${params}`
+    )
+  }
+
   getcompanyCategory(companyCategoryId: string) {
     this.http.get<CompanyCategory>(`${this.url}/$ ?companyCategoryId=${companyCategoryId}`).subscribe(data => {
       this.updatecompanyCategoryState(data);

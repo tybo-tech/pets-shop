@@ -1,0 +1,48 @@
+<div *ngIf="styleItems" class="__item">
+    <!-- <div class="mb-3" *ngFor="let initNavItem of styleItems">
+        <label for="">{{initNavItem.Label}}</label>
+        <input [type]="initNavItem.InputType" (change)="save()" class="style-inputs" [(ngModel)]="initNavItem.Value">
+    </div>
+
+    <div class="mb-3" style="margin-top: 2em; max-width: 12em;">
+        <select class="form-control">
+            <option value="">Add style</option>
+            <option [value]="item.Key" *ngFor="let item of allStyles">{{item.Key}}</option>
+        </select>
+    </div> -->
+
+    <table class="table">
+        <!-- <thead>
+            <tr>
+                <th scope="col">Style</th>
+                <th scope="col">Value</th>
+                <th scope="col">Type</th>
+            </tr>
+        </thead> -->
+        <tbody>
+            <tr *ngFor="let initNavItem of styleItems; let i = index">
+                <td>
+                    <input type="text" (change)="save()" class="style-inputs"
+                    [(ngModel)]="initNavItem.Key">
+                </td>
+                <td>
+                    <input [type]="initNavItem.InputType" (change)="save()" class="style-inputs"
+                        [(ngModel)]="initNavItem.Value">
+                </td>
+                <td>
+                    <select name="" id="" [(ngModel)]="initNavItem.InputType">
+                        <option value="color">color</option>
+                        <option value="text">text</option>
+                        <option value="number">number</option>
+                    </select>
+                </td>
+                <td>
+                    <button class="btn btn-danger" (click)="delete(i)"><i class="fas fa-trash-alt"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="link-info" (click)="add()">Add new</a>
+
+</div>

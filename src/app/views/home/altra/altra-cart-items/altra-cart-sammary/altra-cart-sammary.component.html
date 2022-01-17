@@ -1,28 +1,30 @@
 <div class="" *ngIf="order && order.Orderproducts && order.Orderproducts.length">
-    <div class="items">
-        <div class="item" *ngFor="let item of order.Orderproducts; let i = index">
-            <div class="name">{{item.Quantity}} <small>x</small> {{item.ProductName}} .... {{item.UnitPrice |
-                currency:'R'}}
+
+
+
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-start align-items-center"
+            *ngFor="let item of order.Orderproducts; let i = index">
+
+            <div class="image-parent" (click)="view(item)">
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
+                    {{item.Quantity}}
+                </span>
+                <img [src]="item.FeaturedImageUrl" *ngIf="item.FeaturedImageUrl" class="img-fluid" alt="quixote">
+                <img *ngIf="!item.FeaturedImageUrl" src="assets/images/image-holder.svg" class="img-fluid"
+                    alt="quixote">
+
             </div>
+            <p>
+                <b (click)="view(item)">{{item.ProductName}}</b>
+                <small (click)="view(item)" class="text-muted">{{item.SubTotal |currency:'R'}}</small>
+            </p>
 
-        </div>
-    </div>
+        </li>
 
-    <p>
-        Items Total : {{order.Total | currency : 'R'}}
-    </p>
-    <div class="item" *ngIf="order.Shipping == DELIVERY_TYPES.DELIVERY.Name && order.ShippingPrice">
-        <p>
-            <b> {{DELIVERY_TYPES.DELIVERY.Name}} : {{order.ShippingPrice | currency : 'R'}}</b> <small>
-                {{order.DeliveryRate}}</small>
-        </p>
+    </ul>
+<app-altra-cart-totals></app-altra-cart-totals>
 
-    </div>
-
-
-    <h6 class="__header _total" *ngIf="order.GrandTotal">
-        Total : {{order.GrandTotal | currency : 'R'}}
-    </h6>
 </div>
 
 

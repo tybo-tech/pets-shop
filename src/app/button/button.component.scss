@@ -1,0 +1,9 @@
+button {
+    margin-bottom: .5em;
+    width: inherit;
+    &:disabled {
+        cursor: no-drop !important;
+        background: grey !important;
+    }
+}
+

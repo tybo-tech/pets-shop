@@ -41,11 +41,20 @@
 
 
 
+            
+            <div class="form-group">
+              <label for="name">Password</label>
+              <input type="password" class="form-control" [(ngModel)]="user.Password" placeholder="e.g. 084 001 0100">
+            </div>
+
+
 
 
             <div class="mx-auto">
-              <button type="submit" [disabled]="!user.Name" type="button" (click)="save()"
-                class="btn btn-primary text-right">Save my profile</button>
+            
+
+                <app-button  [isDisabled]="!user.Name" (primaryButtonEvent)="save()" [label] = "'Save my profile'"></app-button>
+
             </div>
           </div>
         </div>

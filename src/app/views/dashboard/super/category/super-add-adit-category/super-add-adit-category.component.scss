@@ -1,43 +1,23 @@
 @import '../../../../../../assets/styles/color';
 
-.page-section {
-  padding: 4em;
-  background: $white;
-
-
-}
-
-.mat-primary{
-  width: 30%;
-  margin-top: 3em;
-  @media only screen and (max-width: 600px) {
-    width: 100%;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-
-   }
-}
-
-.detail {
-  width: 90%;
-  padding: .7em 0;
-
-  select,
-  input {
-    border: 1px solid $input-border;
-    width: 100%;
+.container {
+  .card {
+    @media only screen and (max-width: 600px) {
+      margin: 1em auto;
+    }
   }
 }
 
-.upload {
+.actions__ {
   padding: 1em 0;
-}
-
-
-.preview {
-  img {
-    width: 20%;
+  display: grid;
+  grid-template-columns: repeat(2, 8.5em);
+  grid-gap: .5em;
+  button {
+    display: block;
+    width: fit-content;
+    @media only screen and (max-width: 600px) {
+      width: 100%;
+    }
   }
 }
-

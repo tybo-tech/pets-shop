@@ -5,6 +5,7 @@ import { Item } from 'src/models/item.model';
 import { AccountService, OrderService } from 'src/services';
 import { ItemService } from 'src/services/item.service';
 import { CHECKOUT_PAGES, ITEM_TYPES } from 'src/shared/constants';
+import { DictionaryModel, initNavTheme } from 'src/shared/ngstyle.model';
 
 @Component({
   selector: 'app-altra-checkout',
@@ -20,6 +21,9 @@ export class AltraCheckoutComponent implements OnInit {
   websiteLogo: Item;
   navBarTheme: Item;
   navClass: any;
+  primaryNgStyle = {};
+  primaryNavStyles: DictionaryModel[] = initNavTheme;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private accountService: AccountService,
@@ -52,9 +56,16 @@ export class AltraCheckoutComponent implements OnInit {
       if (data && data.length)
         this.websiteLogo = data.find(x => x.ItemType === ITEM_TYPES.LOGO.Name);
       this.navBarTheme = data.find(x => x.ItemType === ITEM_TYPES.NAV_BARTHEME.Name);
-      if (this.navBarTheme)
+      if (this.navBarTheme) {
         this.navClass = this.navBarTheme.Description;
+        if (this.navBarTheme.Name.length > 15)
+          this.primaryNavStyles = JSON.parse(this.navBarTheme.Name);
 
+      }
+
+      this.primaryNavStyles.forEach(item => {
+        this.primaryNgStyle[item.Key] = item.Value
+    });
     })
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Order, User } from 'src/models';
 import { AccountService, OrderService } from 'src/services';
+import { CompanyService } from 'src/services/company.service';
 
 @Component({
   selector: 'app-statistics',
@@ -14,26 +15,24 @@ export class StatisticsComponent implements OnInit {
   processingPaidOrders: Order[] = [];
   inTransitOrders: Order[] = [];
   user: User;
+  statModel:any;
   constructor(
-    private orderService: OrderService,
     private accountService: AccountService,
     private router: Router,
+    private companyService: CompanyService,
+
 
   ) { }
 
 
   ngOnInit() {
     this.user = this.accountService.currentUserValue;
-
-    this.orderService.OrderListObservable.subscribe(data => {
-      this.orders = data || [];
-      if (this.orders.length) {
-        this.notPaidOrders = this.orders.filter(x => x.Status.toLocaleLowerCase() === 'not paid')
-        this.processingPaidOrders = this.orders.filter(x => x.Status.toLocaleLowerCase() === 'processing')
-        this.inTransitOrders = this.orders.filter(x => x.Status.toLocaleLowerCase() === 'on transit')
+    this.companyService.getAdminStat().subscribe(data=>{
+      if(data){
+        console.log('Stat: ',data);
+        this.statModel = data;
       }
-    });
-    this.orderService.getOrders(this.user.CompanyId);
+    })
   }
   goto(url) {
     this.router.navigate([`admin/dashboard/${url}`]);

@@ -94,33 +94,6 @@ button {
   z-index: 8000000000 !important;
 }
 
-.dark-nav {
-  background: $black !important;
-  a {
-    color: $white !important;
-  }
-  .active {
-    color: #e0b328 !important;
-  }
-  &:last-child {
-    border-top: 1px solid rgb(110, 109, 109);
-  }
-}
-
-.light-nav {
-  background: $white !important;
-  a {
-    color: $black !important;
-  }
-  .active {
-    color: #8f6e0a !important;
-  }
-
-  &:last-child {
-    border-top: 1px solid rgb(49, 49, 49);
-  }
-}
-
 a {
   text-decoration: none !important;
 }
@@ -132,7 +105,7 @@ a {
   top: 0;
   bottom: 0;
   right: 0;
-  z-index: 50000;
+  z-index: 5000000000;
   width: 100%;
   height: 100%;
 }
@@ -153,30 +126,29 @@ a {
   position: fixed;
   right: 0;
   top: 0;
-  z-index: 999;
+  z-index: 50000000001;
   display: flex;
   flex-direction: column;
   width: 470px;
   animation: moveInRight 0.5s ease-out 0s;
   animation-fill-mode: backwards;
-  height: 70%;
+  height: 65%;
   max-width: 100%;
   overflow-y: scroll;
   background: #fff;
   border-left: 1px solid #dcdcdc;
   transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1) all;
-  z-index: 50000;
 
   ._bottom {
     position: inherit;
     bottom: 0;
     width: inherit;
     background: $cloud;
-    padding: 3em 1em;
-    height: 30%;
-    overflow: hidden;
+    padding:  1em;
+    height: 35%;
     animation: moveInRight 0.5s ease-out 0s;
     animation-fill-mode: backwards;
+    overflow-y: scroll;
   }
   .form-item {
     width: 100% !important;
@@ -211,6 +183,10 @@ a {
 .card {
   box-shadow: $box-shadow;
   border-radius: 0.2em !important;
+  @media only screen and (max-width: 600px) {
+    margin: 0.5em 0;
+    box-shadow: none;
+  }
   .card-header {
     border-radius: 0.2em !important;
   }
@@ -241,7 +217,6 @@ label {
     width: fit-content;
     display: block;
     margin: 0 1em;
-    border: 1px solid $primary !important;
     text-transform: uppercase;
   }
   .btn-light {
@@ -253,6 +228,18 @@ label {
   padding: 0.2em 1.2em;
 }
 
-.fw-900{
+.fw-900 {
   font-weight: 900;
+}
+
+a,
+.image-parent {
+  cursor: pointer;
+}
+
+.smart-modal-full {
+  height: 100%;
+  ._body {
+    padding: 1em;
+  }
 }

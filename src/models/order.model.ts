@@ -1,11 +1,11 @@
 import { User } from '.';
 import { Company } from './company.model';
-import { Customer } from './customer.model';
 import { Orderproduct } from './order.product.model';
 import { Promotion } from './promotion.model';
 
 
 export interface Order {
+  Id?: number;
   OrdersId: string;
   OrderNo: string;
   CompanyId: string;
@@ -42,5 +42,12 @@ export interface Order {
   AddressLine?: string;
   LocationName?: string;
   LocationNumber?: string;
+  CartItems?: number;
+  VatAmount?: number;
+  CustomerName?: string;
+  CustomerEmail?: string;
+  CustomerPhone?: string;
+  CustomerDp?: string;
+
   
 }

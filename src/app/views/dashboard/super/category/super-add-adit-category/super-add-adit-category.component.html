@@ -1,80 +1,94 @@
-<app-loader [showLoader]="showLoader" *ngIf="showLoader"></app-loader>
+<div class="container" *ngIf="category">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+      <li class="breadcrumb-item"><a routerLink="/admin/dashboard/categories">Categories</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{category.Name}}</li>
+    </ol>
+  </nav>
 
-<div class="main">
+  <br>
 
-  <div class="page-section">
-
-
-    <div class="detail">
-      <label for="name">Category Name *</label>
-      <input type="text" [(ngModel)]="category.Name" placeholder="e.g. Male">
-    </div>
-    <div class="detail">
-      <label for="name">Category Name *</label>
-      <textarea type="text" [(ngModel)]="category.Description"></textarea>
-    </div>
-
-    <div class="detail">
-      <label for="name">Display Order</label>
-      <select [(ngModel)]="category.DisplayOrder">
-        <option value="0">Not mater</option>
-        <option value="1">Always first</option>
-        <option value="2">Always second</option>
-        <option value="3">Always third</option>
-      </select>
-    </div>
-
-    <div class="detail">
-      <label for="name">Category Status</label>
-      <select [(ngModel)]="category.StatusId">
-        <option value="1">Active</option>
-        <option value="2">In-Active</option>
-        <option value="3">Deleted</option>
-      </select>
-    </div>
-
-
-    <div class="detail">
-      <label for="">upload image for PC</label>
-      <div class="upload-preview">
-        <div class="upload">
-          <input type="file" accept="image/png, image/jpeg" #file placeholder="Choose file" multiple
-            (change)="uploadFile(file.files, 'PC')" style="display:none;">
-          <button mat-button class="btn-uplaod" (click)="file.click()">
-            📷 Set Category image for PC
-          </button>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header bg-dark text-white">Category
         </div>
-        <div class="preview">
-          <img *ngIf="category.ImageUrl" [src]="category.ImageUrl" alt="">
+        <div class="card-body">
+          <div>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" [(ngModel)]="category.Name" class="form-control" id="name" aria-describedby="emailHelp"
+                placeholder="Enter name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="name">Description </label>
+              <textarea type="text" [(ngModel)]="category.Description" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="name">Image </label>
+              <app-image-widget [image]="category.ImageUrl" (imageChangedEvent)="onImageChangedEvent($event)">
+              </app-image-widget>
+            </div>
+
+
+          </div>
         </div>
       </div>
+      <br>
+      <app-altra-sub-category *ngIf="categoryId != 'add'" [category]="category"></app-altra-sub-category>
 
-    </div>
-
-
-    <div class="detail">
-      <label for="">upload image for Mobile</label>
-
-      <div class="upload-preview">
-        <div class="upload">
-          <input type="file" accept="image/png, image/jpeg" #file2 placeholder="Choose file" multiple
-            (change)="uploadFile(file2.files, 'Mobile')" style="display:none;">
-          <button mat-button class="btn-uplaod" (click)="file2.click()">
-            📷 Set Category image for Mobile
-          </button>
+      <br>
+      <div class="card moveInLeft" *ngIf="categoryId != 'add'" style="display: none;">
+        <div class="card-header bg-dark text-white">Products
         </div>
-        <div class="preview">
-          <img *ngIf="category.PhoneBanner" [src]="category.PhoneBanner" alt="">
+        <div class="card-body">
+          <div>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" [(ngModel)]="category.Name" class="form-control" id="name" aria-describedby="emailHelp"
+                placeholder="Enter name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="name">Description </label>
+              <textarea type="text" [(ngModel)]="category.Description" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="name">Image </label>
+
+              <app-image-widget [image]="category.ImageUrl" (imageChangedEvent)="onImageChangedEvent($event)">
+              </app-image-widget>
+              <br>
+            </div>
+
+
+          </div>
         </div>
       </div>
-
     </div>
 
-    <div class="detail">
-      <button mat-button class="mat-primary" [disabled]="!category.Name" type="button" (click)="save()">
-        Save Category
-      </button>
+
+    <div class="col-lg-3">
+      <div class="card">
+        <div class="card-header bg-dark text-white">Actions
+        </div>
+        <div class="card-body">
+
+          <div class="mx-auto">
+
+            <button type="submit" [disabled]="!category.Name" type="button" (click)="back()" class="btn btn-light"
+              style="margin-right: 1em;">Back</button>
+            <button type="submit" type="button" (click)="save()" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </div>
     </div>
+
 
   </div>
-  <app-user-feedback *ngIf="modalModel && modalModel.heading" [modalModel]="modalModel"></app-user-feedback>
+</div>
+

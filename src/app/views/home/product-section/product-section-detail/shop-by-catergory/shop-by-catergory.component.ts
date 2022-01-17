@@ -14,7 +14,7 @@ export class ShopByCatergoryComponent implements OnInit {
   subCatergories: Category[];
   @Input() parentId;
   allCategoriesWithImages: Category[];
-
+  defImage;
   constructor(private companyCategoryService: CompanyCategoryService, private router: Router) { }
 
   ngOnInit() {
@@ -23,6 +23,7 @@ export class ShopByCatergoryComponent implements OnInit {
       if (data) {
         this.allCategories = data;
         this.allCategoriesWithImages = data.filter(x=>x.ImageUrl && x.ImageUrl.length > 3);
+        this.allCategoriesWithImages.map(x=>x.Style={'background-image':`url('${x.ImageUrl}')`})
         this.subCatergories = this.allCategories.filter(x => x.ParentId
           && x.ProductsImages && x.ProductsImages.length);
         if (this.parentId) {
@@ -34,7 +35,7 @@ export class ShopByCatergoryComponent implements OnInit {
   goto(event) {
     this.router.navigate([event]);
   }
-
+  select(e){}
   tapChildCategory(category: any) {
     if (category && category.CategoryId) {
       this.goto(`home/collections/${category.CategoryId}`);

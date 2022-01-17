@@ -77,7 +77,7 @@ export class ListOrdersComponent implements OnInit {
       StatusId: 1,
       Orderproducts: []
     });
-    this.router.navigate(['admin/dashboard/create-order']);
+    this.router.navigate(['admin/dashboard/create-order/customer']);
   }
   back() {
     this.router.navigate(['admin/dashboard']);

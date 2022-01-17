@@ -47,6 +47,7 @@ export class ShopCollectionComponent implements OnInit {
   getCatergories() {
     this.companyCategoryService.systemCategoryListObservable.subscribe(data => {
       this.catergories = data || [];
+      this.catergories.map(x=>x.Style={'background-image':`url('${x.ImageUrl}')`})
       if (this.catergories.length > 0)
         this.catergories = this.catergories.filter(x => Number(x.StatusId) === 1);
     })

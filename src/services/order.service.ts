@@ -4,9 +4,12 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Order } from 'src/models/order.model';
-import { ADD_ORDER_URL, DELIVERY_RATES, DELIVERY_TYPES, GET_ORDERS_BY_USER_ID_URL, GET_ORDERS_URL, GET_ORDER_URL, PRINT_URL, UPDATE_ORDER_URL } from 'src/shared/constants';
+import { ADD_ORDER_URL, COMPANY, DELIVERY_RATES, DELIVERY_TYPES, GET_ORDERS_BY_USER_ID_URL, GET_ORDERS_URL, GET_ORDER_URL, ORDER_TYPE_SALES, PRINT_URL, UPDATE_ORDER_URL, VAT_RATES } from 'src/shared/constants';
 import { Item } from 'src/models/item.model';
 import { LocationModel } from 'src/models/UxModel.model';
+import { Product } from 'src/models/product.model';
+import { Orderproduct } from 'src/models/order.product.model';
+import { User } from 'src/models';
 
 
 @Injectable({
@@ -96,19 +99,32 @@ export class OrderService {
       return this.currentOrderValue.Orderproducts.length;
     return 0;
   }
-  calculateTotalOverdue(order: Order) {
+  calculateTotalOverdue(order: Order): Order {
     if (!order)
-      return 0;
+      return;
+
     order.Total = 0;
+    order.VatAmount = 0;
+    order.CartItems = 0;
+    order.Paid = order.Paid || 0
+    order.ShippingPrice = order.ShippingPrice || 0;
     order.Orderproducts.forEach(line => {
+      line.SubTotal = line.Quantity * Number(line.UnitPrice);
       order.Total += (Number(line.UnitPrice) * Number(line.Quantity));
+      order.CartItems += Number(line.Quantity);
+      if (order.Company && order.Company.IsVATCharged === 'Yes' && line.ProductVAT === VAT_RATES.STANDARD.Name) {
+        order.VatAmount += Number(line.SubTotal) * (Number(order.Company.VATPercentage) / 100.0);
+      }
     });
 
+    order.GrandTotal = Number(order.VatAmount) + Number(order.Total) + Number(order.ShippingPrice);
+    order.Due = Number(order.GrandTotal) - Number(order.Paid);
+    return order;
   }
 
 
 
-  deliveryMethodChanged(order: Order, orderDelivery: Item) {
+  deliveryMethodChanged(order: Order, orderDelivery: Item): Order {
     if (order.Shipping === DELIVERY_TYPES.DELIVERY.Name && orderDelivery) {
       if (orderDelivery.ItemSubCategory === DELIVERY_RATES.RATE_PER_KM.Name) {
         const toLocation: LocationModel = {
@@ -130,13 +146,16 @@ export class OrderService {
 
       }
       order.DeliveryRate = orderDelivery.ItemSubCategory;
+      order = this.calculateTotalOverdue(order);
       this.updateOrderState(order);
     }
 
     if (order.Shipping === DELIVERY_TYPES.COLLECTION.Name) {
       order.ShippingPrice = 0;
+      order = this.calculateTotalOverdue(order);
       this.updateOrderState(order);
     }
+    return order;
   }
 
   calucalateDistance(toLocation: LocationModel, orderDelivery: Item) {
@@ -171,5 +190,104 @@ export class OrderService {
 
   toRad(Value) {
     return Value * Math.PI / 180;
+  }
+
+
+  addToCart(product: Product, order: Order): Order {
+    if (!order)
+      order = this.initOrder();
+
+    if (!order.Orderproducts)
+      order.Orderproducts = [];
+
+
+    if (product && product.ProductId) {
+      product.SelectedQuantiy = product.SelectedQuantiy;
+      const orderproduct = this.mapOrderproduct(product);
+      order.Orderproducts.push(orderproduct);
+      if (product.Company) {
+        order.Company = product.Company;
+      }
+      order.CompanyId = product.CompanyId;
+      this.calculateTotalOverdue(order);
+    }
+    return order;
+  }
+
+
+  mapOrderproduct(product: Product): Orderproduct {
+    return {
+      Id: '',
+      OrderId: '',
+      ProductId: product.ProductId,
+      CompanyId: product.CompanyId,
+      ProductName: product.Name,
+      TotalStock: product.TotalStock,
+      ProductType: 'Product',
+      Colour: product.SelectedCoulor || '',
+      Size: product.SelectedSize || '',
+      Quantity: product.SelectedQuantiy || 1,
+      SubTotal: product.SelectedQuantiy * Number(product.RegularPrice),
+      UnitPrice: product.SalePrice || product.RegularPrice,
+      FeaturedImageUrl: product.FeaturedImageUrl,
+      CreateUserId: '',
+      ModifyUserId: '',
+      ProductVAT: product.ProductVAT || 'NA',
+      StatusId: 1
+    };
+  }
+
+
+  initOrder(updateState = false): Order {
+    const order: Order =
+    {
+      OrdersId: '',
+      OrderNo: 'Shop',
+      CompanyId: COMPANY,
+      CustomerId: '',
+      AddressId: '',
+      Notes: '',
+      Shipping: '',
+      OrderType: ORDER_TYPE_SALES,
+      Total: 0,
+      Paid: 0,
+      Due: 0,
+      InvoiceDate: new Date(),
+      DueDate: '',
+      CreateUserId: 'shop',
+      ModifyUserId: 'shop',
+      Status: 'Not paid',
+      StatusId: 1,
+      Orderproducts: [],
+      CartItems: 0,
+      GrandTotal: 0
+    }
+
+    if (updateState)
+      this.updateOrderState(order);
+
+    return order;
+  }
+
+
+  deleteFromCart(orderproduct: Orderproduct, order: Order, index: number) {
+    order.Orderproducts.splice(index, 1);
+    if (order.Orderproducts.length === 0) {
+      order = null;
+    }
+    this.calculateTotalOverdue(order);
+  }
+  addCustomerToOrder(item: User) {
+    const order = this.currentOrderValue;
+    if (!order)
+      return;
+
+    order.Customer = item;
+    order.CustomerId = item.UserId;
+    order.CustomerName = item.Name;
+    order.CustomerEmail = item.Email;
+    order.CustomerPhone = item.PhoneNumber;
+    order.CustomerDp = item.Dp;
+    this.updateOrderState(order);
   }
 }

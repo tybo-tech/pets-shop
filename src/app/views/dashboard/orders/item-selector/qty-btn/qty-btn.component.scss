@@ -1,0 +1,19 @@
+.center{
+    width: 150px;
+      margin: 40px auto;
+      
+    }
+
+    .input-group{
+        width: 5em;
+        button, input{
+            padding: 1px 4px !important;
+        }
+
+        input{
+            padding: .5px !important;
+            text-align: center !important;
+            border: none;
+            font-size: .85em !important;
+        }
+    }

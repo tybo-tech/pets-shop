@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/models';
+import { Order, User } from 'src/models';
 import { Item } from 'src/models/item.model';
-import { AccountService } from 'src/services';
+import { AccountService, OrderService } from 'src/services';
 import { ItemService } from 'src/services/item.service';
 import { UxService } from 'src/services/ux.service';
 import { ADMIN, ITEM_TYPES, SUPER } from 'src/shared/constants';
@@ -19,11 +19,13 @@ export class DashNavComponent implements OnInit {
   showNav: boolean;
   item;
   websiteLogo: Item;
+  order: Order;
   constructor(
     private accountService: AccountService,
     private router: Router,
     private uxService: UxService,
     private itemService: ItemService,
+    private orderService: OrderService,
 
 
 
@@ -40,6 +42,11 @@ export class DashNavComponent implements OnInit {
     if (this.isSuper) {
     }
     this.getSettings();
+
+    this.orderService.OrderObservable.subscribe(data => {
+      this.order = data;
+    });
+
   }
   toggleNav() {
     this.uxService.hideHomeSideNav();
@@ -61,5 +68,13 @@ export class DashNavComponent implements OnInit {
 
     })
   }
+  cart() {
+    this.router.navigate(['/admin/dashboard/create-order/products']);
+    this.showNav = false;
+  }
 
+  goto(url) {
+    this.router.navigate([`/admin/dashboard/${url}`]);
+    this.showNav = false;
+  }
 }

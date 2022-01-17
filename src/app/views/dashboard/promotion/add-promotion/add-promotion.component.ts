@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { Product, User } from 'src/models';
 import { Promotion } from 'src/models/promotion.model';
 import { BreadModel } from 'src/models/UxModel.model';
@@ -15,7 +16,7 @@ import { CURRENCY, DISCOUNT_APPLIES_TO, DISCOUNT_GROUP, DISCOUNT_MIN_RQS, DISCOU
 })
 export class AddPromotionComponent implements OnInit {
 
- 
+
   promotion: Promotion;
   user: User;
   promotionId: string;
@@ -23,12 +24,11 @@ export class AddPromotionComponent implements OnInit {
   heading: string;
   searchString: string;
   items: BreadModel[];
-  products: Product[];
   selectedProducts: Product[] = [];
   selectedGetsProducts: Product[] = [];
-  selectedProductsIds: string[] = [];
   selectedProductsIdsForGet: string[] = [];
   showAdd: boolean;
+  showProductsOption: boolean;
   showAddCustomerGets: boolean;
   DISCOUNT_GROUP = DISCOUNT_GROUP;
   DISCOUNT_TYPES = DISCOUNT_TYPES;
@@ -43,10 +43,7 @@ export class AddPromotionComponent implements OnInit {
     private uploadService: UploadService,
     private uxService: UxService,
     private productService: ProductService,
-
-
-
-
+    private messageService: MessageService
   ) {
     this.activatedRoute.params.subscribe(r => {
       this.promotionId = r.id;
@@ -73,16 +70,12 @@ export class AddPromotionComponent implements OnInit {
     ];
 
 
-    this.productService.getProductsSync(this.user.CompanyId).subscribe(data => {
-      this.uxService.updateLoadingState({ Loading: false, Message: undefined });
-      this.products = data || [];
-      this.products.map(x => x.IsSelected = false);
-      this.loadPromotion();
-    })
+    this.loadPromotion();
+
 
   }
   back() {
-    this.router.navigate(['admin/dashboard/promotions']);
+    this.router.navigate(['admin/dashboard/discounts']);
   }
 
   loadPromotion() {
@@ -97,7 +90,7 @@ export class AddPromotionComponent implements OnInit {
         DiscountValue: '',
         DiscountUnits: '',
         AppliesTo: DISCOUNT_APPLIES_TO[0],
-        AppliesValue: '',
+        AppliesValue: `${(new Date().getTime())}`,
         CustomerGetsValue: '',
         MinimumRequirements: DISCOUNT_MIN_RQS[0],
         MinimumRequirementValue: '',
@@ -112,7 +105,7 @@ export class AddPromotionComponent implements OnInit {
         ModifyUserId: this.user.CompanyId,
         StatusId: 1,
       }
-      this.heading = 'Adding a new promotion.'
+      this.heading = 'Create Discount'
       this.items.push({
         Name: this.heading,
         Link: null
@@ -122,98 +115,25 @@ export class AddPromotionComponent implements OnInit {
     if (this.promotionId && this.promotionId.length > 5) {
       this.promotionService.get(this.promotionId).subscribe(data => {
         this.promotion = data;
-        this.promotion.StartDate = this.promotion.StartDate.split(' ')[0];
-        this.promotion.FinishDate = this.promotion.FinishDate.split(' ')[0];
-        this.heading = `Viewing: ${this.promotion.Name}`;
+        this.promotion.StartDate = this.promotion.StartDate.split('T')[0];
+        this.promotion.FinishDate = this.promotion.FinishDate.split('T')[0];
+        if (!this.promotion.AppliesValue) {
+          this.promotion.AppliesValue = `${(new Date().getTime())}`
+        }
+        this.heading = `View Discount`;
         this.items.push({
           Name: this.promotion.Name,
           Link: null
         });
-
-        this.selectedProductsIds = [];
-        if (this.promotion.AppliesValue && this.promotion.AppliesValue.length > 2) {
-          this.selectedProductsIds = JSON.parse(this.promotion.AppliesValue);
-          this.refreshSelectedProductsId();
-        }
-        if (this.promotion.CustomerGetsValue && this.promotion.CustomerGetsValue.length > 2) {
-          this.selectedProductsIdsForGet = JSON.parse(this.promotion.CustomerGetsValue);
-          this.refreshSelectedProductsIdForGet();
-        }
-
       })
 
     }
   }
 
-  selectProduct(product: Product) {
-    product.IsSelected = !product.IsSelected;
-    if (product.IsSelected) {
-      const check = this.selectedProductsIds.find(x => x === product.ProductId);
-      if (!check) {
-        this.selectedProductsIds.push(product.ProductId);
-        this.refreshSelectedProductsId();
-      }
-    }
 
 
-    if (!product.IsSelected) {
-      const check = this.selectedProductsIds.find(x => x === product.ProductId);
-      if (check) {
-        const index = this.selectedProductsIds.indexOf(check);
-        if (index > -1) {
-          this.selectedProductsIds.splice(index, 1);
-          this.refreshSelectedProductsId();
-        }
-      }
-    }
-  }
-
-  selectProductForGet(product: Product) {
-    product.IsSelectedForGet = !product.IsSelectedForGet;
-    if (product.IsSelectedForGet) {
-      const check = this.selectedProductsIdsForGet.find(x => x === product.ProductId);
-      if (!check) {
-        this.selectedProductsIdsForGet.push(product.ProductId);
-        this.refreshSelectedProductsIdForGet();
-      }
-    }
 
 
-    if (!product.IsSelectedForGet) {
-      const check = this.selectedProductsIdsForGet.find(x => x === product.ProductId);
-      if (check) {
-        const index = this.selectedProductsIdsForGet.indexOf(check);
-        if (index > -1) {
-          this.selectedProductsIdsForGet.splice(index, 1);
-          this.refreshSelectedProductsIdForGet();
-        }
-      }
-    }
-  }
-  refreshSelectedProductsId() {
-    this.selectedProducts = [];
-    if (this.selectedProductsIds && this.selectedProductsIds.length) {
-      this.selectedProductsIds.forEach(id => {
-        const product = this.products.find(x => x.ProductId === id);
-        if (product) {
-          this.selectedProducts.push(product);
-          product.IsSelected = true;
-        }
-      })
-    }
-  }
-  refreshSelectedProductsIdForGet() {
-    this.selectedGetsProducts = [];
-    if (this.selectedProductsIdsForGet && this.selectedProductsIdsForGet.length) {
-      this.selectedProductsIdsForGet.forEach(id => {
-        const product = this.products.find(x => x.ProductId === id);
-        if (product) {
-          this.selectedGetsProducts.push(product);
-          product.IsSelectedForGet = true;
-        }
-      })
-    }
-  }
   savePromotion() {
     this.promotion.Name = this.promotion.PromoCode;
     // this.promotion.MinimumRequirementValue = this.promotion.MinimumRequirementValue || this.promotion.MinimumRequirements;
@@ -221,18 +141,21 @@ export class AddPromotionComponent implements OnInit {
       this.promotion.MinimumRequirementValue = '';
     }
     this.promotion.DiscountUnits = this.getUnits(this.promotion.PromoType);
-    this.promotion.AppliesValue = JSON.stringify(this.selectedProductsIds);
     this.promotion.CustomerGetsValue = JSON.stringify(this.selectedProductsIdsForGet);
+    this.promotion.StartDate = `${this.promotion.StartDate}T${this.promotion.StartTime}:00`;
+    this.promotion.FinishDate = `${this.promotion.FinishDate}T${this.promotion.FinishTime}:00`;
+   
     if (this.promotionId === 'add') {
       this.addNewPromotion();
       return;
     }
-    this.promotion.StartDate = `${this.promotion.StartDate} ${this.promotion.StartTime}:00`;
-    this.promotion.FinishDate = `${this.promotion.FinishDate} ${this.promotion.FinishTime}:00`;
+
     this.promotionService.update(this.promotion).subscribe(data => {
       if (data && data.PromotionId) {
-        // this.back();
-        this.uxService.updateMessagePopState('Promotion saved.');
+        this.messageService.add({ severity: 'success', summary: 'Promotion saved.', detail: '' });
+        if (this.promotion.AppliesTo === DISCOUNT_APPLIES_TO[0]) {
+          this.productService.applyDiscountToAllProducts(this.promotion.AppliesValue).subscribe(e=>{});
+        }
         this.ngOnInit();
       }
 
@@ -240,13 +163,14 @@ export class AddPromotionComponent implements OnInit {
   }
 
   addNewPromotion() {
-    this.promotion.StartDate = `${this.promotion.StartDate} ${this.promotion.StartTime}:00`;
-    this.promotion.FinishDate = `${this.promotion.FinishDate} ${this.promotion.FinishTime}:00`;
     this.promotionService.add(this.promotion).subscribe(data => {
       if (data && data.PromotionId) {
         // this.view(data);
         this.ngOnInit();
-        this.uxService.updateMessagePopState('Promotion created successfully.')
+        if (this.promotion.AppliesTo === DISCOUNT_APPLIES_TO[0]) {
+          this.productService.applyDiscountToAllProducts(this.promotion.AppliesValue).subscribe(e=>{});
+        }
+        this.messageService.add({ severity: 'success', summary: 'Promotion created successfully.', detail: '' });
 
       }
 
@@ -283,5 +207,10 @@ export class AddPromotionComponent implements OnInit {
   selectAndSerachForGet(product: Product) {
     this.searchString = product.Name;
     this.showAddCustomerGets = true;
+  }
+
+  togleProductModal() {
+    this.showProductsOption = !this.showProductsOption;
+    this.uxService.showHideBodyScroller(this.showProductsOption);
   }
 }

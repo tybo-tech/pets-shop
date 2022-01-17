@@ -1,0 +1,8 @@
+<button (click)="clicked()" class="btn btn-primary" [ngClass]="btnClass" [disabled]="isDisabled"
+    [ngStyle]="primaryNgStyle" *ngIf="label && type == 'primary'" [innerHTML]="label">
+    <i class="fas fa-shopping-cart for-pc"></i> Add to cart</button>
+
+
+<button (click)="clicked()" class="btn btn-light" [ngClass]="btnClass" [disabled]="isDisabled"
+    [ngStyle]="secondaryNgStyle" *ngIf="label && type == 'secondary'" [innerHTML]="label">
+    <i class="fas fa-shopping-cart for-pc"></i> Add to cart</button>

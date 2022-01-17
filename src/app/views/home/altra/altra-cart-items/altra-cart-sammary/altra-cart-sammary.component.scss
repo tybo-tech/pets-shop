@@ -1,22 +1,4 @@
 @import "../../../../../../assets/styles/color";
-.items {
-    .item {
-        border-bottom: 1px solid $cloud;
-        padding: 0.5em 0.2em;
-        display: grid;
-        grid-template-columns: 100%;
-        .price {
-            padding-bottom: 0.5em;
-        }
-        .image {
-            img {
-                width: 3em;
-                position: relative;
-                top: 0.6em;
-            }
-        }
-    }
-}
 
 
 .__actions {
@@ -36,4 +18,38 @@
     .card {
         margin-top: 1em;
     }
+}
+
+
+.image-parent {
+    max-width: 5em;
+    position: relative;
+    img{
+      border-radius: .5em;
+      width: 3em;
+      border: 1px solid $cloud;
+    }
+  }
+  
+  .selections{
+    padding: .5em;
+  }
+  
+  p {
+    padding: .2em 1em;
+    padding-left: 2em;
+    span, small {
+      display: block;
+    }
+  }
+  
+  .link-danger{
+    cursor: pointer;
+  }
+  .position-absolute{
+      z-index: 1000;
+  }
+
+.rounded-pill{
+background: $silver !important;
 }

@@ -1,4 +1,4 @@
-<app-altra-search *ngIf="showSearch"></app-altra-search>
+<app-altra-search *ngIf="showSearch" [styles]="styles"></app-altra-search>
 <div class="__nav-bar d-flex justify-content-between">
     <div class="col" style="text-align: left;">
         <button class="btn btn-dark" (click)="showSearch = !showSearch"><i class="fas fa-search"></i></button>
@@ -7,7 +7,8 @@
         <a routerLink="/"> <img *ngIf="websiteLogo" [src]="websiteLogo.ImageUrl" alt="Logo"></a>
     </div>
     <div class="col" style="text-align: right;">
-        <button (click)="showCartEvent()" class="btn btn-dark"><i class="fa fa-shopping-cart"></i><span class="badge bg-primary" *ngIf="carttItems">  {{carttItems}}</span></button>
+        <button (click)="showCartEvent()" class="btn btn-dark"><i class="fa fa-shopping-cart"></i><span
+                class="badge bg-primary"> {{order?.CartItems || 0}}</span></button>
     </div>
 </div>
 
@@ -20,7 +21,7 @@
 <div class="smart-modal" *ngIf="showCart">
     <div class="smart-close d-flex justify-content-between">
         <div class="h6" style="color: #000; text-transform: capitalize; padding: .4em;">
-            CART <span class="badge rounded-pill bg-dark"> {{carttItems}}</span>
+            CART <span class="badge rounded-pill bg-dark"> {{order?.CartItems}}</span>
 
         </div>
         <i class="far fa-window-close" (click)="showCartEvent()"></i>
@@ -39,8 +40,12 @@
         </div>
 
         <div class="__actions">
-            <button class="btn btn-light" (click)="shopMore()">Add more items</button>
-            <button class="btn btn-primary" (click)="checkout()">Proceed to checkout</button>
+
+            <app-button [btnClass]="'btn-big btn-full'" [type]="'secondary'" (primaryButtonEvent)="shopMore()"
+                [label]="'Add more items'"></app-button>
+            <br>
+            <app-button [btnClass]="'btn-big  btn-full'" (primaryButtonEvent)="checkout()" [label]="'Proceed to checkout'">
+            </app-button>
         </div>
     </div>
 </div>

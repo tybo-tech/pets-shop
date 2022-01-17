@@ -1,4 +1,64 @@
-<div class="top-bar-conatiner">
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Orders List</li>
+    </ol>
+  </nav>
+
+  <br>
+  <div class="row">
+    <div class="col-12 col-sm-8 col-lg-5">
+      <h6 class="text-muted mb-3">Orders {{(' | '+orders?.length) || ''}}</h6>
+
+      <div class="mb-3">
+        <button type="button" (click)="add()" class="btn btn-primary">Create order</button>
+
+      </div>
+
+      <br>
+      <ul class="list-group" *ngIf="orders && orders.length">
+        <li class="list-group-item d-flex justify-content-start align-items-center"
+          *ngFor="let item of orders;let i = index"  (click)="view(item)">
+       <div>
+        <p>
+          <b> {{item.Customer?.Name}} {{item.Customer?.Surname}}</b>
+          <span class="cat">
+            {{item.Total  | currency:'R'}}
+          </span>
+          <span class="cat">
+          
+            <span class="badge bg-dark">  {{item.Status}}</span>
+
+          </span>
+          <span class="date">
+            Created {{item.InvoiceDate | date: 'mediumDate'}}
+          </span>
+          <span class="date" *ngIf="item.EstimatedDeliveryDate" style="color: rgba(13, 110, 26, 0.678);">
+            Est. Delivery {{item.EstimatedDeliveryDate | date: 'mediumDate'}}
+          </span>
+
+
+        </p>
+        <!-- <p>
+          <small class="text-muted"><a (click)="confirm($event, item)" class="link-danger">Delete</a></small>
+
+        </p> -->
+       </div>
+
+        </li>
+
+      </ul>
+
+      <app-empty-state *ngIf="!orders || !orders.length"
+        [message]="'No orders found yet, order list will show here.'"></app-empty-state>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <div class="top-bar-conatiner">
 
   <div class="top-bar" *ngIf="orders">
     <div class="menu-back">
@@ -62,4 +122,4 @@
 
 
 
-
+ -->

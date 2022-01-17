@@ -23,10 +23,12 @@ export class AltraPaymentsComponent implements OnInit {
   merchantId = '';
   merchantKey = '';
   payFast: Item;
+  backLabel: string;
 
   constructor(private router: Router, private itemService: ItemService) { }
 
   ngOnInit(): void {
+    this.backLabel = `<i class="fas fa-arrow-left"></i> Back to shipping`
     this.companyId = this.order.CompanyId;
     this.shopingSuccesfulUrl = `${environment.BASE_URL}/home/shopping-succesful/${this.companyId}`;
     this.paymentCancelledUrl = `${environment.BASE_URL}/home/payment-cancelled/${this.companyId}`;

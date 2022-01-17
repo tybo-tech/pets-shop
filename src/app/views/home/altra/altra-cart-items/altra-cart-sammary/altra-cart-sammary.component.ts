@@ -22,10 +22,6 @@ export class AltraCartSammaryComponent implements OnInit {
   ngOnInit(): void {
     this.orderService.OrderObservable.subscribe(data => {
       this.order = data;
-      // if (this.order || !this.order.ShippingPrice)
-      //   this.order.ShippingPrice = 0;
-      if (this.order)
-        this.order.GrandTotal = Number(this.order.Total) + Number(this.order.ShippingPrice)
     })
   }
 
@@ -34,5 +30,5 @@ export class AltraCartSammaryComponent implements OnInit {
   continnueShopping() {
     this.router.navigate([`shopping/checkout`])
   }
-
+  view(e){}
 }

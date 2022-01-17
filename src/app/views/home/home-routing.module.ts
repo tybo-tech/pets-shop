@@ -19,12 +19,9 @@ import { ViewMyOrderComponent } from '../dashboard/orders/view-order/view-my-ord
 import { ViewOrderComponent } from '../dashboard/orders/view-order/view-order.component';
 import { AboutComponent } from './about/about.component';
 import { AllShopsComponent } from './all-shops/all-shops.component';
-import { AltraCartItemsComponent } from './altra/altra-cart-items/altra-cart-items.component';
 import { AltraCartPageComponent } from './altra/altra-cart-items/altra-cart-page/altra-cart-page.component';
-import { AltraCartSammaryComponent } from './altra/altra-cart-items/altra-cart-sammary/altra-cart-sammary.component';
 import { AltraCheckoutCustomerComponent } from './altra/altra-cart-items/altra-checkout-customer/altra-checkout-customer.component';
 import { AltraCheckoutComponent } from './altra/altra-cart-items/altra-checkout/altra-checkout.component';
-import { AltraDeliveryComponent } from './altra/altra-cart-items/altra-delivery/altra-delivery.component';
 import { AltraPaymentsComponent } from './altra/altra-cart-items/altra-payments/altra-payments.component';
 import { AltraAccountNavComponent } from './altra/altra-nav/altra-account-nav/altra-account-nav.component';
 import { AltraNavComponent } from './altra/altra-nav/altra-nav.component';
@@ -95,6 +92,7 @@ const routes: Routes = [
       { path: 'products/:id', component: ProductSectionComponent },
       { path: 'home/start-shop', component: SignUpModalComponent },
       { path: 'sign-up', component: SignUpComponent },
+      { path: 'sign-up/:id', component: SignUpComponent },
       { path: 'home/custom-design', component: CustomerDesignComponent },
       // { path: 'shop/checkout', component: ShopingSuccesfulComponent }    for testing only,
       { path: 'shop/checkout', component: CheckoutComponent },
@@ -211,11 +209,8 @@ export const declarations = [
   AltraNavComponent,
   AltraSearchComponent,
   AltraAccountNavComponent,
-  AltraCartItemsComponent,
   AltraCheckoutComponent,
   AltraCheckoutCustomerComponent,
-  AltraCartSammaryComponent,
-  AltraDeliveryComponent,
   AltraCustomerAddressComponent,
   AltraBreadcrumbComponent,
   AltraPaymentsComponent,

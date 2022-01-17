@@ -1,85 +1,108 @@
-<div class="row" *ngIf="product">
-  <div class="col-md-8 col-lg-8 col-sm-12">
-    <div class="card">
-      <h5 class="card-header">Product basic details</h5>
+<div class="container" *ngIf="product">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+      <li class="breadcrumb-item"><a routerLink="/admin/dashboard/products">Products</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{product?.Name}}</li>
+    </ol>
+  </nav>
 
-      <div class="card-body">
+  <br>
+  <div class="row">
+    <div class="col-md-8 col-lg-8 col-sm-12">
+      <div class="card">
+        <h5 class="card-header bg-dark text-white">Product basic details</h5>
 
-        <div class="row">
-          <div class="col-md-6">
-            <div class="mb-3">
-              <label class="form-label">Catergory</label>
-              <select class="form-select" aria-label="Default select example" [(ngModel)]="product.ParentCategoryGuid"
-                *ngIf="parentCategories && parentCategories.length" (change)="selectCategory($event.target.value)">
-                <option *ngFor="let pc of parentCategories" [ngValue]="pc.CategoryId">{{pc.Name}}</option>
-              </select> </div>
-          </div>
+        <div class="card-body">
 
-          <div class="col-md-6">
-            <div class="mb-3">
-              <label class="form-label">Sub Catergory</label>
-              <select class="form-select" aria-label="Default select example" [(ngModel)]="product.CategoryGuid"
-                *ngIf="chilndrenCategories" (change)="catChanged()">
-                <option *ngFor="let cc of chilndrenCategories" [ngValue]="cc.CategoryId">{{cc.Name}}</option>
-              </select> </div>
-          </div>
-        </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Catergory</label>
+                <select class="form-select" aria-label="Default select example" [(ngModel)]="product.ParentCategoryGuid"
+                  *ngIf="parentCategories && parentCategories.length" (change)="selectCategory($event.target.value)">
+                  <option *ngFor="let pc of parentCategories" [ngValue]="pc.CategoryId">{{pc.Name}}</option>
+                </select>
+                <small (click)="addCatergory()"> <a class="link-primary"> <i class="fa fa-plus"></i> Add new</a></small>
+              </div>
+            </div>
 
-
-        <div class="row">
-          <div class="col-md-6">
-            <div class="mb-3">
-            
-
-              <label class="form-label"> Price <strong>(ZAR)</strong></label>
-              <input type="number" class="form-control" [(ngModel)]="product.RegularPrice" id="exampleInputPassword1">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Sub Catergory</label>
+                <select class="form-select" aria-label="Default select example" [(ngModel)]="product.CategoryGuid"
+                  *ngIf="chilndrenCategories">
+                  <option *ngFor="let cc of chilndrenCategories" [ngValue]="cc.CategoryId">{{cc.Name}}</option>
+                </select>
+                <small (click)="addCatergory(product.ParentCategoryGuid)"> <a class="link-primary"> <i class="fa fa-plus"></i> Add new</a></small>
+              </div>
             </div>
           </div>
 
-          <div class="col-md-6">
-            <div class="mb-3">
-              <label class="form-label">Total Stock In Hand
-              </label>
-              <input type="tel" class="form-control" [(ngModel)]="product.TotalStock" id="exampleInputPassword1">
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+
+
+                <label class="form-label"> Price <strong>(ZAR)</strong></label>
+                <input type="number" class="form-control" [(ngModel)]="product.RegularPrice" id="exampleInputPassword1">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Total Stock In Hand
+                </label>
+                <input type="tel" class="form-control" [(ngModel)]="product.TotalStock" id="exampleInputPassword1">
+              </div>
             </div>
           </div>
+
+          <div class="mb-3">
+            <label class="form-label">Product name</label>
+            <input type="text" class="form-control" [(ngModel)]="product.Name" id="exampleInputPassword1">
+          </div>
+          <div class="mb-3" *ngIf="company && company.IsVATCharged == 'Yes'">
+            <label>
+              Product VAT
+            </label>
+            <select name="" id="" [(ngModel)]="product.ProductVAT" class="form-control">
+              <option [value]="VAT_RATES.STANDARD.Name">{{VAT_RATES.STANDARD.Name}}</option>
+              <option [value]="VAT_RATES.ZERO.Name">{{VAT_RATES.ZERO.Name}}</option>
+              <option [value]="VAT_RATES.EXEMPT.Name">{{VAT_RATES.EXEMPT.Name}}</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+            <textarea class="form-control" [(ngModel)]="product.Description" id="exampleFormControlTextarea1"
+              rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Images</label>
+
+            <app-images *ngIf="product" [images]="product.Images" [user]="user" [product]="product" [optionId]="0"
+              (onUploadFinished)="saveImage($event)" (deleteImageEvent)="deleteImage($event)"
+              (setMianImageEvent)="setMianImage($event)" (showImageEvent)="showImage($event)"></app-images>
+          </div>
+
         </div>
 
-        <div class="mb-3">
-          <label class="form-label">Product name</label>
-          <input type="text" class="form-control" [(ngModel)]="product.Name" id="exampleInputPassword1">
-        </div>
+      </div>
+    </div>
 
-        <div class="mb-3">
-          <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-          <textarea class="form-control" [(ngModel)]="product.Description"  id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Images</label>
+    <div class="col-md-4 col-lg-4 col-sm-12">
+      <div class="card">
+        <h5 class="card-header bg-dark text-white">Actions</h5>
+        <div class="card-body">
+          <a class="btn btn-dark" (click)="back()"> Back</a>
+          <a class="btn btn-primary" (click)="saveProduct()"> Save product</a>
 
-          <app-images *ngIf="product" [images]="product.Images" [user]="user" [product]="product" [optionId]="0"
-            (onUploadFinished)="saveImage($event)" (deleteImageEvent)="deleteImage($event)"
-            (setMianImageEvent)="setMianImage($event)" (showImageEvent)="showImage($event)"></app-images>
         </div>
-
       </div>
 
     </div>
   </div>
 
-  <div class="col-md-4 col-lg-4 col-sm-12">
-    <div class="card">
-      <h5 class="card-header">Actions</h5>
-      <div class="card-body">
-        <a class="btn btn-dark" (click)="back()"> Back</a>
-        <a class="btn btn-primary" (click)="saveProduct()"> Save product</a>
-
-      </div>
-    </div>
-
-  </div>
 </div>
-
-<p-toast position="top-right" baseZIndex="9999999999"></p-toast>
-
-

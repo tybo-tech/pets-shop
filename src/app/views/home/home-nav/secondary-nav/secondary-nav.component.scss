@@ -3,15 +3,16 @@
 .items {
   display: flex;
   background: #000000;
-  width: fit-content;
-  margin: 0 7em;
+  justify-content: center;
+  width:100%;
+  margin: 0 auto;
 
   .item {
     margin: 0;
     position: relative;
-    padding: 1em 2em;
+    padding: 1em;
     text-align: center;
-    font-size: 0.9em;
+    font-size: 0.8em !important;
 
     @media only screen and (max-width: 600px) {
       padding: 1em 2em;
@@ -68,11 +69,9 @@
       border: none;
     }
 
-    // border-right: 2px solid $cloud;
-
     a {
       font-size: 1.75em;
-      color: $white !important;
+      color: inherit !important;
       text-align: center;
     }
   }

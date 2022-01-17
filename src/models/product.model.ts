@@ -62,6 +62,8 @@ export interface Product {
   IsSelectedForGet?:boolean;
   HasBeenSelected?:boolean;
   PickId?:string;
+  ProductVAT?:string;
+  PromotionLinkId?:string;
 
 
 }

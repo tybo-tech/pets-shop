@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Item } from 'src/models/item.model';
-import { ITEM_TYPES } from 'src/shared/constants';
+import { COMPANY, ITEM_TYPES } from 'src/shared/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -87,5 +87,32 @@ export class ItemService {
         return logoItem.ImageUrl;
     }
     return null;
+  }
+
+  initItem(catergory: string, type: string, name = ''): Item {
+    return {
+      ItemId: '',
+      RelatedId: '',
+      RelatedParentId: '',
+      Name: name,
+      ParentId: '',
+      ItemType: type,
+      CompanyId: COMPANY,
+      Description: '',
+      OrderingNo: 1,
+      Price: 0,
+      LimitValue: 0,
+      OffLimitPrice: 0,
+      ItemStatus: 'Active',
+      ItemCode: '',
+      ImageUrl: '',
+      ItemPin: '',
+      ItemCategory: catergory,
+      ItemSubCategory: '',
+      CreateUserId: '',
+      ModifyUserId: '',
+      StatusId: 1
+    }
+
   }
 }

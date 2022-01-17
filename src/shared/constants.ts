@@ -71,7 +71,7 @@ export const PRINT_URL = `api/pdf/inv/i-2.php`;
 export const UPDATE_ORDER_URL = `api/orders/update-order.php`;
 
 
-export const DISCOUNT_TYPES = ['Percentage Off', 'Fixed Amount Off', 'Free Shipping', 'Buy X get Y'];
+export const DISCOUNT_TYPES = ['Percentage Off', 'Fixed Amount Off']; //, 'Free Shipping', 'Buy X get Y'
 export const DISCOUNT_APPLIES_TO = ['All Products', 'Specific Products']; //, 'Specific Collections'
 export const DISCOUNT_MIN_RQS = ['No Minimum Requirements', 'Minimum Purchase Amount', 'Minimum Purchase Quantity'];
 export const DISCOUNT_GROUP = ['Automatically Apply The Discount.', 'Customer Must Enter Promo Code To Get The Discount'];
@@ -226,6 +226,19 @@ export const ITEM_TYPES = {
 
     PAYFAST: {
         Name: 'Payfast'
+    },
+
+    GOOGLE_ANALYTICS: {
+        Name: 'Google-Analytics'
+    },
+    FEATURE_SECTION: {
+        Name: 'Feature-Section'
+    },
+    SLIDERDISCOUNT_APPLIES_TO_SECTION: {
+        Name: 'Slider-Section'
+    },
+    WEBSITE_COLORS  : {
+        Name: 'Website-Colors'
     }
 }
 
@@ -264,6 +277,21 @@ export const CHECKOUT_PAGES = {
     }
 }
 
+export const ORDER_STEPS = {
+    CUSTOMER: {
+        Name: 'customer'
+    },
+    PRODUCTS: {
+        Name: 'products'
+    },
+    SHIPPING: {
+        Name: 'shipping'
+    },
+    PAYMENTS: {
+        Name: 'payments'
+    }
+}
+
 
 export const DELIVERY_TYPES = {
     COLLECTION: {
@@ -271,6 +299,34 @@ export const DELIVERY_TYPES = {
     },
     DELIVERY: {
         Name: 'Delivery'
+    }
+}
+
+
+
+export const VAT_DISPLAY = {
+    EXCL: {
+        Name: 'Excl VAT'
+    },
+    INCL: {
+        Name: 'Incl VAT'
+    }
+}
+
+
+
+export const VAT_RATES = {
+    STANDARD: {
+        Value: 15,
+        Name: 'Standard rate'
+    },
+    ZERO: {
+        Value: 0,
+        Name: 'Zero rate'
+    },
+    EXEMPT: {
+        Value: 0,
+        Name: 'Exempt'
     }
 }
 

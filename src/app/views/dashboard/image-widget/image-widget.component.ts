@@ -11,10 +11,25 @@ import { IMAGE_CROP_SIZE } from 'src/shared/constants';
 export class ImageWidgetComponent implements OnInit {
   @Input() image: string;
   @Output() imageChangedEvent: EventEmitter<string> = new EventEmitter<string>();
+  @Input() maxSize: number;
   loading: boolean;
   constructor(private uploadService: UploadService) { }
 
   ngOnInit() {
+  }
+
+  uploadOriginal(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    this.loading = true;
+    formData.append('name', `tybo.${file.name.split('.')[file.name.split('.').length - 1]}`); // file extention
+    this.uploadService.uploadFile(formData).subscribe(response => {
+      this.loading = false;
+      if (response && response.length > 15) {
+        this.imageChangedEvent.emit(`${environment.API_URL}/api/upload/${response}`);
+      }
+    });
+
   }
 
   public uploadFile = (files: FileList) => {
@@ -23,10 +38,16 @@ export class ImageWidgetComponent implements OnInit {
     }
     this.loading = true;
     Array.from(files).forEach(file => {
-      this.resizeImage(file);
+      debugger
+      if (file.size < 200000000)
+        this.uploadOriginal(file)
+      else
+        this.resizeImage(file);
     });
   }
-
+  remove() {
+    this.imageChangedEvent.emit(``);
+  }
   resizeImage(file) {
     if (file.type.match(/image.*/) && file.type !== 'image/gif') {
       console.log('An image has been loaded');
@@ -38,7 +59,7 @@ export class ImageWidgetComponent implements OnInit {
 
           // Resize the image
           const canvas = document.createElement('canvas');
-          const maxSize = IMAGE_CROP_SIZE;
+          const maxSize = this.maxSize || IMAGE_CROP_SIZE;
           let width = image.width;
           let height = image.height;
           if (width > height) {
@@ -107,4 +128,6 @@ export class ImageWidgetComponent implements OnInit {
 
     return new Blob([uInt8Array], { type: contentType });
   }
+
+
 }

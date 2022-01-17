@@ -11,8 +11,10 @@
  
 
       <div class="card-body">
-        <div class="preview" (click)="file.click()">
-          <img *ngIf="image && image.length" [src]="image" alt="">
+        <div class="preview" >
+          <img *ngIf="image && image.length" (click)="file.click()" [src]="image" alt=""> 
+          <a *ngIf="image && image.length" (click)="remove()" class="link-danger">Remove image</a>
+
         </div>
         <a  *ngIf="!image || !image.length" (click)="file.click()" class="card-link">Click to upload.</a>
       </div>

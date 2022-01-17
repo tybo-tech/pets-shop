@@ -1,0 +1,59 @@
+<div class="card" *ngIf="company">
+    <div class="card-body">
+        <label>
+            Charge Vat?
+        </label>
+        <select name="" id="" [(ngModel)]="company.IsVATCharged" class="form-control">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <div *ngIf="company.IsVATCharged == 'Yes'">
+            <label>
+                Vat Standard rate
+            </label>
+            <input [(ngModel)]="company.VATPercentage" class="form-control" />
+
+            <label>
+                Vat Number
+            </label>
+            <input [(ngModel)]="company.VATNo" class="form-control" />
+            <br>
+            <h5 style="font-weight: 800;">VAT product settings</h5>
+
+            <label>
+                Product VAT price display ?
+            </label>
+            <select name="" id="" [(ngModel)]="company.PriceIncludeVAT" class="form-control">
+                <option [value]="VAT_DISPLAY.EXCL.Name">{{VAT_DISPLAY.EXCL.Name}}</option>
+                <option [value]="VAT_DISPLAY.INCL.Name">{{VAT_DISPLAY.INCL.Name}}</option>
+            </select>
+
+
+
+            <label>
+                Delivery VAT
+            </label>
+            <select name="" id="" [(ngModel)]="company.DeliveryVat" class="form-control">
+                <option [value]="VAT_RATES.STANDARD.Name">{{VAT_RATES.STANDARD.Name}}</option>
+                <option [value]="VAT_RATES.ZERO.Name">{{VAT_RATES.ZERO.Name}}</option>
+                <option [value]="VAT_RATES.EXEMPT.Name">{{VAT_RATES.EXEMPT.Name}}</option>
+            </select>
+
+
+            <!-- <label>
+                Default Product VAT?
+            </label>
+            <select name="" id="" [(ngModel)]="company.DefaultProductVAT" class="form-control">
+                <option value="Taxable">Taxable </option>
+                <option value="Exempt">Exempt</option>
+            </select> -->
+
+        </div>
+
+
+        <br>
+        <button class="btn btn-primary" (click)="save()">Save VAT</button>
+
+    </div>
+</div>

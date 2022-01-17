@@ -1,11 +1,14 @@
-<div class="items pc-only" [ngClass]="navClass" *ngIf="categories">
-  <div class="item" (click)="goto('/products')" *ngIf="productsMenu" [ngClass]="productsMenu.Class">
-   <a> {{productsMenu.Name}}</a>
+<div class="items pc-only" [ngStyle]="style" *ngIf="categories">
+  <div class="item" (click)="goto('/about')" *ngIf="aboutMenu" [ngClass]="aboutMenu.Class">
+    <a> {{aboutMenu.Name}}</a>
   </div>
-  <div class="item" *ngFor="let item of categories" [ngClass]="item.Class" (mouseover)="item.IsSelected = true"
-    (mouseleave)="item.IsSelected = false">
-   <a> {{item.Name}} <i class="fas fa-chevron-down"></i></a>
-    <div class="drop" *ngIf="item.IsSelected && item.Children">
+  <div class="item" (click)="goto('/products')" *ngIf="productsMenu" [ngClass]="productsMenu.Class">
+    <a> {{productsMenu.Name}}</a>
+  </div>
+  <div class="item" *ngFor="let item of categories" [ngClass]="item.Class" (click)="openParent(item)"
+    (mouseover)="item.IsSelected = true" (mouseleave)="item.IsSelected = false">
+    <a> {{item.Name}} <i class="fas fa-chevron-down" *ngIf="item.Children && item.Children.length"></i></a>
+    <div class="drop" *ngIf="item.IsSelected && item.Children && item.Children.length">
       <div class="drop-items">
         <div class="drop-item" *ngFor="let child of item.Children" (click)="view(child)">
           {{child.Name}}
@@ -17,7 +20,7 @@
 </div>
 
 
-<div class="menu-btn phone-only" *ngIf="categories">
+<div class="menu-btn phone-only" *ngIf="categories" [ngStyle]="style">
   <div class="item">
     <a class="link" *ngIf="!showMenu" (click)="showMenu = true"><i class="fas fa-bars"></i></a>
     <a class="link" *ngIf="showMenu" (click)="showMenu = false"><i class="fas fa-times"></i></a>
@@ -40,12 +43,16 @@
 
 <div class="mmmenu" *ngIf="showMenu">
   <div class="mob-menu">
-    <div class="item" (click)="goto('/products')" *ngIf="productsMenu" [ngClass]="productsMenu.Class">
+    <div class="item" (click)="showMenu = false; goto('/about')" *ngIf="aboutMenu" [ngClass]="aboutMenu.Class">
+      <a> {{aboutMenu.Name}}</a>
+    </div>
+    <div class="item" (click)="showMenu = false; goto('/products')" *ngIf="productsMenu" [ngClass]="productsMenu.Class">
       {{productsMenu.Name}}
     </div>
-    <div class="item" *ngFor="let item of categories" [ngClass]="item.Class" (click)="toggleMenu(item)">
-      {{item.Name}} <i class="fas fa-chevron-down"></i>
-      <div class="drop" *ngIf="item.IsSelected && item.Children">
+    <div class="item" *ngFor="let item of categories" [ngClass]="item.Class"
+      (click)="openParent(item); toggleMenu(item)">
+      {{item.Name}} <i *ngIf="item.Children && item.Children.length" class="fas fa-chevron-down"></i>
+      <div class="drop" *ngIf="item.IsSelected && item.Children && item.Children.length">
         <div class="drop-items">
           <div class="drop-item" *ngFor="let child of item.Children" (click)="view(child)">
             {{child.Name}}

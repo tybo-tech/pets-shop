@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import { Category } from 'src/models/category.model';
 import { ModalModel } from 'src/models/modal.model';
-import { UploadService, CompanyCategoryService } from 'src/services';
-import { IMAGE_DONE } from 'src/shared/constants';
+import { UploadService, CompanyCategoryService, AccountService } from 'src/services';
+import { COMPANY_TYPE, IMAGE_DONE } from 'src/shared/constants';
 
 @Component({
   selector: 'app-super-add-adit-category',
@@ -21,10 +23,25 @@ export class SuperAddAditCategoryComponent implements OnInit {
     img: undefined
   };
   showLoader;
+  user: import("c:/ndu/apps/pets-shop/src/models/user.model").User;
+  categoryId: any;
+  heading: string;
   constructor(
     private uploadService: UploadService,
     private categoryService: CompanyCategoryService,
-  ) { }
+    private activatedRoute: ActivatedRoute,
+    private accountService: AccountService,
+    private messageService: MessageService,
+    private router: Router,
+
+
+  ) {
+    this.activatedRoute.params.subscribe(r => {
+      this.categoryId = r.id;
+      this.user = this.accountService.currentUserValue;
+      this.load();
+    });
+  }
 
   ngOnInit() {
   }
@@ -50,6 +67,36 @@ export class SuperAddAditCategoryComponent implements OnInit {
     });
   }
 
+  load() {
+
+    if (this.categoryId !== 'add') {
+      this.categoryService.getCategory(this.categoryId).subscribe(data => {
+        if (data && data.CategoryId) {
+          this.category = data;
+          this.heading = this.category.Name;
+        }
+      })
+    } else {
+      this.category = {
+        CategoryId: '',
+        Name: '',
+        ParentId: '',
+        Description: '',
+        DisplayOrder: 0,
+        CategoryType: 'Parent',
+        CompanyType: COMPANY_TYPE,
+        ImageUrl: '',
+        PhoneBanner: '',
+        IsDeleted: false,
+        CreateUserId: this.user.UserId,
+        ModifyUserId: this.user.UserId,
+        StatusId: 1,
+        Children: []
+      };
+
+      this.heading = `Adding new category`;
+    }
+  }
   save() {
     if (this.category.CategoryId && this.category.CategoryId.length > 5) {
       this.categoryService.update(this.category).subscribe(data => {
@@ -57,6 +104,8 @@ export class SuperAddAditCategoryComponent implements OnInit {
           this.modalModel.heading = `Success!`
           this.modalModel.img = IMAGE_DONE;
           this.modalModel.body.push('Category details saved.');
+          this.messageService.add({ severity: 'success', summary: 'Category details saved.', detail: '' });
+
         }
       });
 
@@ -68,10 +117,18 @@ export class SuperAddAditCategoryComponent implements OnInit {
             this.modalModel.heading = `Success!`
             this.modalModel.img = IMAGE_DONE;
             this.modalModel.body.push('Category created.')
+            this.messageService.add({ severity: 'success', summary: 'Category details saved.', detail: '' });
           });
         }
       });
     }
+  }
+  back() {
+    this.router.navigate([`/admin/dashboard/categories`]);
+  }
+
+  onImageChangedEvent(url) {
+    this.category.ImageUrl = url;
   }
 
 }

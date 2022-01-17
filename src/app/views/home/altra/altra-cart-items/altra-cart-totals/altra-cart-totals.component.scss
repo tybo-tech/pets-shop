@@ -1,0 +1,9 @@
+.____totals{
+    padding: 1em 0;
+    h6{
+        font-size: .85em;
+        &:last-child{
+            font-size: 1em;
+        }
+    }
+}

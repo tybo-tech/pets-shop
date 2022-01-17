@@ -26,6 +26,7 @@ export class AltraCheckoutCustomerComponent implements OnInit {
   customerAddressItem: Item;
   LOCATION_TYPES = LOCATION_TYPES;
   orderDelivery: Item;
+  backLabel: string;
   constructor(
     private accountService: AccountService,
     private orderService: OrderService,
@@ -36,6 +37,7 @@ export class AltraCheckoutCustomerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.backLabel = `<i class='fas fa-arrow-left'></i> Back to cart`;
     this.orderService.OrderObservable.subscribe(data => {
       this.order = data;
     })

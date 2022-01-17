@@ -36,6 +36,10 @@ export class CompanyService {
 
   private companyListBehaviorSubject: BehaviorSubject<Company[]>;
   public companyListObservable: Observable<Company[]>;
+
+  private companyBehaviorSubject: BehaviorSubject<Company>;
+  public companyObservable: Observable<Company>;
+
   url: string;
 
   constructor(
@@ -68,6 +72,12 @@ export class CompanyService {
       new BehaviorSubject<Company[]>(JSON.parse(localStorage.getItem('companyList')));
     this.companyListObservable = this.companyListBehaviorSubject.asObservable();
 
+
+
+    this.companyBehaviorSubject =
+      new BehaviorSubject<Company>(JSON.parse(localStorage.getItem('company')));
+    this.companyObservable = this.companyBehaviorSubject.asObservable();
+
     this.url = environment.API_URL;
   }
 
@@ -93,6 +103,9 @@ export class CompanyService {
   public get geteCompanyListState(): Company[] {
     return this.companyListBehaviorSubject.value;
   }
+  public get companyValue(): Company {
+    return this.companyBehaviorSubject.value;
+  }
 
   updatecompanyCategoryListState(grades: CompanyCategory[]) {
     this.companyCategoryListBehaviorSubject.next(grades);
@@ -109,6 +122,10 @@ export class CompanyService {
   updateParentCategoryListState(categories: CompanyCategory[]) {
     this.parentCategoryListBehaviorSubject.next(categories);
     localStorage.setItem('parentCategorysList', JSON.stringify(categories));
+  }
+  updateCompanyState(company: Company) {
+    this.companyBehaviorSubject.next(company);
+    localStorage.setItem('company', JSON.stringify(company));
   }
 
 
@@ -154,6 +171,11 @@ export class CompanyService {
   getCompanyById(companyId) {
     return this.http.get<Company>(
       `${this.url}/api/company/get-by-id.php?CompanyId=${companyId}`
+    );
+  }
+  getAdminStat(companyId = 'all') {
+    return this.http.get<any>(
+      `${this.url}/api/company/get-admin-stat.php?CompanyId=${companyId}`
     );
   }
 

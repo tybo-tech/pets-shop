@@ -5,6 +5,7 @@ export interface Category {
   CategoryId: string;
   Name: string;
   ParentId: string;
+  ParentName?: string;
   Description: string;
   DisplayOrder: number;
   CategoryType: string;
@@ -25,4 +26,5 @@ export interface Category {
   Picks?: Product[];
   ShowChildren?: boolean;
   IsShop?: boolean;
+  Style?: any;
 }

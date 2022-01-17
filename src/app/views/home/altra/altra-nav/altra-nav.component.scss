@@ -1,18 +1,18 @@
 // component css goes here
 @import "../../../../../assets/styles/color";
-.____the-nav{
+.____the-nav {
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     z-index: 10000;
     box-shadow: $box-shadow;
+
+    
 }
 .__nav {
     padding: 0.25em 5em;
-    .__col {
-        // border: 1px solid red;
-    }
+    border-bottom: 1px solid;
     ._logo {
         img {
             width: auto;

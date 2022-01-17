@@ -1,11 +1,39 @@
-@import '../../../../../assets/styles/color';
+@import "../../../../../assets/styles/color";
 
 .image-parent {
   max-width: 8em;
 }
 
 p {
+  margin: 0.2em 0;
   span {
     display: block;
   }
+}
+
+.list-group-item {
+  position: relative;
+  .checkbox_ {
+    // position: absolute;
+    // left: -3em;
+    // top: 3em;
+    input {
+      cursor: pointer;
+    }
+  }
+}
+
+
+.smart-modal {
+  height: 100%;
+  ._body{
+      padding: 1em;
+  }
+}
+
+.p-a{
+  color: $white;
+  margin: .1em .5em;
+  text-decoration: none;
+  cursor: default;
 }

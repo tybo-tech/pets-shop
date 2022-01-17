@@ -1,4 +1,4 @@
-<div class="images" *ngIf="images"> 
+<div class="images" *ngIf="images">
   <div class="image" *ngFor="let image of images; let i = index">
     <div class="file">
       <img [src]="image.Url" alt="">
@@ -14,9 +14,10 @@
     </div>
   </div>
 
-  <div class="image btn">
-    <img src="assets/new/uplaod.svg" (click)="file.click()" alt="">
-  
+  <div class="image btn"> 
+    <button class="btn btn-primary" (click)="file.click()">
+      <i class="fa fa-plus"></i>
+    </button>
   </div>
 </div>
 

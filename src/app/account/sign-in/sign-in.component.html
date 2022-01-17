@@ -16,24 +16,10 @@
     </div>
   </div>
 
- 
+
 
   <form class="form" [formGroup]="rForm">
     <div class="form-container">
-      <!-- <h1 class="h1">
-          Login to your account.
-        </h1> -->
-
-      <!-- <div class="logo">
-        <a routerLink="" >
-          <img *ngIf="websiteLogo" style="width: 12em; border-radius: .5em;" [src]="websiteLogo.ImageUrl" alt="">
-        </a>
-      </div> -->
-
-      <!-- <div class="social">
-        <app-social-login></app-social-login>
-        <div class="or">Or</div>
-      </div> -->
       <div class="form-group">
         <br>
         <br>
@@ -64,15 +50,15 @@
       <div class="forgot-password">
         <a routerLink="/home/forgot-password">Forgot password ?</a>
       </div>
-      <div class="action">
-        <button class="btn btn-primary btn-big" (click)="Login()" [disabled]="!rForm.valid">
-          Login
-        </button>
+      <div class="_action">
+    
+        <app-button  [isDisabled]="!rForm.valid" [btnClass]="'btn-big'" (primaryButtonEvent)="Login()" [label] = "'Login'"></app-button>
+
         <h5 class="error">{{error}}</h5>
       </div>
 
       <div class="go-login">
-        DON'T HAVE AN ACCOUNT? <a routerLink="/sign-up">
+        DON'T HAVE AN ACCOUNT? <a [routerLink]="'/sign-up/'+backTo">
           SIGN UP</a>
       </div>
     </div>
@@ -82,4 +68,3 @@
 
 <app-customer-feedback *ngIf="modalModel && modalModel.heading" [modalModel]="modalModel"></app-customer-feedback>
 <app-home-loader *ngIf="showLoader"></app-home-loader>
-

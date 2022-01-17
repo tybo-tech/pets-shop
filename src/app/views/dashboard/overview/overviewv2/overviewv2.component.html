@@ -1,12 +1,4 @@
-<app-dash-nav *ngIf="showMenu"></app-dash-nav>
-<div class="overlay" *ngIf="showMenu" (click)="menu()"></div>
-
-<div class="main" *ngIf="user && user.Company && products">
-  <br><br>
 
   <app-statistics *ngIf="user && user.UserType === ADMIN"></app-statistics>
-
   <app-super-overview *ngIf="user && user.UserType === SUPER"></app-super-overview>
 
-
-</div>

@@ -27,7 +27,7 @@
         padding: 1em 0.2em;
         margin-bottom: 1.5em;
         display: grid;
-        grid-template-columns: 9em 70% auto;
+        grid-template-columns: 6em 70% auto;
         font-size: 0.8em;
         @media only screen and (max-width: 600px) {
             grid-template-columns: 9em 60% auto;
@@ -37,7 +37,7 @@
         }
         .image {
             img {
-                width: 7em;
+                width: 4em;
                 position: relative;
                 top: 0.6em;
                 border-radius: 0.25em;

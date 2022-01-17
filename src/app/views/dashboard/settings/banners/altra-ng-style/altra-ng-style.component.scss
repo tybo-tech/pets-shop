@@ -1,0 +1,18 @@
+@import './../../../../../../assets/styles/color';
+.style-inputs{
+    padding: 0;
+    // width: 1em;
+    // height: 1em;
+    position: relative;
+    left: 1em;
+    top: .2em;
+  }
+
+  .__item{
+    background: $cloud;
+    margin: .5em auto;
+    border-radius: .5em;
+    padding: .5em;
+    box-shadow: $box-shadow;
+    ;
+  }

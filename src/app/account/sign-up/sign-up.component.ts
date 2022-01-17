@@ -1,14 +1,14 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Email } from 'src/models/email.model';
 import { ModalModel } from 'src/models/modal.model';
 import { User, UserModel } from 'src/models/user.model';
 import { AccountService } from 'src/services/account.service';
 import { EmailService } from 'src/services/communication';
 import { ADMIN, COMPANY_DESCRIPTION, CUSTOMER, IMAGE_DONE, ITEM_TYPES, SYSTEM } from 'src/shared/constants';
-import { IS_DELETED_FALSE, AWAITING_ACTIVATION } from 'src/shared/status.const';
+import { IS_DELETED_FALSE, AWAITING_ACTIVATION, ACTIVE } from 'src/shared/status.const';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { AddressComponent } from 'ngx-google-places-autocomplete/objects/addressComponent';
@@ -52,6 +52,7 @@ export class SignUpComponent implements OnInit {
   user: any;
   navHistory: NavHistoryUX;
   websiteLogo: any;
+  backTo = '';
 
   constructor(
     private fb: FormBuilder,
@@ -62,10 +63,12 @@ export class SignUpComponent implements OnInit {
     private orderService: OrderService,
     private uxService: UxService,
     private itemService: ItemService,
-
-
-
-  ) { }
+    private activatedRoute: ActivatedRoute
+  ) { 
+    this.activatedRoute.params.subscribe(r => {
+      this.backTo = r.id;
+    });
+  }
 
   ngOnInit() {
     this.order = this.orderService.currentOrderValue;
@@ -85,7 +88,7 @@ export class SignUpComponent implements OnInit {
       CreateUserId: [SYSTEM],
       ModifyUserId: [SYSTEM],
       IsDeleted: [IS_DELETED_FALSE],
-      StatusId: [AWAITING_ACTIVATION]
+      StatusId: [ACTIVE]
     });
     this.uxService.uxNavHistoryObservable.subscribe(data => {
       this.navHistory = data;
@@ -127,11 +130,11 @@ export class SignUpComponent implements OnInit {
       if (user && user.UserType === CUSTOMER) {
         this.accountService.updateUserState(user);
 
-        if (user.UserType === CUSTOMER && this.navHistory && this.navHistory.BackToAfterLogin) {
-          this.routeTo.navigate([this.navHistory.BackToAfterLogin]);
+        if (this.backTo) {
+          this.backTo = this.backTo.split('_').join('/');
+          this.routeTo.navigate([this.backTo]);
           return;
         }
-
         if (this.order && this.order.CustomerId === 'checked') {
           this.order.CustomerId = user.UserId;
           this.order.Customer = user;

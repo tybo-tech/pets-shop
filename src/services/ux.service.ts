@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HomeNavUx, LoaderUx, LocationModel, NavHistoryUX } from 'src/models/UxModel.model';
 
@@ -33,7 +34,8 @@ export class UxService {
   private pageYPositionBehaviorSubject: BehaviorSubject<number>;
   public pageYPositionObservable: Observable<number>;
 
-  constructor() {
+  constructor(@Inject(DOCUMENT) private _document: HTMLDocument
+  ) {
     this.uxMessagePopBehaviorSubject = new BehaviorSubject<string>(null);
     this.uxMessagePopObservable = this.uxMessagePopBehaviorSubject.asObservable();
 
@@ -125,9 +127,24 @@ export class UxService {
     return d / 1000;
   }
 
-  
+
   toRad(Value) {
     return Value * Math.PI / 180;
+  }
+
+  showHideBodyScroller(showCart) {
+    if (showCart) {
+      var body = this._document.getElementById('_body');
+      if (body)
+        body.style.overflow = 'hidden'
+
+    }
+
+    if (!showCart) {
+      var body = this._document.getElementById('_body');
+      if (body)
+        body.style.overflowY = 'scroll'
+    }
   }
 }
 

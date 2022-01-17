@@ -3,21 +3,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import { Category, CompanyCategory, Product, User } from 'src/models';
+import { Company } from 'src/models/company.model';
 import { Images } from 'src/models/images.model';
 import { ProductVariation } from 'src/models/product.variation.model';
 import { ProductVariationOption } from 'src/models/product.variation.option.model';
 import { BreadModel } from 'src/models/UxModel.model';
 import { AccountService, CompanyCategoryService, ProductService, UploadService } from 'src/services';
+import { CompanyService } from 'src/services/company.service';
 import { ImagesService } from 'src/services/images.service';
 import { ProductVariationService } from 'src/services/product-variation.service';
 import { UxService } from 'src/services/ux.service';
-import { COMPANY_TYPE, PRODUCT_ORDER_LIMIT_MAX, PRODUCT_TYPE_STOCK, STATUS_ACTIIVE_STRING, STATUS_TRASHED_STRING } from 'src/shared/constants';
+import { COMPANY_TYPE, PRODUCT_ORDER_LIMIT_MAX, PRODUCT_TYPE_STOCK, STATUS_ACTIIVE_STRING, STATUS_TRASHED_STRING, VAT_RATES } from 'src/shared/constants';
 
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss'],
-  providers: [MessageService]
 })
 export class AddProductComponent implements OnInit {
   showLoader;
@@ -25,6 +26,7 @@ export class AddProductComponent implements OnInit {
   // tslint:disable-next-line: no-output-on-prefix
   @Output() addingProductFinished: EventEmitter<Product> = new EventEmitter();
   setUpVariations: boolean;
+  VAT_RATES = VAT_RATES;
   heading = 'Add product'
   product: Product = {
     ProductId: '',
@@ -92,6 +94,7 @@ export class AddProductComponent implements OnInit {
   STATUS_TRASHED_STRING = STATUS_TRASHED_STRING;
   productLink: any;
   productId: any;
+  company: Company;
   // CATEGORIES = CATEGORIES;
   constructor(
     private router: Router,
@@ -104,6 +107,7 @@ export class AddProductComponent implements OnInit {
     private productVariationService: ProductVariationService,
     private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
+    private companyService: CompanyService,
 
 
 
@@ -120,6 +124,7 @@ export class AddProductComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.accountService.currentUserValue;
+    this.company = this.companyService.companyValue;
 
     if (this.existingProduct && this.existingProduct.ProductId) {
       this.product = this.existingProduct;
@@ -272,7 +277,7 @@ export class AddProductComponent implements OnInit {
   back() {
     this.router.navigate([`/admin/dashboard/products`]);
   }
-  
+
   showSuccess(detail, summary = 'Success', severity = 'success') {
     this.messageService.add({ severity: severity, summary: summary, detail: detail });
   }
@@ -401,39 +406,26 @@ export class AddProductComponent implements OnInit {
 
   }
 
-  catChanged() {
-    if (this.product.CategoryGuid === 'add') {
-      this.addNewSubCat('Child');
-    }
-    if (this.product.TertiaryCategoryGuid === 'add-tertiary') {
-      this.addNewSubCat('Tertiary');
-    }
-  }
 
 
-  addNewSubCat(type) {
-    this.shoWaddNewCatergory = true;
-    if (this.parentCategories && this.parentCategories.length) {
-      const parent = this.parentCategories.find(x => x.CategoryId === this.product.ParentCategoryGuid);
-      this.newCatergory = {
-        CategoryId: '',
-        Name: '',
-        ParentId: parent.CategoryId,
-        Description: '',
-        DisplayOrder: 0,
-        CategoryType: type,
-        CompanyType: 'Fashion',
-        ImageUrl: '',
-        PhoneBanner: '',
-        IsDeleted: false,
-        CreateUserId: this.user.UserId,
-        ModifyUserId: this.user.UserId,
-        StatusId: 1,
-        Children: []
-      };
-
-    }
-
+  addCatergory(parentId = '') {
+    const type = parentId === '' ? 'Parent' : 'Child';
+    this.newCatergory = {
+      CategoryId: '',
+      Name: '',
+      ParentId: parentId,
+      Description: '',
+      DisplayOrder: 0,
+      CategoryType: type,
+      CompanyType: 'Fashion',
+      ImageUrl: '',
+      PhoneBanner: '',
+      IsDeleted: false,
+      CreateUserId: this.user.UserId,
+      ModifyUserId: this.user.UserId,
+      StatusId: 1,
+      Children: []
+    };
   }
   toggleSetUpVariations() {
     if (this.product.ParentCategoryGuid) {

@@ -1,10 +1,9 @@
 .box {
   text-align: center;
-  padding: 1em;
   margin: 2em auto;
 
   .headering {
-    padding: 1em;
+    padding: 1em 0;
     .ref {
       font-size: 0.8em;
     }
@@ -12,33 +11,39 @@
 
   @import "../../../../../../assets/styles/color";
 
-  .category {
-    margin: 0.5em;
-    position: relative;
-    img {
-      width: 100%;
-    }
-    button {
-      position: absolute;
-      bottom: 1em;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 0.5em 2em;
-      border-radius: 0;
-      font-weight: 600;
 
-      @media only screen and (max-width: 600px) {
-        padding: 0.4em 0.75em;
-        font-size: 0.8em !important;
-        margin: 0.1em;
-      }
-    }
-  }
 }
 
 .row {
   @media only screen and (max-width: 600px) {
     display: grid;
     grid-template-columns: repeat(3, 33.333%);
+  }
+}
+  
+.cat {
+  background: rgb(209, 209, 209);
+  height: 8em;
+  background-size:cover;
+  background-repeat: no-repeat;
+  padding: 1em;
+  border-radius: 0.2em;
+  position: relative;
+  background-position: bottom;
+  margin-bottom: 1em;
+
+  @media only screen and (max-width: 600px) {
+    margin: .5em;
+  }
+
+  button {
+    position: absolute;
+    bottom: 1em;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.4em 1em;
+    border-radius: 0;
+    font-weight: 600;
+    font-size: 0.8em !important;
   }
 }

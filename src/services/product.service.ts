@@ -227,6 +227,10 @@ export class ProductService {
     return this.http.get<Product[]>(
       `${this.url}/api/product/search.php?SearchString=${searchString}`)
   }
+  applyDiscountToAllProducts(discountId) {
+    return this.http.get<Product[]>(
+      `${this.url}/api/product/apply-discount.php?PromotionLinkId=${discountId}`)
+  }
 
 
 }

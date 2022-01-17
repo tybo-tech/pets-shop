@@ -17,6 +17,9 @@ export interface Orderproduct {
   ModifyDate?: string;
   ModifyUserId: string;
   StatusId: number;
+  TotalStock?: number;
+  ProductVAT?: string;
+
 };
 
 

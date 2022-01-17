@@ -1,12 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { AddressComponent } from 'ngx-google-places-autocomplete/objects/addressComponent';
+import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
-import { Email, User } from 'src/models';
+import { Email, Order, User } from 'src/models';
 import { Customer } from 'src/models/customer.model';
-import { AccountService, EmailService, UploadService, UserService } from 'src/services';
+import { ModalModel } from 'src/models/modal.model';
+import { NavHistoryUX, LocationModel } from 'src/models/UxModel.model';
+import { AccountService, EmailService, OrderService, UploadService, UserService } from 'src/services';
 import { CustomerService } from 'src/services/customer.service';
 import { UxService } from 'src/services/ux.service';
 import { CUSTOMER } from 'src/shared/constants';
@@ -17,43 +20,96 @@ import { CUSTOMER } from 'src/shared/constants';
   styleUrls: ['./add-customer.component.scss']
 })
 export class AddCustomerComponent implements OnInit {
-  @Input() customer: User;
-  @Input() customerName: string;
-  @Output() addingUserFinished: EventEmitter<User> = new EventEmitter();
 
-  // <app-add-customer [user]="user">
-  @ViewChild('places') places: GooglePlaceDirective;
-
-  options = {
-    types: [],
-    componentRestrictions: { country: 'ZA' }
-  }
-
+  loggedInUser: User;
+  user: User;
   showLoader;
-  x: AddressComponent;
-  address: Address;
+  modalModel: ModalModel = {
+    heading: undefined,
+    body: [],
+    ctaLabel: 'Done',
+    routeTo: 'home/profile',
+    img: undefined
+  };
 
-  emailToSend: Email;
-  users: User[];
-  user: any;
-  showGotoCustomer: boolean;
-  existingCustomer: User;
+
+  address: Address;
+  x: AddressComponent;
+  navHistory: NavHistoryUX;
+  userId: string;
+  backTo: string;
+  heading: string;
   constructor(
     private uploadService: UploadService,
     private userService: UserService,
+    private routeTo: Router,
     private accountService: AccountService,
+    private orderService: OrderService,
     private uxService: UxService,
-    private router: Router,
-    private emailService: EmailService
-  ) { }
+    private messageService: MessageService,
+    private activatedRoute: ActivatedRoute,
+
+
+
+  ) {
+
+    this.activatedRoute.params.subscribe(r => {
+      this.userId = r.id;
+      this.backTo = r.backTo;
+      this.loggedInUser = this.accountService.currentUserValue;
+      if (!this.loggedInUser)
+        this.routeTo.navigate(['sign-in'])
+      if (this.userId === 'add') {
+        this.initNewUser();
+      } else {
+        userService.getUserSync(this.userId).subscribe(data => {
+          if (data && data.UserId) {
+            this.user = data;
+          } else {
+            this.showSuccess('Customer not found.', '', 'error');
+            this.back();
+
+          }
+        })
+      }
+    });
+  }
 
   ngOnInit() {
-    this.user = this.accountService.currentUserValue;
-    this.userService.userListObservable.subscribe(data => {
-      this.users = data;
-    });
-    this.userService.getUsers(this.user.CompanyId, CUSTOMER);
+
   }
+  initNewUser() {
+    this.user = {
+      UserId: '',
+      CompanyId: this.loggedInUser.CompanyId,
+      UserType: 'Customer',
+      Name: '',
+      Surname: '',
+      Email: '',
+      PhoneNumber: '',
+      Password: '',
+      Dp: '',
+      AddressLineHome: '',
+      AddressUrlHome: '',
+      AddressLineWork: '',
+      AddressUrlWork: '',
+      CreateUserId: this.loggedInUser.UserId,
+      ModifyUserId: this.loggedInUser.UserId,
+      StatusId: '1',
+      UserToken: ''
+    };
+    this.heading = `New customer`;
+  }
+
+  back() {
+    if (this.backTo) {
+      this.backTo = this.backTo.split('_').join('/');
+      this.routeTo.navigate([this.backTo]);
+      return;
+    }
+    this.routeTo.navigate(['/admin/dashboard/customers']);
+  }
+
 
   public uploadFile = (files: FileList) => {
     if (files.length === 0) {
@@ -61,60 +117,64 @@ export class AddCustomerComponent implements OnInit {
     }
 
     Array.from(files).forEach(file => {
-      this.uploadService.resizeImage(file, null, this.customer);
-
+      this.uploadService.resizeImage(file, null, this.loggedInUser);
       // const formData = new FormData();
       // formData.append('file', file);
       // formData.append('name', `tybo.${file.name.split('.')[file.name.split('.').length - 1]}`); // file extention
       // this.uploadService.uploadFile(formData).subscribe(url => {
-      //   this.customer.Dp = `${environment.API_URL}/api/upload/${url}`;
+      //   this.user.Dp = `${environment.API_URL}/api/upload/${url}`;
       // });
 
     });
   }
 
   save() {
-    if (this.address && this.address.formatted_address) {
-      this.customer.AddressLineHome = this.address.formatted_address;
-    }
+    this.user.AddressLineHome = this.address && this.address.formatted_address || this.user.AddressLineHome;
 
-    if (this.customer.UserId && this.customer.UserId.length > 5) {
-      this.userService.updateUserSync(this.customer).subscribe(data => {
+    this.user.AddressLineHome = this.user.AddressLineHome || ''
+    this.user.AddressUrlHome = this.user.AddressUrlHome || ''
+    this.user.AddressLineWork = this.user.AddressLineWork || ''
+    this.user.AddressUrlWork = this.user.AddressUrlWork || ''
+    if (this.user.UserId && this.user.UserId.length > 5) {
+      this.showLoader = true;
+      this.userService.updateUserSync(this.user).subscribe(data => {
         if (data && data.UserId) {
-          this.addingUserFinished.emit(data);
-          // this.sendEmail(data, 'Update-Customer');
+          this.showLoader = false;
+          this.showSuccess('Customer updated successfully.');
+          if (this.backTo) {
+            this.selectItem(data);
+            this.backTo = this.backTo.split('_').join('/');
+            this.showSuccess('Customer order updated.');
+            this.routeTo.navigate([this.backTo]);
+            return;
+          }
+
+          // this.back();
+        }
+      })
+    } else {
+      this.userService.add(this.user).subscribe(data => {
+        if (data && data.UserId) {
+          this.showLoader = false;
+          this.showSuccess('Customer created successfully.');
+          if (this.backTo) {
+            this.selectItem(data);
+            this.showSuccess('Customer added to order.');
+            this.backTo = this.backTo.split('_').join('/');
+            this.routeTo.navigate([this.backTo]);
+            return;
+          }
+
+          // this.back();
         }
       })
     }
-    else {
-      if (this.checkIfCustomerExist()) {
-        this.uxService.updateMessagePopState('Customer already exist.');
-        this.showGotoCustomer = true;
-        return false
-      }
-      this.userService.add(this.customer).subscribe(data => {
-        if (data && data.UserId) {
-          this.addingUserFinished.emit(data);
-          // this.sendEmail(data, 'Add-New-Customer');
-        }
-      });
-    }
+
   }
 
-  sendEmail(user: User, type: string) {
-    this.emailService.getCustomerEmails().subscribe(emailData => {
-      this.emailToSend = emailData.find(x => x.Type === type)
-      this.emailToSend.UserFullName = user.Name;
-      this.emailToSend.Email = user.Email;
-      this.emailService.sendGeneralTextEmail(this.emailToSend).subscribe(data => {
-        if (data > 0) {
-          this.addingUserFinished.emit(user);
-        } else {
-          alert('Something went wrong');
-        }
-      })
 
-    });
+  selectItem(item: User) {
+    this.orderService.addCustomerToOrder(item);
   }
 
 
@@ -142,27 +202,27 @@ export class AddCustomerComponent implements OnInit {
       if (comp.types.findIndex(x => x.toLowerCase() == type) > -1)
         return comp;
     }
+
     return null;
   }
 
 
-  getCustomerEmailType(type: string) {
-    this.emailToSend = null;
-    return this.emailToSend;
-  }
-
-  checkIfCustomerExist() {
-    const customer = this.users && this.users.find(x => x.Email && x.Email.length > 4 && x.Email.includes('@') && x.Email === this.customer.Email);
-    if (customer) {
-      this.existingCustomer = customer;
+  onAdressEvent(event: LocationModel) {
+    console.log(event);
+    if (event) {
+      this.loggedInUser.Latitude = event.lat;
+      this.loggedInUser.Longitude = event.lng;
+      this.loggedInUser.AddressLineHome = event.addressLine;
     }
-    return customer;
   }
-
-  view(user: User) {
-    this.userService.updateUserState(user);
-    this.router.navigate(['admin/dashboard/customer', user.UserId]);
-    location.reload();
+  showSuccess(detail, summary = 'Success', severity = 'success') {
+    this.messageService.add({ severity: severity, summary: summary, detail: detail });
+  }
+  logout() {
+    this.accountService.logout();
+  }
+  dashboard() {
+    this.routeTo.navigate(['/admin/dashboard'])
 
   }
 }

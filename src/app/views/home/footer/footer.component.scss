@@ -1,113 +1,43 @@
 @import '../../../../assets/styles/color';
-.footer{
-  background: $black;
+.footer {
   padding: 1em;
-  margin: 0;
-  // position: fixed;
-  // z-index: 1000;
-  // width: 100%;
-  // left: 0;
-  // bottom: 0;
-  .headerlink{
-    font-weight: 700;
-    text-transform: capitalize;
-    display: block;
-    text-decoration: none;
-    color: $white;
-    padding: .3em;
-    font-size: 1.2em;
+  background: #707070;
+  color: #fff;
+  text-align: center;
+  font-size: .75em;
+  margin-top: 0;
+
+  .items {
+    display: grid;
+    grid-template-columns: repeat(3, 33%);
+    max-width: 25em;
+    margin: 1em auto;
+    // border-bottom: 1px solid #fff;
+    margin-bottom: 2em;
+    padding: 1em 0;
+
+    .item {
+      text-align: center;
+    }
+  }
+
+  p {
+    text-align: center;
   }
 }
 
-.sub-links{
-  a{
-    display: block;
-    padding: .2em 1em;
-    color: $cloud;
-    text-decoration: none;
 
+.social {
+  display: grid;
+  grid-template-columns: repeat(3, 33%);
+  width: 15em;
+  margin: 2em auto;
+  text-align: center;
+  margin-top: 4em;
+
+  img {
+    width: 80%;
+    display: block;
+    margin: 0 auto;
   }
 }
-// .footer {
-//   background: $black;
-//   color: #ffffff;
-//   padding: 0;
-
-
-
-//   .items {
-//     display: grid;
-//     grid-template-columns: 33% 36% auto;
-//     padding: 2em;
-
-
-//     @media only screen and (max-width: 600px) {
-//       grid-template-columns: 100%;
-//     }
-
-//     .item {
-//       h3 {
-//         text-transform: uppercase;
-//         font-weight: 900;
-//         margin-bottom: .5em;
-//         padding: .2em 0em;
-//         font-size: 1em;
-
-//         @media only screen and (max-width: 600px) {
-//           margin: .5em 0;
-//           border-top: 1px solid #ecf0f1;
-//           padding: .5em 0;
-//         }
-//       }
-//     }
-//   }
-// }
-
-
-// .social {
-//   padding: .5em;
-//   display: grid;
-//   grid-template-columns: 1.5em auto;
-
-//   .name {
-//     padding: 0 2em;
-
-//     a {
-//       text-decoration: none;
-//       color: rgb(255, 255, 255);
-//       font-weight: 500;
-//       text-transform: capitalize;
-//       letter-spacing: 2px;
-//     }
-//   }
-
-//   img {
-//     width: 100%;
-//   }
-// }
-
-// .col-1 {
-//   grid-template-columns: 100%;
-
-//   .name {
-//     padding: 0;
-
-//   }
-// }
-
-
-// .power {
-//   padding: 2em;
-//   padding-top: 1em;
-//   font-size: .85em;
-
-// }
-
-// a {
-//   text-decoration: none;
-//   color: rgb(255, 255, 255);
-// }
-
-// a{
-//   font-size: .85em;
-// }

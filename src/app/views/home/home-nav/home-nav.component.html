@@ -43,7 +43,7 @@
       <a class="link" routerLink="/home/wishlist"><i class="fas fa-heart  for-pc"></i></a>
       <a routerLink="/shop/cart"> <i class="fas fa-shopping-cart for-pc"></i>
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger for-pc">
-          {{carttItems}}
+          {{order?.CartItems || 0}}
         </span>
       </a>
     </div>

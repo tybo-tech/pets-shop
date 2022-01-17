@@ -1,0 +1,42 @@
+<div class="____totals" *ngIf="order"> 
+    <h6 class="d-flex justify-content-between">
+        <span>
+            Subtotal
+        </span>
+        <span>
+            {{order.Total | currency : 'R'}}
+        </span>
+    </h6>
+
+
+    <h6  *ngIf="order.Shipping == DELIVERY_TYPES.DELIVERY.Name && order.ShippingPrice" class="d-flex justify-content-between">
+        <span>
+            {{DELIVERY_TYPES.DELIVERY.Name}} <small>
+                {{order.DeliveryRate}}</small>
+        </span>
+        <span>
+            {{order.ShippingPrice | currency : 'R'}}
+        </span>
+    </h6>
+
+
+    <h6  *ngIf="order.VatAmount" class="d-flex justify-content-between">
+        <span>
+            VAT
+        </span>
+        <span>
+            {{order.VatAmount | currency : 'R'}}
+        </span>
+    </h6>
+
+
+    <h6 class="d-flex justify-content-between">
+        <span>
+            Total
+        </span>
+        <span>
+            {{order.GrandTotal | currency : 'R'}}
+        </span>
+    </h6>
+
+</div>

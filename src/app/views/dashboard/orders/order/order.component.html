@@ -1,35 +1,74 @@
-<!-- <app-loader [showLoader]="showLoader" *ngIf="showLoader"></app-loader> -->
+<div class="container" *ngIf="order">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+      <li class="breadcrumb-item"><a routerLink="/admin/dashboard/invoices/all">Orders List</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{order.Id}}</li>
+    </ol>
+  </nav>
 
+  <br>
 
-
-<div class="create-order mobile-full">
-  <div class="top-bar-conatiner">
-
-    <div class="top-bar">
-      <div class="menu-back ">
-        <span class="material-icons" (click)="back()">
-          keyboard_arrow_left
-        </span>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header bg-dark text-white">Customer details
+        </div>
+        <div class="card-body">
+          <p>
+            Customer Name : <b>{{order.CustomerName}}</b> <br>
+            Customer Email : <b>{{order.CustomerEmail}}</b> <br>
+            Customer Phone : <b>{{order.CustomerPhone}}</b> <br>
+            <br>
+            Addess: <br>
+            <b>
+              <span *ngIf="order.LocationNumber">{{order.LocationNumber}}</span>
+              <span *ngIf="order.LocationName">{{order.LocationName}}</span>
+              <span *ngIf="order.AddressLine">{{order.AddressLine}}</span>
+            </b>
+          </p>
+        </div>
       </div>
+      <br>
 
+      <br>
+      <div class="card">
+        <div class="card-header bg-dark text-white">Ordered items
+        </div>
+        <div class="card-body">
+          <!-- <app-altra-cart-sammary></app-altra-cart-sammary> -->
+          <app-altra-cart-sammary></app-altra-cart-sammary>
 
-      <div class="name link tal" (click)="back()">
-        Orders
-      </div>
-
-
-      <div class="name" *ngIf="order">
-        Order
+          <!-- <br>
+          <button class="btn btn-light btn-big" (click)="back()" style="margin-right: 1em;"> Orders details</button>
+          <button class="btn btn-primary btn-big" (click)="newOrder()">Add new order</button> -->
+        </div>
       </div>
     </div>
+
+
+    <div class="col-lg-3">
+      <div class="card">
+        <div class="card-header bg-dark text-white">Actions
+        </div>
+        <div class="card-body">
+
+          <div class="mx-auto">
+
+            <button type="submit" type="button" (click)="back()" class="btn btn-light"
+              style="margin-right: 1em;">Back</button>
+            <button type="submit" type="button" (click)="print()" class="btn btn-primary">Print</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
+</div>
 
-  <!-- <div class="col-1-of-2"> -->
-
-    
-
-
-
+<!-- <div class="create-order mobile-full">
+  
   <div class="section-card mt5" *ngIf="order && order.Customer">
     <div class="ctas" *ngIf="order && order.Orderproducts &&order.Orderproducts.length">
 
@@ -148,8 +187,6 @@
 
   </div>
 
-  <!-- </div> -->
-
   <div class="section-card tracking">
     <h2 class="header-label">
       Order Tracking
@@ -182,4 +219,4 @@
 
 
 </div>
-<app-user-feedback *ngIf="modalModel && modalModel.heading" [modalModel]="modalModel"></app-user-feedback>
+<app-user-feedback *ngIf="modalModel && modalModel.heading" [modalModel]="modalModel"></app-user-feedback> -->
