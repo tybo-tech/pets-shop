@@ -99,6 +99,7 @@ const routes: Routes = [
       { path: 'shop/cart', component: MyCartComponent },
       { path: 'home/forgot-password', component: ForgotPasswordComponent },
       { path: 'home/reset-password', component: ResetPasswordComponent },
+      { path: 'home/reset-password/:id', component: ResetPasswordComponent },
       { path: 'home/fitting-room', component: FiitingRoomComponent },
       { path: 'shop/product/:id', component: ProductSectionDetailComponent },
 

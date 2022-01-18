@@ -9,6 +9,7 @@
     border-radius: 10em;
     // overflow: hidden;
     border: 2px solid;
+    padding: 0 1em;
 
     .col {
         position: relative;
@@ -16,10 +17,15 @@
         input {
             padding: 0.2em 2em;
             width: 100%;
-            border: none;
+            border: none !important;
             background: none;
             border: none;
             color: inherit;
+            position: relative;
+            top: .3333em;
+            &:focus{
+                border:  none !important;
+            }
         }
 
         button {

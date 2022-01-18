@@ -18,6 +18,7 @@ export interface Email {
   Message?: string;
   Link?: string;
   LinkLabel?: string;
+  FromEmail?: string;
   UserFullName?: string;
   Name?: string;
   Amount?: number;

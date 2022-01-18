@@ -351,3 +351,15 @@ export const LOCATION_TYPES = {
     }
 }
 
+
+
+export const ORDER_STATUS = {
+    DRAFT: {
+        Name: 'Draft'
+    },
+    DELIVERY: {
+        Name: 'Delivery'
+    }
+}
+
+

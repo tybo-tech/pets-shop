@@ -27,6 +27,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { AltraLayoutComponent } from './settings/banners/altra-layout/altra-layout.component';
 import { PromotionProductsComponent } from './promotion/add-promotion/promotion-products/promotion-products.component';
 import { AltraNgStyleComponent } from './settings/banners/altra-ng-style/altra-ng-style.component';
+import { CompanyContactsComponent } from './settings/banners/vat/company-contacts/company-contacts.component';
 
 @NgModule({
   imports: [
@@ -56,7 +57,7 @@ import { AltraNgStyleComponent } from './settings/banners/altra-ng-style/altra-n
     ConfirmPopupModule
 
   ],
-  declarations: [...declarations, AltraLayoutComponent, PromotionProductsComponent, AltraNgStyleComponent],
+  declarations: [...declarations, AltraLayoutComponent, PromotionProductsComponent, AltraNgStyleComponent, CompanyContactsComponent],
   providers: [MessageService, ConfirmationService],
 
 })

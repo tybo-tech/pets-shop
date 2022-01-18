@@ -29,9 +29,11 @@
 
 
             <app-altra-checkout-customer *ngIf="page === CHECKOUT_PAGES.INFO.Name"></app-altra-checkout-customer>
-            <app-altra-payment-methods *ngIf="page === CHECKOUT_PAGES.PAYMENTS.Name && user && order" [order]="order"
-                [user]="user"></app-altra-payment-methods>
-            <app-altra-delivery [user]="user" *ngIf="user && page === CHECKOUT_PAGES.SHIPPING.Name">
+            <app-altra-payment-methods *ngIf="page === CHECKOUT_PAGES.PAYMENTS.Name &&  order" [order]="order">
+            </app-altra-payment-methods>
+
+
+            <app-altra-delivery *ngIf=" page === CHECKOUT_PAGES.SHIPPING.Name">
             </app-altra-delivery>
 
         </div>

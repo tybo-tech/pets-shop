@@ -40,7 +40,8 @@
                 width: 4em;
                 position: relative;
                 top: 0.6em;
-                border-radius: 0.25em;
+                border-radius: 0.3em;
+                border: 1px solid $grey;
             }
         }
     }
@@ -67,9 +68,10 @@
 
 .qty__ {
     width: fit-content;
-    padding: 0.4em;
+    padding: 0em !important;
     border: 1px solid $black;
     margin-top: 0.4em;
+    // font-size: .5em !important;
 }
 
 .qty-btn {

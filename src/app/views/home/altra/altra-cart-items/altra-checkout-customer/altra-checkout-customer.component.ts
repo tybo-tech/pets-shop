@@ -6,7 +6,7 @@ import { Item, ITEM_CUSTOMER_ADRESS } from 'src/models/item.model';
 import { LocationModel } from 'src/models/UxModel.model';
 import { AccountService, OrderService, UserService } from 'src/services';
 import { ItemService } from 'src/services/item.service';
-import { COMPANY, ITEM_TYPES, LOCATION_TYPES, USER_TYPES } from 'src/shared/constants';
+import { COMPANY, ITEM_TYPES, LOCATION_TYPES, ORDER_STATUS, USER_TYPES } from 'src/shared/constants';
 
 @Component({
   selector: 'app-altra-checkout-customer',
@@ -58,6 +58,9 @@ export class AltraCheckoutCustomerComponent implements OnInit {
       }
     })
   }
+
+
+  //***********************  END  *******************************/
   initCustomer() {
     this.customer = {
       UserId: '',
@@ -190,8 +193,8 @@ export class AltraCheckoutCustomerComponent implements OnInit {
           this.editingAddress = false;
           this.order.AddressId = data.ItemId;
           if (!this.user.Items)
-          this.user.Items = [];
-          
+            this.user.Items = [];
+
           this.user.Items.push(data);
           this.accountService.updateUserState(this.user);
           this.adressChanged();
@@ -202,21 +205,33 @@ export class AltraCheckoutCustomerComponent implements OnInit {
 
   }
   onAdressEvent(event: LocationModel) {
-    console.log(event);
     if (event) {
-      this.customerAddressItem.Latitude = event.lat;
-      this.customerAddressItem.Longitude = event.lng;
-      this.customerAddressItem.AddressLine = event.addressLine;
+      this.order.Latitude = event.lat;
+      this.order.Longitude = event.lng;
+      this.order.AddressLine = event.addressLine;
+      this.order = this.orderService.deliveryMethodChanged(this.order, this.orderDelivery);
+      this.orderService.updateOrderState(this.order);
     }
   }
   addNewAddress() {
     this.customerAddressItem = ITEM_CUSTOMER_ADRESS;
     this.editingAddress = true;
   }
-  checkout() {
-    this.router.navigate(['/shopping/checkout/add/shipping']);
+  shipping() {
+
+    if (!this.order.OrdersId) {
+      this.order.Status = ORDER_STATUS.DRAFT.Name;
+      this.orderService.create(this.order).subscribe(data => {
+        if (data && data.OrdersId) {
+          this.order = data;
+          this.orderService.updateOrderState(this.order);
+          this.router.navigate([`/shopping/checkout/${this.order.OrdersId}/shipping`]);
+        }
+      })
+    }
   }
   cart() {
+    this.orderService.updateOrderState(this.order);
     this.router.navigate(['/view-cart']);
   }
 }

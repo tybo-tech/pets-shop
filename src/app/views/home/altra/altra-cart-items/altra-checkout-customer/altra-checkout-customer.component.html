@@ -1,4 +1,93 @@
-<div class="card">
+<div class="card" *ngIf="order && customer">
+    <div class="card-header bg-dark text-white"><i class="fa fa-user"></i> Customer information.
+    </div>
+    <div class="card-body">
+
+        <div *ngIf="!customer.UserId" class="col-lg-12">
+            <p style="padding: 1em 0; font-weight: 600;">
+                Already have an account? <a routerLink="/sign-in/shopping_checkout_add_information"> Log in</a>
+            </p>
+            <hr>
+            <br>
+        </div>
+        <h6>
+            Contact information
+
+        </h6>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="CustomerEmail" [(ngModel)]="order.CustomerEmail"
+                        placeholder="name@example.com">
+                    <label for="CustomerEmail">Email address (*)</label>
+                </div>
+
+
+            </div>
+            <div class="col-lg-6">
+                <div class="form-floating">
+                    <input type="tel" class="form-control" id="CustomerPhone" [(ngModel)]="order.CustomerPhone"
+                        placeholder="0120000000">
+                    <label for="CustomerPhone"> Phone number (*)</label>
+                </div>
+            </div>
+        </div>
+        <br>
+        <h6>
+            Address information
+        </h6>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="CustomerName" [(ngModel)]="order.CustomerName"
+                placeholder="Johan Mthembu">
+            <label for="CustomerName">Customer full name (*)</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <app-address-widgeth-home [floating]="'yes'" [label]="'Street address (*)'"
+                [addressLineHome]="order.AddressLine " (adressChangedEvent)="onAdressEvent($event)">
+            </app-address-widgeth-home>
+        </div>
+
+
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="LocationName" [(ngModel)]="order.LocationName"
+                placeholder="Estate/Building Name (optional)">
+            <label for="LocationName">Estate /  building name (optional) </label>
+        </div>
+
+
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="LocationNumber" [(ngModel)]="order.LocationNumber"
+                placeholder="Unit Number  (optional)">
+            <label for="LocationNumber">Unit number (optional)</label>
+        </div>
+
+        <div class="form-check" *ngIf="!customer.UserId" >
+            <input class="form-check-input" [(ngModel)]="order.SaveMyDetails" type="checkbox"
+                value="" id="flexCheckChecked" checked>
+            <label class="form-check-label" for="flexCheckChecked">
+                Save my details for next time
+            </label>
+        </div>
+        <div class="form-floating mb-3" *ngIf="order.SaveMyDetails">
+            <input type="password" class="form-control" id="LocationNumber" [(ngModel)]="order.Password"
+                placeholder="Unit Number  (optional)">
+            <label for="LocationNumber">Create password</label>
+        </div>
+<br>
+
+        <div class="__actions__ d-flex justify-content-end">
+            <app-button [btnClass]="'btn-big'" [type]="'secondary'" (primaryButtonEvent)="cart()" [label]="backLabel">
+            </app-button>
+            <app-button [btnClass]="'btn-big'" (primaryButtonEvent)="shipping()" [label]="'Proceed to shipping'">
+            </app-button>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="card">
     <div class="card-header bg-dark text-white"><i class="fa fa-user"></i> Customer information.
     </div>
     <div class="card-body" *ngIf="customer && !viewing">
@@ -197,4 +286,4 @@
         </div>
 
     </div>
-</div>
+</div> -->

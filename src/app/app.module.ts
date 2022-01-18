@@ -21,7 +21,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
-    AppComponent  ],
+    AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -30,7 +30,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatIconModule,
     HammerModule,
     SocialLoginModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }, ),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production },),
     NgbModule
 
   ],
@@ -57,7 +57,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         ]
       } as SocialAuthServiceConfig,
     }
-  
+
   ],
   bootstrap: [AppComponent]
 })

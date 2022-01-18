@@ -1,42 +1,4 @@
 @import "../../../../../../assets/styles/color";
-.form-group {
-  margin-bottom: 2em;
-}
-
-.table-labels {
-  margin: 0.5em;
-  border-bottom: 1px solid $cloud;
-  padding: 0.5em;
-  display: block;
-}
-
-.card-body {
-  animation: moveInRight 0.5s ease-out 0s;
-  animation-fill-mode: backwards;
-}
-.form-group {
-  margin-bottom: 1em;
-}
-
-.address {
-  border-left: 1px solid $cloud;
-  height: 100%;
-  margin: 0.2em 1em;
-  margin-left: 3em;
-  padding: 1em;
-}
-
-.__headers {
-  padding: 1em 0.85em;
-  padding-bottom: 0;
-  font-weight: 900;
-  span {
-    font-weight: 400;
-    text-align: center;
-    padding: 0.2em 1em;
-    font-size: 0.75em;
-    border-radius: 0.2em;
-    border: 1px solid $primary;
-    margin-left: 1.2em;
-  }
+.form-floating{
+  border-radius: .2em !important;
 }

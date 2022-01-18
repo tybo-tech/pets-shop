@@ -1,0 +1,8 @@
+<ul class="list-group" *ngIf="order">
+    <li class="list-group-item">Email: <b>{{order.CustomerEmail}}</b></li>
+    <li class="list-group-item">Phone No. : <b>{{order.CustomerPhone}}</b></li>
+    <li class="list-group-item">Address : <b>{{order.LocationNumber}} {{order.LocationName}}
+            {{order.AddressLine}}</b></li>
+    <li class="list-group-item">Method : <b>{{order.Shipping}}</b></li>
+
+</ul>

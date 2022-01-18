@@ -1,5 +1,12 @@
-<input ngx-google-places-autocomplete [options]='options' [(ngModel)]="addressLineHome"
+<input ngx-google-places-autocomplete [options]='options' *ngIf="!floating" [(ngModel)]="addressLineHome"
   placeholder="Search address" class="form-control" #places="ngx-places" type="search"
   (onAddressChange)="handleAddressChange($event)" />
+
+  <div class="form-floating mb-3" *ngIf="floating" > 
+    <input id="floatingInput" ngx-google-places-autocomplete [options]='options' [(ngModel)]="addressLineHome"
+    placeholder="Search address" class="form-control" #places="ngx-places" type="search"
+    (onAddressChange)="handleAddressChange($event)">
+    <label for="floatingInput">{{label}}</label>
+  </div>
   
   <!-- <button class="primary" (click)="userCurrentLocation()">User current location</button> -->

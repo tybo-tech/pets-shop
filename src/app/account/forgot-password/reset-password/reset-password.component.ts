@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { LocationStrategy } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TokenModel, ChangePasswordModel } from 'src/models/account.model';
 import { AccountService } from 'src/services/account.service';
+import { MessageService } from 'primeng/api';
+import { UserService } from 'src/services';
+import { User } from 'src/models';
 
 @Component({
   selector: 'app-reset-password',
@@ -12,89 +15,74 @@ import { AccountService } from 'src/services/account.service';
 })
 export class ResetPasswordComponent implements OnInit {
   token;
-  rForm: FormGroup;
   hidePassword = true;
   error: string;
   showLoader: boolean;
-  showModal: boolean;
+  loading: boolean;
+  password: string;
+  confirmPassword: string;
+  user: User;
 
 
   constructor(
-    private fb: FormBuilder,
     private routeTo: Router,
     private location: LocationStrategy,
-    private accountService: AccountService
-  ) { }
+    private accountService: AccountService,
+    private activatedRoute: ActivatedRoute,
+    private userService: UserService,
+    private messageService: MessageService,
 
-  ngOnInit() {
-    this.rForm = this.fb.group({
-      Email: new FormControl(
-        null,
-        Validators.compose([
-          Validators.required,
-          Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-        ])
-      ),
-      Password: [null, Validators.required],
-      ConfirmPassword: [null, Validators.required]
-    });
-    const baseUrlMain: string = (this.location as any)._platformLocation.location.href;
-    this.token = baseUrlMain.substring(baseUrlMain.indexOf('=') + 1);
-    // verify user token
-    this.getUserByToken();
-  }
+  ) {
 
-  getUserByToken() {
-    this.showLoader = true;
-    if (this.token === undefined) {
-      // this.showLoader = false;
-      // this.ctaModel.icon = 'assets/images/error.svg';
-      // this.ctaModel.header = 'Forbidden, Unwanted access';
-      // this.ctaModel.message = 'You should not be here, please contact support';
-      // this.showModal = true;
-      alert('Forbidden: 1004,You should not be here, please contact support!');
-      // this.routeTo.navigate(['']);
-    }
-    const tokenModel: TokenModel = { Token: this.token };
-    this.accountService.getUserByToken(tokenModel).subscribe(data => {
-      if (data) {
-        this.showLoader = false;
-      } else {
-        // this.showLoader = false;
-        // this.ctaModel.icon = 'assets/images/error.svg';
-        // this.ctaModel.header = 'Forbidden, Unwanted access';
-        // this.ctaModel.message = 'You should not be here, please contact support';
-        // this.showModal = true;
-        alert('Forbidden: 1004,You should not be here, please contact support!');
-        // this.routeTo.navigate(['']);
+    this.activatedRoute.params.subscribe(r => {
+      this.token = r.id;
+      if (this.token) {
+        this.getUserByToken();
       }
     });
   }
 
-  onSubmit(model: ChangePasswordModel) {
+  ngOnInit() {
+  }
+
+  getUserByToken() {
+
+    const tokenModel: TokenModel = { Token: this.token };
+    this.accountService.getUserByToken(tokenModel).subscribe(data => {
+      if (data) {
+        this.loading = false;
+        this.user = data;
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: `Link not valid` });
+
+      }
+    });
+  }
+
+  onSubmit() {
+    const model: ChangePasswordModel = { Email: this.user.Email, Password: this.password, ConfirmPassword: this.confirmPassword }
     this.error = undefined;
     this.showLoader = true;
     if (model.ConfirmPassword !== model.Password) {
       this.error = 'Password(s) must match!';
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: `Password(s) must match!` });
+
       this.showLoader = false;
       return;
     }
-    this.accountService.changePassword(model).subscribe(data => {
+    this.user.Password = this.password;
+    this.user.UserToken = `${new Date()}`;
+    this.userService.updateUserSync(this.user).subscribe(data => {
       if (data) {
-        // this.showLoader = false;
-        // this.showModal = true;
-        alert('Success,Please login with your new credentials');
-        this.routeTo.navigate(['sign-in']);
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: `Please login with your new credentials` });
+        this.routeTo.navigate(['/sign-in']);
+
       } else {
-        // this.showLoader = false;
-        // this.ctaModel.icon = 'assets/images/error.svg';
-        // this.ctaModel.header = 'Oops, error';
-        // this.ctaModel.message = 'Something went wrong, please try again later!';
-        // this.showModal = true;
         alert('Error: 1003,Something went wrong, please try again later!');
         this.routeTo.navigate(['']);
       }
     });
   }
+
 
 }

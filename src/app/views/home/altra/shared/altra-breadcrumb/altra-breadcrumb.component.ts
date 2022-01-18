@@ -49,7 +49,7 @@ export class AltraBreadcrumbComponent implements OnInit {
       return;
     }
 
-    if(this.order && !this.order.Customer){
+    if(this.order && !this.order.CustomerEmail){
       this.messageService.add({ severity: 'error', summary: 'Please enter your details or login if you already have the account', detail: '' });
       return;
     }

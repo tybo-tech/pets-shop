@@ -4,14 +4,7 @@
     </div>
     <div class="card-body" *ngIf="order">
 
-
-        <ul class="list-group">
-            <li class="list-group-item">Contact: <b>{{order.Customer?.Email}}</b></li>
-            <li class="list-group-item">Ship to : <b>{{order.LocationNumber}} {{order.LocationName}}
-                    {{order.AddressLine}}</b></li>
-            <li class="list-group-item">Method : <b>{{order.Shipping}}</b></li>
-
-        </ul>
+        <app-altra-order-customer-sammary [order]="order"></app-altra-order-customer-sammary>
 
         <br>
         <br>
@@ -44,7 +37,7 @@
 
         </ul>
         <br><br>
-        <app-altra-payments *ngIf="order && user" [order]="order" [user]="user"></app-altra-payments>
+        <app-altra-payments *ngIf="order && order.CustomerEmail" [order]="order" [user]="user"></app-altra-payments>
     </div>
 </div>
 

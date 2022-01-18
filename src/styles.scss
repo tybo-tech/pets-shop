@@ -243,3 +243,24 @@ a,
     padding: 1em;
   }
 }
+
+li, ul{
+  border-color: $grey !important;
+}
+
+
+.__form{
+  margin: 8% auto;
+  max-width: 30em;
+  background: $white;
+  padding: 1em;
+  border-radius: .5em;
+  box-shadow: $box-shadow;
+
+  @media only screen and (max-width: 600px) {
+    max-width: 88%;
+    button{
+      width: 100%;
+    }
+  }
+}

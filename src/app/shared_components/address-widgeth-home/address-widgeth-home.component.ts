@@ -13,6 +13,8 @@ export class AddressWidgethHomeComponent implements OnInit {
   @ViewChild('places') places: GooglePlaceDirective;
   @Output() adressChangedEvent: EventEmitter<any> = new EventEmitter();
   @Input() addressLineHome: string;
+  @Input() floating: string;
+  @Input() label: string;
 
   options = {
     types: [],

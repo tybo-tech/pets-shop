@@ -29,10 +29,10 @@
       position: absolute;
       padding: 0.5em;
       z-index: 100;
-      width: 100%;
+      width:16em;
       background: $white;
       color: $black;
-      left: 0;
+      left: -2em;
       transition: 0.3s ease;
       z-index: 1000000000000;
 
@@ -40,8 +40,9 @@
         border-top: 3px solid $grey;
         padding: 1em;
       }
-
+      
       .drop-item {
+        border-bottom: 1px solid $cloud;
         padding: 0.5em 0;
         font-size: 0.8em;
       }

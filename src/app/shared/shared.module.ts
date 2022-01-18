@@ -7,6 +7,7 @@ import { AltraCartTotalsComponent } from '../views/home/altra/altra-cart-items/a
 import { AltraDeliveryComponent } from '../views/home/altra/altra-cart-items/altra-delivery/altra-delivery.component';
 import { ButtonComponent } from '../button/button.component';
 import { LoaderComponent } from '../shared_components';
+import { AltraOrderCustomerSammaryComponent } from '../shared_components/altra-order-customer-sammary/altra-order-customer-sammary.component';
 
 
 
@@ -17,7 +18,8 @@ import { LoaderComponent } from '../shared_components';
     AltraCartTotalsComponent,
     AltraDeliveryComponent,
     ButtonComponent,
-    LoaderComponent
+    LoaderComponent,
+    AltraOrderCustomerSammaryComponent
   ],
   exports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { LoaderComponent } from '../shared_components';
     AltraCartTotalsComponent,
     AltraDeliveryComponent,
     ButtonComponent,
-    LoaderComponent
+    LoaderComponent,
+    AltraOrderCustomerSammaryComponent
   ],
   imports: [
     CommonModule,

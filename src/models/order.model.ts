@@ -48,6 +48,6 @@ export interface Order {
   CustomerEmail?: string;
   CustomerPhone?: string;
   CustomerDp?: string;
-
-  
+  Password?: string;
+  SaveMyDetails?: boolean;
 }
